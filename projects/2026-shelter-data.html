@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="재난 안전 데이터셋을 시민 관점에서 비교하고 연결한 안심이 데이터 실험 프로젝트입니다.">
+    <title>대피소 데이터 통합과 사용성 평가 | 안심이</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="../index.html">안심이</a>
+        <nav class="nav-links" aria-label="주요 메뉴">
+            <a href="../index.html#team">팀</a>
+            <a href="../index.html#projects">프로젝트</a>
+            <a href="../meethack.html">블로그</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="project-hero">
+            <p class="eyebrow">2026 · 데이터 실험 / 워크숍</p>
+            <h1>대피소 데이터 통합과 사용성 평가</h1>
+            <p class="lead">
+                통합대피소, 민방공 대피소, 민방위 대피소, 수용 공간 시설, 지진 대피 장소 등 여러 데이터셋을
+                한곳에 놓고 시민에게 필요한 항목이 무엇인지 검토한 작업입니다.
+            </p>
+            <div class="fact-row">
+                <span>주제: 대피소 데이터</span>
+                <span>형태: 워크숍 / 스프레드시트</span>
+                <span>관점: 시민 사용성</span>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="statement">
+                <p class="eyebrow">Question</p>
+                <h2>대피소 데이터는 시민이 실제로 판단할 수 있는 형태인가?</h2>
+                <p>
+                    공공데이터에는 주소, 좌표, 시설명처럼 중요한 기본 정보가 있지만, 재난 상황에서 시민이
+                    바로 판단해야 하는 접근성, 이용 조건, 관리 정보는 데이터셋마다 다르게 제공되거나 빠져 있을 수 있습니다.
+                </p>
+            </div>
+        </section>
+
+        <section class="section muted">
+            <div class="section-heading">
+                <p class="eyebrow">Data Work</p>
+                <h2>검토한 데이터와 작업 방식</h2>
+            </div>
+            <div class="scenario-grid detailed">
+                <article class="scenario-card">
+                    <h3>여러 대피소 데이터셋 비교</h3>
+                    <p>통합대피소와 민방공·민방위·수용 공간·지진 대피 장소 데이터를 함께 놓고 항목 구조를 비교했습니다.</p>
+                    <dl class="scene-detail">
+                        <div>
+                            <dt>비교 항목</dt>
+                            <dd>시설명</dd>
+                            <dd>주소와 좌표</dd>
+                            <dd>대피소 구분과 관리 번호</dd>
+                        </div>
+                    </dl>
+                </article>
+                <article class="scenario-card">
+                    <h3>수요자 관점의 필요 항목 정리</h3>
+                    <p>워크숍 참여자가 가상의 인물과 상황을 두고 어떤 데이터 항목이 필요한지 직접 적어보는 방식으로 사용성을 검토했습니다.</p>
+                    <dl class="scene-detail">
+                        <div>
+                            <dt>작업 시트</dt>
+                            <dd>제시 인물</dd>
+                            <dd>데이터 항목</dd>
+                            <dd>필요한 이유와 중요도</dd>
+                        </div>
+                    </dl>
+                </article>
+                <article class="scenario-card">
+                    <h3>재난·물품·수요자 관계 연결</h3>
+                    <p>재난 종류, 준비 물품, 수요자 조건을 연결해 맞춤형 재난가방과 안내가 가능한 데이터 구조를 실험했습니다.</p>
+                    <dl class="scene-detail">
+                        <div>
+                            <dt>관계 데이터</dt>
+                            <dd>수요자 x 물품</dd>
+                            <dd>재난 x 물품</dd>
+                            <dd>공통 물품과 특수 물품</dd>
+                        </div>
+                    </dl>
+                </article>
+                <article class="scenario-card">
+                    <h3>서비스로 이어지는 빌드</h3>
+                    <p>데이터 시트를 프로토타입 화면과 연결할 수 있도록 필요한 속성과 표시 방식을 정리했습니다.</p>
+                    <dl class="scene-detail">
+                        <div>
+                            <dt>서비스 연결</dt>
+                            <dd>맞춤형 물품 리스트</dd>
+                            <dd>대피소 정보 필터</dd>
+                            <dd>PDF 또는 카드형 출력</dd>
+                        </div>
+                    </dl>
+                </article>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-heading">
+                <p class="eyebrow">Findings</p>
+                <h2>데이터 실험에서 확인한 점</h2>
+            </div>
+            <div class="finding-list">
+                <article>
+                    <span>01</span>
+                    <h3>데이터셋이 많아도 시민의 질문에 바로 답하지는 않습니다.</h3>
+                    <p>시설명과 주소만으로는 “지금 나와 가족이 갈 수 있는가”를 판단하기 어렵습니다.</p>
+                </article>
+                <article>
+                    <span>02</span>
+                    <h3>수요자 조건은 데이터 구조 안에 들어가야 합니다.</h3>
+                    <p>장애, 언어, 동반 가족, 반려동물, 어린이 같은 조건이 정보 필터와 안내 방식에 영향을 줍니다.</p>
+                </article>
+                <article>
+                    <span>03</span>
+                    <h3>워크숍은 데이터 항목을 발견하는 좋은 방법입니다.</h3>
+                    <p>사람들이 실제로 묻는 질문을 모으면 공공데이터에 추가되거나 보완되어야 할 항목이 선명해집니다.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div>
+            <strong>안심이</strong>
+            <p>재난 안전 정보를 시민의 언어로 다시 만드는 팀</p>
+        </div>
+        <div class="footer-links">
+            <a href="../index.html#projects">프로젝트</a>
+            <a href="mailto:ansim@codefor.kr">ansim@codefor.kr</a>
+        </div>
+    </footer>
+</body>
+</html>
