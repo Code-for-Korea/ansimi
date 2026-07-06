@@ -398,6 +398,12 @@ h3 {
     color: var(--green);
     font-size: 1.8rem;
     font-weight: 900;
+    grid-row: 1 / span 2;
+}
+
+.finding-list article h3,
+.finding-list article p {
+    grid-column: 2;
 }
 
 .table-wrap {
@@ -701,6 +707,15 @@ tr:last-child td {
     .finding-list article {
         grid-template-columns: 1fr;
         gap: 8px;
+    }
+
+    .finding-list span {
+        grid-row: auto;
+    }
+
+    .finding-list article h3,
+    .finding-list article p {
+        grid-column: 1;
     }
 
     .hero-actions {
