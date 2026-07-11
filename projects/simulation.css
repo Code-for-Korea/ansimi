@@ -1,0 +1,688 @@
+/* simulation.css - Retro Pixel Art Stylesheet (Enhanced HUD & Outlined Text Layout) */
+
+@import url('https://fonts.googleapis.com/css2?family=Poor+Story&family=Press+Start+2P&display=swap');
+
+:root {
+    --retro-ink: #172026;
+    --retro-paper: #fffefa;
+    --retro-soft: #f4f0e8;
+    --retro-green: #2f6f4e;
+    --retro-yellow: #d7a21a;
+    --retro-red: #b85c38;
+    --retro-blue: #1d6f73;
+    --pixel-font: 'Poor Story', -apple-system, BlinkMacSystemFont, sans-serif;
+    --game-font: 'Press Start 2P', monospace;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #0b0f12;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    image-rendering: pixelated;
+}
+
+/* Retro Handheld/Console frame container */
+#retro-game-board {
+    position: relative;
+    width: 100%;
+    max-width: 620px;
+    height: 100%;
+    max-height: 800px;
+    background: #2b333a;
+    border: 8px solid var(--retro-ink);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 20px 0 #1b2024, 0 30px 40px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+/* CRT Screen Effect Overlay */
+.crt-overlay {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.12) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+    background-size: 100% 4px, 6px 100%;
+    z-index: 100;
+    pointer-events: none;
+    border-radius: 4px;
+    opacity: 0.75;
+}
+
+/* Game Screen Frame */
+#game-screen {
+    flex: 1;
+    background-color: var(--retro-paper);
+    border: 4px solid var(--retro-ink);
+    box-shadow: inset 0 0 20px rgba(23, 32, 38, 0.15);
+    border-radius: 4px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* Gameplay Background Image */
+.gameplay-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+/* Overlay shadow for gameplay background to ensure text readability */
+.gameplay-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.22);
+    pointer-events: none;
+}
+
+/* Title Background Image */
+.title-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background-image: url('../assets/images/pixel_title.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+.title-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.22);
+    pointer-events: none;
+}
+
+/* Game Sections */
+.game-section {
+    display: none;
+    flex-direction: column;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.game-section.active {
+    display: flex;
+}
+
+/* SPECIFIC: Title and Gameplay sections need absolute inner positioning */
+#screen-title {
+    padding: 0;
+    position: relative;
+}
+
+#screen-gameplay {
+    padding: 0;
+    position: relative;
+}
+
+/* TITLE SCREEN SPECIFIC */
+.title-content-wrapper {
+    position: relative;
+    z-index: 5;
+    margin-top: 60px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    pointer-events: none;
+}
+
+/* Outlined Title Typography */
+.pixel-title {
+    font-family: var(--pixel-font);
+    font-weight: bold;
+    font-size: 3.0rem;
+    text-align: center;
+    color: var(--retro-ink);
+    margin: 10px 0 5px;
+    letter-spacing: -1px;
+    pointer-events: auto;
+    text-shadow: 
+        -2.5px -2.5px 0 #ffffff,  
+         2.5px -2.5px 0 #ffffff,
+        -2.5px  2.5px 0 #ffffff,
+         2.5px  2.5px 0 #ffffff,
+        -2.5px  0px   0 #ffffff,
+         2.5px  0px   0 #ffffff,
+         0px   -2.5px 0 #ffffff,
+         0px    2.5px 0 #ffffff,
+        -1.5px -1.5px 0 #ffffff,
+         1.5px -1.5px 0 #ffffff,
+        -1.5px  1.5px 0 #ffffff,
+         1.5px  1.5px 0 #ffffff;
+}
+
+.pixel-title-sm {
+    font-family: var(--pixel-font);
+    font-weight: bold;
+    font-size: 1.8rem;
+    text-align: center;
+    color: var(--retro-ink);
+    margin: 8px 0;
+    text-shadow: 2px 2px 0 var(--retro-yellow);
+}
+
+.pixel-subtitle {
+    font-family: var(--pixel-font);
+    font-size: 1.35rem;
+    font-weight: bold;
+    text-align: center;
+    color: var(--retro-blue);
+    margin-bottom: 24px;
+    pointer-events: auto;
+    text-shadow: 
+        -2px -2px 0 #ffffff,  
+         2px -2px 0 #ffffff,
+        -2px  2px 0 #ffffff,
+         2px  2px 0 #ffffff,
+        -2px  0px 0 #ffffff,
+         2px  0px 0 #ffffff,
+         0px -2px 0 #ffffff,
+         0px  2px 0 #ffffff;
+}
+
+.game-intro-text {
+    font-family: var(--pixel-font);
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--retro-ink);
+    line-height: 1.6;
+    pointer-events: auto;
+    max-width: 440px;
+    text-shadow: 
+        -2px -2px 0 #ffffff,  
+         2px -2px 0 #ffffff,
+        -2px  2px 0 #ffffff,
+         2px  2px 0 #ffffff,
+        -2px  0px 0 #ffffff,
+         2px  0px 0 #ffffff,
+         0px -2px 0 #ffffff,
+         0px  2px 0 #ffffff;
+}
+
+.game-intro-text p {
+    margin: 8px 0;
+}
+
+.title-actions-wrapper {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 36px;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+}
+
+.start-game-btn {
+    width: 100%;
+    max-width: 320px;
+}
+
+.select-desc {
+    font-family: var(--pixel-font);
+    text-align: center;
+    margin-bottom: 16px;
+    font-size: 1.1rem;
+    color: var(--retro-ink);
+}
+
+/* Retro Box styling (for menus) */
+.retro-box {
+    background: var(--retro-soft);
+    border: 4px solid var(--retro-ink);
+    box-shadow: 4px 4px 0 var(--retro-ink);
+    padding: 12px;
+    margin-bottom: 16px;
+    border-radius: 2px;
+    font-family: var(--pixel-font);
+    font-size: 1.05rem;
+    line-height: 1.5;
+}
+
+/* Menu Buttons */
+.pixel-btn {
+    font-family: var(--pixel-font);
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 10px 16px;
+    border: 4px solid var(--retro-ink);
+    box-shadow: 4px 4px 0 var(--retro-ink);
+    background-color: var(--retro-paper);
+    color: var(--retro-ink);
+    cursor: pointer;
+    outline: none;
+    margin-bottom: 10px;
+    position: relative;
+    transition: transform 0.05s, box-shadow 0.05s;
+    user-select: none;
+}
+
+.pixel-btn:hover {
+    background-color: var(--retro-soft);
+}
+
+.pixel-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--retro-ink);
+}
+
+.primary-btn {
+    background-color: var(--retro-yellow);
+}
+.primary-btn:hover {
+    background-color: #f3b007;
+}
+
+.secondary-btn {
+    background-color: var(--retro-paper);
+}
+
+.back-btn {
+    margin-top: auto;
+    align-self: center;
+}
+
+/* Character Selection */
+.char-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.char-card {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 8px 14px;
+    margin-bottom: 0;
+    transition: background-color 0.1s;
+}
+
+.char-card.clickable {
+    cursor: pointer;
+}
+
+.char-card.clickable:hover {
+    background-color: var(--retro-paper);
+    border-color: var(--retro-green);
+    box-shadow: 4px 4px 0 var(--retro-green);
+}
+
+.char-avatar {
+    font-size: 2.2rem;
+    width: 48px;
+    height: 48px;
+    background: var(--retro-paper);
+    border: 3px solid var(--retro-ink);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.char-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.char-name {
+    font-size: 1.05rem;
+    font-weight: bold;
+    color: var(--retro-ink);
+}
+
+.char-stat {
+    font-size: 0.8rem;
+    color: var(--retro-blue);
+    margin-top: 1px;
+}
+
+.char-desc {
+    margin: 4px 0 0;
+    font-size: 0.8rem;
+    line-height: 1.3;
+    color: #444;
+}
+
+/* HUD Overlay Layer (TOP LAYER) */
+.hud-top-layer {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* Inner elements allow pointer events for clicks */
+.hud-left-group, .hud-right-group {
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.hud-center-group {
+    pointer-events: none;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+/* Top Left: Avatar in rounded box */
+.hud-avatar-box {
+    background-color: var(--retro-paper);
+    border: 4px solid var(--retro-ink);
+    border-radius: 12px;
+    width: 58px;
+    height: 58px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* Heart HP bar */
+.hud-hp-hearts {
+    display: flex;
+    margin-top: 6px;
+    gap: 2px;
+}
+
+.pixel-heart {
+    filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.3));
+}
+
+/* Center Top: Timer text */
+.hud-timer-text {
+    font-family: var(--game-font);
+    font-size: 1.6rem;
+    color: #ffffff;
+    letter-spacing: -1px;
+    text-shadow: 
+        -3px -3px 0 #000, 
+         3px -3px 0 #000, 
+        -3px  3px 0 #000, 
+         3px  3px 0 #000, 
+        -3px  0px 0 #000, 
+         3px  0px 0 #000, 
+         0px -3px 0 #000, 
+         0px  3px 0 #000;
+}
+
+/* Top Right: Circular Minimap with wood/gold border */
+.minimap-circle-overlay {
+    position: relative;
+    width: 82px;
+    height: 82px;
+    border: 4px solid #8b5a2b; /* Brownish border */
+    border-radius: 50%;
+    background-color: #c4cfa1; /* GameBoy retro screen green */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 2px 2px 5px rgba(0,0,0,0.4);
+    overflow: hidden;
+    align-self: flex-end;
+}
+
+/* Retro radar / coordinates grid bg */
+.minimap-grid-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(rgba(0,0,0,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px);
+    background-size: 8px 8px;
+    background-position: center;
+}
+
+#minimap-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.minimap-legend {
+    font-family: var(--pixel-font);
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    margin-top: 6px;
+    line-height: 1.2;
+    text-shadow: 
+        -1.5px -1.5px 0 #000, 
+         1.5px -1.5px 0 #000, 
+        -1.5px  1.5px 0 #000, 
+         1.5px  1.5px 0 #000;
+}
+
+/* CENTER LAYER: Scenario Overlay Text Box */
+.scenario-text-container {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: 150px;
+    bottom: 170px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+    pointer-events: none;
+}
+
+/* Outlined poor story text */
+.scenario-overlay-text {
+    font-family: var(--pixel-font);
+    font-size: 1.55rem;
+    line-height: 1.6;
+    color: #172026; /* Dark ink text inside */
+    font-weight: 900;
+    text-align: center;
+    max-width: 480px;
+    pointer-events: auto;
+    margin: 0;
+    /* Thick white stroke border effect */
+    text-shadow: 
+        -2.5px -2.5px 0 #ffffff,  
+         2.5px -2.5px 0 #ffffff,
+        -2.5px  2.5px 0 #ffffff,
+         2.5px  2.5px 0 #ffffff,
+        -2.5px  0px   0 #ffffff,
+         2.5px  0px   0 #ffffff,
+         0px   -2.5px 0 #ffffff,
+         0px    2.5px 0 #ffffff,
+        -1.5px -1.5px 0 #ffffff,
+         1.5px -1.5px 0 #ffffff,
+        -1.5px  1.5px 0 #ffffff,
+         1.5px  1.5px 0 #ffffff;
+}
+
+/* BOTTOM LAYER: Choices Stack (Lifted slightly) */
+.choices-container-wrapper {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 36px; /* Lifted up slightly */
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+}
+
+.choices-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.choices-stack .pixel-btn {
+    background-color: var(--retro-paper);
+    border: 3px solid var(--retro-ink);
+    border-radius: 12px;
+    font-family: var(--pixel-font);
+    font-size: 1.15rem;
+    font-weight: bold;
+    color: var(--retro-ink);
+    padding: 11px 18px;
+    text-align: left;
+    margin-bottom: 0;
+    width: 100%;
+    box-shadow: 0 4px 0 var(--retro-ink);
+    transition: transform 0.05s, box-shadow 0.05s;
+    line-height: 1.4;
+}
+
+.choices-stack .pixel-btn:hover {
+    background-color: var(--retro-soft);
+}
+
+.choices-stack .pixel-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 var(--retro-ink);
+}
+
+/* Result Screen */
+.result-badge {
+    font-family: var(--pixel-font);
+    font-weight: bold;
+    font-size: 1.8rem;
+    text-align: center;
+    padding: 8px;
+    border: 3px dashed var(--retro-ink);
+    margin-bottom: 12px;
+}
+
+.result-badge.success {
+    background-color: rgba(47, 111, 78, 0.15);
+    color: var(--retro-green);
+    border-color: var(--retro-green);
+}
+
+.result-badge.fail {
+    background-color: rgba(184, 92, 56, 0.15);
+    color: var(--retro-red);
+    border-color: var(--retro-red);
+}
+
+.result-explanation {
+    font-family: var(--pixel-font);
+    font-size: 1.05rem;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.insight-box {
+    background: var(--retro-paper);
+    border-color: var(--retro-blue);
+    box-shadow: 4px 4px 0 var(--retro-blue);
+    padding: 10px 14px;
+}
+
+.insight-box h3 {
+    margin: 0 0 6px 0;
+    font-family: var(--pixel-font);
+    font-size: 1.1rem;
+    color: var(--retro-blue);
+}
+
+.insight-box p {
+    margin: 0;
+    font-family: var(--pixel-font);
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: #444;
+}
+
+.result-actions {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.result-actions .pixel-btn {
+    margin-bottom: 0;
+}
+
+/* Mobile Tweak (make text slightly smaller if on thin phone) */
+@media (max-width: 480px) {
+    .pixel-title {
+        font-size: 2.2rem;
+    }
+    .pixel-subtitle {
+        font-size: 1.05rem;
+    }
+    .game-intro-text {
+        font-size: 1.0rem;
+        line-height: 1.4;
+    }
+    .hud-timer-text {
+        font-size: 1.25rem;
+    }
+    .hud-avatar-box {
+        width: 46px;
+        height: 46px;
+        font-size: 1.8rem;
+    }
+    .minimap-circle-overlay {
+        width: 64px;
+        height: 64px;
+    }
+    .scenario-overlay-text {
+        font-size: 1.25rem;
+        line-height: 1.45;
+    }
+    .choices-stack .pixel-btn {
+        font-size: 0.95rem;
+        padding: 9px 14px;
+    }
+}

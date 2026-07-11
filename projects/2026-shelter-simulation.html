@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대피소 서바이벌 | 안심이</title>
+    <!-- Google Fonts: Press Start 2P & Poor Story -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="simulation.css">
+</head>
+<body>
+    <div id="retro-game-board">
+        <!-- CRT scanline overlay for retro aesthetics -->
+        <div class="crt-overlay"></div>
+        
+        <!-- Game screen container -->
+        <div id="game-screen">
+            <!-- TITLE / INTRO SCREEN -->
+            <section id="screen-title" class="game-section active">
+                <!-- Background image container for title -->
+                <div class="title-bg"></div>
+                
+                <!-- Title text overlays -->
+                <div class="title-content-wrapper">
+                    <div class="pixel-title">대피소 서바이벌</div>
+                    <div class="pixel-subtitle">우리 동네 대피소, 진짜 갈 수 있을까?</div>
+                    
+                    <div class="game-intro-text">
+                        <p>재난 경보가 울렸습니다!</p>
+                        <p>지도 앱에 표시된 대피소까지 무사히 갈 수 있을까요?</p>
+                        <p>당신의 캐릭터를 선택하고 대피를 시작하세요.</p>
+                    </div>
+                </div>
+                
+                <!-- START button lifted off bottom -->
+                <div class="title-actions-wrapper">
+                    <button class="pixel-btn primary-btn start-game-btn" onclick="game.changeScreen('screen-char-select')">대피 시작하기 (START)</button>
+                </div>
+            </section>
+
+            <!-- CHARACTER SELECT SCREEN -->
+            <section id="screen-char-select" class="game-section">
+                <div class="pixel-title-sm">캐릭터 선택 (SELECT CHARACTER)</div>
+                <p class="select-desc">대피를 진행할 시민의 상황을 선택하세요.</p>
+                
+                <div class="char-grid">
+                    <!-- Character 1: Wheelchair User (Min-woo) -->
+                    <div class="char-card retro-box clickable" onclick="game.selectCharacter('wheelchair')">
+                        <div class="char-avatar">♿</div>
+                        <div class="char-info">
+                            <span class="char-name">민우 (휠체어 이용자)</span>
+                            <span class="char-stat">재난: 침수 / 난이도: ★★★</span>
+                            <p class="char-desc">물리적 턱과 계단에 취약하며, 무단차 입구와 엘리베이터가 중요합니다.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Character 2: Parent with Baby (Hyeon-ah) -->
+                    <div class="char-card retro-box clickable" onclick="game.selectCharacter('infant')">
+                        <div class="char-avatar">👶</div>
+                        <div class="char-info">
+                            <span class="char-name">현아 (영유아 동반 가족)</span>
+                            <span class="char-stat">재난: 침수 / 난이도: ★★☆</span>
+                            <p class="char-desc">아이를 동반하여 속도가 느립니다. 유모차 경로와 임시 수유실 정보가 필요합니다.</p>
+                        </div>
+                    </div>
+
+                    <!-- Character 3: Foreigner Student (Michael) -->
+                    <div class="char-card retro-box clickable" onclick="game.selectCharacter('foreign')">
+                        <div class="char-avatar">🌎</div>
+                        <div class="char-info">
+                            <span class="char-name">마이클 (외국인 유학생)</span>
+                            <span class="char-stat">재난: 화학물질 누출 / 난이도: ★★☆</span>
+                            <p class="char-desc">한국어 재난문자를 해독해야 합니다. 영문 표지판과 지하 대피 정보가 생존을 가릅니다.</p>
+                        </div>
+                    </div>
+
+                    <!-- Character 4: Elderly (Soon-im) -->
+                    <div class="char-card retro-box clickable" onclick="game.selectCharacter('elderly')">
+                        <div class="char-avatar">👵</div>
+                        <div class="char-info">
+                            <span class="char-name">김순임 (독거 노인)</span>
+                            <span class="char-stat">재난: 폭염 / 난이도: ★☆☆</span>
+                            <p class="char-desc">거동이 다소 불편하고 스마트폰 사용이 서툽니다. 무더위쉼터 연락처와 개방 정보가 중요합니다.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="pixel-btn secondary-btn back-btn" onclick="game.changeScreen('screen-title')">이전으로</button>
+            </section>
+
+            <!-- IN-GAME PLAY SCREEN -->
+            <section id="screen-gameplay" class="game-section">
+                <!-- Absolute background image container -->
+                <div id="gameplay-bg" class="gameplay-bg"></div>
+                
+                <!-- OVERLAY HUD (TOP LAYER) -->
+                <div class="hud-top-layer">
+                    <!-- Top Left: Persona Avatar + Hearts HP -->
+                    <div class="hud-left-group">
+                        <div id="hud-avatar-box" class="hud-avatar-box">👵</div>
+                        <div id="hud-hp-hearts" class="hud-hp-hearts">
+                            <!-- SVG hearts inserted by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Center Top: Timer -->
+                    <div class="hud-center-group">
+                        <span id="hud-time" class="hud-timer-text">09:38</span>
+                    </div>
+
+                    <!-- Top Right: Minimap -->
+                    <div class="hud-right-group">
+                        <div class="minimap-circle-overlay">
+                            <div class="minimap-grid-bg"></div>
+                            <svg id="minimap-svg" viewBox="0 0 100 100">
+                                <!-- Dynamic SVG lines & nodes -->
+                            </svg>
+                        </div>
+                        <div id="minimap-legend" class="minimap-legend">현재: 출발지</div>
+                    </div>
+                </div>
+
+                <!-- CENTER LAYER: Scenario Text with thick outline -->
+                <div class="scenario-text-container">
+                    <p id="scenario-text" class="scenario-overlay-text">
+                        한낮 폭염 경보 기온이 38도를 돌파했습니다...
+                    </p>
+                </div>
+
+                <!-- BOTTOM LAYER: Choices Stack (Lifted slightly) -->
+                <div class="choices-container-wrapper">
+                    <div id="choices-container" class="choices-stack">
+                        <!-- Choices buttons inserted by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- RESULT SCREEN -->
+            <section id="screen-result" class="game-section">
+                <div id="result-title" class="pixel-title-sm">대피 결과</div>
+                
+                <div class="result-box retro-box">
+                    <div id="result-badge" class="result-badge success">대피 성공!</div>
+                    <div id="result-text" class="result-explanation">
+                        대피소에 무사히 도착했습니다. 하지만 실제라면 어땠을까요?
+                    </div>
+                </div>
+
+                <!-- Educational Insight from fieldwork -->
+                <div id="educational-insight" class="insight-box retro-box">
+                    <h3>💡 현장 조사에서 발견한 사실</h3>
+                    <p id="insight-text">주소만으로 대피소를 이용하는 데는 한계가 있습니다. 실제 대피층, 전용 경사로, 야간 대표 연락처 등 구체적인 데이터가 꼭 있어야 합니다.</p>
+                </div>
+
+                <div class="result-actions">
+                    <button class="pixel-btn primary-btn" onclick="game.restart()">다시 도전하기</button>
+                    <button class="pixel-btn secondary-btn" onclick="game.exitSimulation()">원래 페이지로</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="simulation.js"></script>
+</body>
+</html>

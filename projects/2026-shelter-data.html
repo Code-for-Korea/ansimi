@@ -9,29 +9,251 @@
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
-    <header class="site-header"><a class="brand" href="../index.html">안심이</a><nav class="nav-links" aria-label="주요 메뉴"><a href="../index.html">홈</a><a href="./" aria-current="page">프로젝트</a><a href="../blog.html">블로그</a></nav></header>
+    <header class="site-header">
+        <a class="brand" href="../index.html">안심이</a>
+        <nav class="nav-links" aria-label="주요 메뉴">
+            <a href="../index.html">홈</a>
+            <a href="index.html" aria-current="page">프로젝트</a>
+            <a href="../blog.html">블로그</a>
+        </nav>
+    </header>
     <main>
-        <section class="project-hero case-hero"><p class="eyebrow">2026 당신 옆의 공익활동 · Fieldwork + Data Proposal</p><h1>재난대비, 막연한 정보에서 구체적 경험으로</h1><p class="lead">안심이는 재난 대비를 특별한 상황을 위한 준비가 아니라 일상 속에서 이해하고 실천할 수 있는 문제로 전환하는 프로젝트입니다. 지도 속 정보로만 존재하는 대피소를 실제로 찾아가 보고, 시민의 시선에서 접근성과 이용 가능성을 확인하며, 그 경험을 함께 기록하고 공유합니다.</p><div class="fact-row"><span>우리 동네 대피소 탐방대</span><span>현장 탐방</span><span>전문가 인터뷰</span><span>데이터 제안</span></div></section>
-        <section class="section project-intro"><div class="case-summary"><div><p class="eyebrow">Community</p><h2>재난 대비를 내 생활과 연결된 경험으로 만듭니다.</h2></div><div class="intro-copy"><p>안심이는 기존 재난 정보가 사건 중심으로 제공되는 한계를 넘어, 시민의 생활 맥락에서 재난 대비를 다시 바라보고자 시작되었습니다. ‘당신 옆의 공익활동’은 시민이 직접 참여하여 경험을 만들고 공유하는 커뮤니티 기반 활동이라는 점에서 안심이가 지향하는 방향과 맞닿아 있었습니다.</p><p>안심이는 “우리 동네 대피소 탐방대” 활동을 중심으로 커뮤니티를 운영합니다. 탐방대원들은 우리 동네 대피소를 직접 찾아가 접근성, 이용 가능성, 주변 환경을 시민의 시선에서 확인하고, 필요 시 대피소 관리자 인터뷰를 통해 실제 운영 방식과 숨겨진 정보를 확인합니다.</p><p>이 과정을 통해 수집된 경험을 바탕으로 우리 동네 대피소 지도, 시민 관점의 이용 가이드, 재난 대비 체크리스트 같은 콘텐츠를 제작하여 재난 대비를 보다 실천 가능한 형태로 확산시키고자 합니다.</p></div></div></section>        <section class="section"><div class="case-summary"><div><p class="eyebrow">Problem</p><h2>대피소 정보는 위치에서 끝나면 충분하지 않습니다.</h2></div><p>현장에서 확인한 문제는 단순히 “대피소가 어디인가”가 아니었습니다. 시민에게 필요한 것은 실제 대피층, 이동 경로, 담당 연락처, 접근성, 동반 조건처럼 도착 전후의 판단을 가능하게 하는 정보였습니다. 가까운 대피소가 곧 갈 수 있는 대피소는 아니며, 갈 수 있는 대피소가 곧 머물 수 있는 대피소도 아닙니다.</p></div></section>
+        <section class="project-hero case-hero">
+            <p class="eyebrow">2026 당신 옆의 공익활동 · Fieldwork + Data Proposal</p>
+            <h1>재난대비, 막연한 정보에서 구체적 경험으로</h1>
+            <p class="lead">안심이는 재난 대비를 특별한 상황을 위한 준비가 아니라 일상 속에서 이해하고 실천할 수 있는 문제로 전환하는 프로젝트입니다. 지도 속 정보로만 존재하는 대피소를 실제로 찾아가 보고, 시민의 시선에서 접근성과 이용 가능성을 확인하며, 그 경험을 함께 기록하고 공유합니다.</p>
+            <div class="fact-row">
+                <span>우리 동네 대피소 탐방대</span>
+                <span>현장 탐방</span>
+                <span>전문가 인터뷰</span>
+                <span>데이터 제안</span>
+            </div>
+            <div class="hero-actions" style="margin-top: 24px; display: flex !important;">
+                <button id="start-simulation-btn" class="button primary" style="cursor: pointer; border: none; font-family: inherit; font-size: 1.2rem; padding: 12px 30px; min-height: 52px; border-radius: 8px;">대피 시뮬레이션 체험하기</button>
+            </div>
+        </section>
 
-        <section class="section muted"><div class="section-heading"><p class="eyebrow">Process</p><h2>진행 흐름</h2></div><ol class="process-list"><li><strong>공공데이터 읽기</strong><p>통합대피소, 민방공대피소, 지진옥외대피장소 등 기존 데이터가 시민의 판단에 어떤 정보를 주고 무엇을 빠뜨리는지 비교했습니다.</p></li><li><strong>시민 상황 만들기</strong><p>영유아 동반 가족, 휠체어 이용자, 반려동물 보호자, 지하주차장형 대피소 이용자를 중심으로 탐방 시나리오를 구성했습니다.</p></li><li><strong>현장 탐방</strong><p>사당·남사초 일대에서 표지판, 출입구, 보행 경로, 내부 안내, 실제 도착 경험을 확인하며 데이터에 없는 공백을 기록했습니다.</p></li><li><strong>전문가 인터뷰</strong><p>재난구호 현장 경험을 바탕으로 담당주체, 결손정보, 취약계층 접근성, 대피소의 커뮤니티 기능을 데이터 항목으로 번역했습니다.</p></li><li><strong>데이터 제안</strong><p>접근성, 생활조건, 경로 안내, 운영 주체, 결손정보를 포함하는 공개용 스키마 초안을 만들었습니다.</p></li></ol></section>
+        <section class="section project-intro">
+            <div class="case-summary">
+                <div>
+                    <p class="eyebrow">Community</p>
+                    <h2>재난 대비를 내 생활과 연결된 경험으로 만듭니다.</h2>
+                </div>
+                <div class="intro-copy">
+                    <p>안심이는 기존 재난 정보가 사건 중심으로 제공되는 한계를 넘어, 시민의 생활 맥락에서 재난 대비를 다시 바라보고자 시작되었습니다. ‘당신 옆의 공익활동’은 시민이 직접 참여하여 경험을 만들고 공유하는 커뮤니티 기반 활동이라는 점에서 안심이가 지향하는 방향과 맞닿아 있었습니다.</p>
+                    <p>안심이는 “우리 동네 대피소 탐방대” 활동을 중심으로 커뮤니티를 운영합니다. 탐방대원들은 우리 동네 대피소를 직접 찾아가 접근성, 이용 가능성, 주변 환경을 시민의 시선에서 확인하고, 필요 시 대피소 관리자 인터뷰를 통해 실제 운영 방식과 숨겨진 정보를 확인합니다.</p>
+                    <p>이 과정을 통해 수집된 경험을 바탕으로 우리 동네 대피소 지도, 시민 관점의 이용 가이드, 재난 대비 체크리스트 같은 콘텐츠를 제작하여 재난 대비를 보다 실천 가능한 형태로 확산시키고자 합니다.</p>
+                </div>
+            </div>
+        </section>
 
-        <section class="section"><div class="section-heading"><p class="eyebrow">Field Scenes</p><h2>현장에서 드러난 네 가지 장면</h2></div><div class="scenario-grid detailed">
-            <article class="scenario-card"><h3>영유아 동반 가족</h3><p>앱과 지도에서 대피소를 찾는 과정이 복잡했고, 아이를 돌보는 행동이 이동 속도와 판단에 계속 영향을 줬습니다.</p><dl class="scene-detail"><div><dt>행동</dt><dd>아이를 안고 앱을 확인함</dd><dd>침수 구간에서는 안고, 나머지 구간에서는 손을 잡고 이동함</dd><dd>아이를 안심시키고 보폭을 맞춰 걸음</dd></div><div><dt>필요한 정보</dt><dd>유모차 이동 가능 경로</dd><dd>화장실과 대기 공간</dd><dd>야간 운영 여부와 중간 생활 거점</dd></div></dl><div class="artifact-board"><span class="artifact-token icon-phone">스마트폰 지도</span><span class="artifact-token icon-snack">간식</span><span class="artifact-token icon-toy">장난감</span><span class="artifact-token icon-bag">아이 짐 가방</span></div></article>
-            <article class="scenario-card"><h3>휠체어 이용자</h3><p>가까운 대피소가 실제로 접근 가능한지는 별도 문제였습니다. 목적지가 바뀌면 경로 판단과 물리적 위험이 함께 커졌습니다.</p><dl class="scene-detail"><div><dt>행동</dt><dd>포화된 대피소를 피해 목적지를 변경함</dd><dd>대각선 길에서 지도를 다시 확인함</dd><dd>턱과 차량을 피하며 인도로 진입함</dd></div><div><dt>필요한 정보</dt><dd>무단차 입구와 경사로</dd><dd>엘리베이터 운행 층수</dd><dd>학교 정문·후문을 구분할 수 있는 안내</dd></div></dl><div class="artifact-board"><span class="artifact-token icon-wheelchair">휠체어</span><span class="artifact-token icon-ramp">경사로·연석</span><span class="artifact-token icon-road">인도·교차로</span><span class="artifact-token icon-sign">정문 안내</span></div></article>
-            <article class="scenario-card"><h3>반려동물 보호자</h3><p>반려동물 동반 가능 여부만이 아니라 이동 중 배변, 다른 동물과의 거리, 도착 후 머물 공간이 함께 문제가 됐습니다.</p><dl class="scene-detail"><div><dt>행동</dt><dd>이동가방에서 반려견을 꺼내 목줄을 하고 걸음</dd><dd>배변과 냄새 맡기로 중간중간 멈춤</dd><dd>다른 동물이 보이면 안아 들어 시야를 가림</dd></div><div><dt>필요한 정보</dt><dd>동반 가능 여부</dd><dd>별도 대기 공간</dd><dd>배변 처리와 문의 연락처</dd></div></dl><div class="artifact-board"><span class="artifact-token icon-carrier">이동가방</span><span class="artifact-token icon-leash">목줄</span><span class="artifact-token icon-waste">배변용품</span><span class="artifact-token icon-map">지도 앱</span></div></article>
-            <article class="scenario-card"><h3>지하주차장 대피소</h3><p>대피소에 도착해도 어디로 들어가고, 어느 층까지 내려가며, 어디에 머물러야 하는지 판단하기 어려웠습니다.</p><dl class="scene-detail"><div><dt>행동</dt><dd>계단과 엘리베이터 중 무엇을 탈지 고민함</dd><dd>가족 단위 이동 때문에 엘리베이터를 선택함</dd><dd>도착 후 식수, 화장실, 관리자 위치를 찾음</dd></div><div><dt>필요한 정보</dt><dd>야간에도 보이는 입구 표식</dd><dd>대피층과 내부 안내도</dd><dd>식수·화장실·대기 위치</dd></div></dl><div class="artifact-board"><span class="artifact-token icon-sign">대피소 표식</span><span class="artifact-token icon-elevator">엘리베이터 정보</span><span class="artifact-token icon-water">식수·화장실</span><span class="artifact-token icon-floor">대피층 안내</span></div></article>
-        </div></section>
+        <section class="section">
+            <div class="case-summary">
+                <div>
+                    <p class="eyebrow">Problem</p>
+                    <h2>대피소 정보는 위치에서 끝나면 충분하지 않습니다.</h2>
+                </div>
+                <p>현장에서 확인한 문제는 단순히 “대피소가 어디인가”가 아니었습니다. 시민에게 필요한 것은 실제 대피층, 이동 경로, 담당 연락처, 접근성, 동반 조건처럼 도착 전후의 판단을 가능하게 하는 정보였습니다. 가까운 대피소가 곧 갈 수 있는 대피소는 아니며, 갈 수 있는 대피소가 곧 머물 수 있는 대피소도 아닙니다.</p>
+            </div>
+        </section>
 
-        <section class="section muted"><div class="section-heading"><p class="eyebrow">Findings</p><h2>핵심 발견</h2></div><div class="finding-list"><article><span>01</span><h3>가까운 대피소와 갈 수 있는 대피소는 다릅니다.</h3><p>이동 조건, 침수 가능성, 우회 여부, 동반 가족의 상황에 따라 실제 선택지는 달라집니다.</p></article><article><span>02</span><h3>주소만으로는 대피소를 이용할 수 없습니다.</h3><p>실제 대피층, 출입구, 표식, 엘리베이터 운행 범위가 함께 제공되어야 합니다.</p></article><article><span>03</span><h3>운영 정보가 보이지 않으면 시민은 확인할 곳을 잃습니다.</h3><p>담당 부서와 대표 연락처는 대피소 정보의 보조 항목이 아니라 기본 항목에 가깝습니다.</p></article><article><span>04</span><h3>취약 상황의 정보 공백은 더 큽니다.</h3><p>휠체어, 영유아, 고령자, 반려동물 동반 상황에서는 “갈 수 있음”과 “머물 수 있음”을 구분해야 합니다.</p></article></div></section>
+        <section class="section muted">
+            <div class="section-heading">
+                <p class="eyebrow">Process</p>
+                <h2>진행 흐름</h2>
+            </div>
+            <ol class="process-list">
+                <li><strong>공공데이터 읽기</strong><p>통합대피소, 민방공대피소, 지진옥외대피장소 등 기존 데이터가 시민의 판단에 어떤 정보를 주고 무엇을 빠뜨리는지 비교했습니다.</p></li>
+                <li><strong>시민 상황 만들기</strong><p>영유아 동반 가족, 휠체어 이용자, 반려동물 보호자, 지하주차장형 대피소 이용자를 중심으로 탐방 시나리오를 구성했습니다.</p></li>
+                <li><strong>현장 탐방</strong><p>사당·남사초 일대에서 표지판, 출입구, 보행 경로, 내부 안내, 실제 도착 경험을 확인하며 데이터에 없는 공백을 기록했습니다.</p></li>
+                <li><strong>전문가 인터뷰</strong><p>재난구호 현장 경험을 바탕으로 담당주체, 결손정보, 취약계층 접근성, 대피소의 커뮤니티 기능을 데이터 항목으로 번역했습니다.</p></li>
+                <li><strong>데이터 제안</strong><p>접근성, 생활조건, 경로 안내, 운영 주체, 결손정보를 포함하는 공개용 스키마 초안을 만들었습니다.</p></li>
+            </ol>
+        </section>
 
-        <section class="section"><div class="section-heading"><p class="eyebrow">Data Proposal</p><h2>공공데이터에 추가되어야 할 항목</h2><p>원본 스프레드시트 대신, 공개 가능한 수준으로 정리한 데이터 스키마 초안을 웹 자산으로 만들었습니다.</p></div><div class="table-wrap"><table><thead><tr><th>현재 주로 보이는 정보</th><th>추가가 필요한 정보</th><th>이유</th></tr></thead><tbody><tr><td>주소·좌표</td><td>입구 위치와 실제 대피층</td><td>건물에 도착한 뒤 어디로 가야 하는지 판단하기 위해</td></tr><tr><td>수용 인원·면적</td><td>개방 조건과 담당 부서</td><td>운영 여부와 문의 경로를 확인하기 위해</td></tr><tr><td>대피소 유형</td><td>재난 유형별 이용 가능성</td><td>민방위, 지진, 수해 대피소의 이용 맥락이 다르기 때문에</td></tr><tr><td>시설명</td><td>엘리베이터 운행 범위와 휠체어 접근성</td><td>이동 약자가 실제로 접근 가능한지 확인하기 위해</td></tr><tr><td>없음 또는 불명확</td><td>화장실·식수·반려동물 동반 가능 여부</td><td>도착 후 머물 수 있는 조건을 판단하기 위해</td></tr></tbody></table></div><div class="asset-list project-assets"><a href="../assets/data/shelter-data-proposal.public.json">공개 데이터 스키마 JSON 보기</a></div></section>
+        <section class="section">
+            <div class="section-heading">
+                <p class="eyebrow">Field Scenes</p>
+                <h2>현장에서 드러난 네 가지 장면</h2>
+            </div>
+            <div class="scenario-grid detailed">
+                <article class="scenario-card">
+                    <h3>영유아 동반 가족</h3>
+                    <p>앱과 지도에서 대피소를 찾는 과정이 복잡했고, 아이를 돌보는 행동이 이동 속도와 판단에 계속 영향을 줬습니다.</p>
+                    <dl class="scene-detail">
+                        <div><dt>행동</dt><dd>아이를 안고 앱을 확인함</dd><dd>침수 구간에서는 안고, 나머지 구간에서는 손을 잡고 이동함</dd><dd>아이를 안심시키고 보폭을 맞춰 걸음</dd></div>
+                        <div><dt>필요한 정보</dt><dd>유모차 이동 가능 경로</dd><dd>화장실과 대기 공간</dd><dd>야간 운영 여부와 중간 생활 거점</dd></div>
+                    </dl>
+                    <div class="artifact-board"><span class="artifact-token icon-phone">스마트폰 지도</span><span class="artifact-token icon-snack">간식</span><span class="artifact-token icon-toy">장난감</span><span class="artifact-token icon-bag">아이 짐 가방</span></div>
+                </article>
+                <article class="scenario-card">
+                    <h3>휠체어 이용자</h3>
+                    <p>가까운 대피소가 실제로 접근 가능한지는 별도 문제였습니다. 목적지가 바뀌면 경로 판단과 물리적 위험이 함께 커졌습니다.</p>
+                    <dl class="scene-detail">
+                        <div><dt>행동</dt><dd>포화된 대피소를 피해 목적지를 변경함</dd><dd>대각선 길에서 지도를 다시 확인함</dd><dd>턱과 차량을 피하며 인도로 진입함</dd></div>
+                        <div><dt>필요한 정보</dt><dd>무단차 입구와 경사로</dd><dd>엘리베이터 운행 층수</dd><dd>학교 정문·후문을 구분할 수 있는 안내</dd></div>
+                    </dl>
+                    <div class="artifact-board"><span class="artifact-token icon-wheelchair">휠체어</span><span class="artifact-token icon-ramp">경사로·연석</span><span class="artifact-token icon-road">인도·교차로</span><span class="artifact-token icon-sign">정문 안내</span></div>
+                </article>
+                <article class="scenario-card">
+                    <h3>반려동물 보호자</h3>
+                    <p>반려동물 동반 가능 여부만이 아니라 이동 중 배변, 다른 동물과의 거리, 도착 후 머물 공간이 함께 문제가 됐습니다.</p>
+                    <dl class="scene-detail">
+                        <div><dt>행동</dt><dd>이동가방에서 반려견을 꺼내 목줄을 하고 걸음</dd><dd>배변과 냄새 맡기로 중간중간 멈춤</dd><dd>다른 동물이 보이면 안아 들어 시야를 가림</dd></div>
+                        <div><dt>필요한 정보</dt><dd>동반 가능 여부</dd><dd>별도 대기 공간</dd><dd>배변 처리와 문의 연락처</dd></div>
+                    </dl>
+                    <div class="artifact-board"><span class="artifact-token icon-carrier">이동가방</span><span class="artifact-token icon-leash">목줄</span><span class="artifact-token icon-waste">배변용품</span><span class="artifact-token icon-map">지도 앱</span></div>
+                </article>
+                <article class="scenario-card">
+                    <h3>지하주차장 대피소</h3>
+                    <p>대피소에 도착해도 어디로 들어가고, 어느 층까지 내려가며, 어디에 머물러야 하는지 판단하기 어려웠습니다.</p>
+                    <dl class="scene-detail">
+                        <div><dt>행동</dt><dd>계단과 엘리베이터 중 무엇을 탈지 고민함</dd><dd>가족 단위 이동 때문에 엘리베이터를 선택함</dd><dd>도착 후 식수, 화장실, 관리자 위치를 찾음</dd></div>
+                        <div><dt>필요한 정보</dt><dd>야간에도 보이는 입구 표식</dd><dd>대피층과 내부 안내도</dd><dd>식수·화장실·대기 위치</dd></div>
+                    </dl>
+                    <div class="artifact-board"><span class="artifact-token icon-sign">대피소 표식</span><span class="artifact-token icon-elevator">엘리베이터 정보</span><span class="artifact-token icon-water">식수·화장실</span><span class="artifact-token icon-floor">대피층 안내</span></div>
+                </article>
+            </div>
+        </section>
 
-        <section class="section muted"><div class="section-heading"><p class="eyebrow">Outputs</p><h2>결과물</h2></div><div class="output-grid"><article><strong>현장 탐방 프레임</strong><p>시민 상황별로 대피소 접근과 이용 가능성을 확인하는 탐방 관점을 정리했습니다.</p></article><article><strong>데이터 항목 제안</strong><p>담당주체, 접근성, 경로 안내, 생활조건, 결손정보를 포함하는 항목군을 제안했습니다.</p></article><article><strong>공개 스키마 초안</strong><p>웹에서 바로 확인할 수 있는 JSON 형태의 공개 자산을 만들었습니다.</p></article><article><strong>다음 산출 방향</strong><p>시민용 탐방 체크리스트와 지자체 제안서, 데이터 설명서로 확장할 수 있습니다.</p></article></div></section>
+        <section class="section muted">
+            <div class="section-heading">
+                <p class="eyebrow">Findings</p>
+                <h2>핵심 발견</h2>
+            </div>
+            <div class="finding-list">
+                <article><span>01</span><h3>가까운 대피소와 갈 수 있는 대피소는 다릅니다.</h3><p>이동 조건, 침수 가능성, 우회 여부, 동반 가족의 상황에 따라 실제 선택지는 달라집니다.</p></article>
+                <article><span>02</span><h3>주소만으로는 대피소를 이용할 수 없습니다.</h3><p>실제 대피층, 출입구, 표식, 엘리베이터 운행 범위가 함께 제공되어야 합니다.</p></article>
+                <article><span>03</span><h3>운영 정보가 보이지 않으면 시민은 확인할 곳을 잃습니다.</h3><p>담당 부서와 대표 연락처는 대피소 정보의 보조 항목이 아니라 기본 항목에 가깝습니다.</p></article>
+                <article><span>04</span><h3>취약 상황의 정보 공백은 더 큽니다.</h3><p>휠체어, 영유아, 고령자, 반려동물 동반 상황에서는 “갈 수 있음”과 “머물 수 있음”을 구분해야 합니다.</p></article>
+            </div>
+        </section>
 
-        <section class="section"><div class="section-heading"><p class="eyebrow">Recommendations</p><h2>개선 제안</h2></div><ol class="recommendations"><li>대피소별 담당 부서와 대표 연락처를 공개합니다.</li><li>실제 대피층, 입구, 내부 이동 경로를 표시합니다.</li><li>엘리베이터 운행 범위와 휠체어 접근 가능 여부를 별도 항목으로 제공합니다.</li><li>반려동물, 영유아, 고령자 등 동반 조건에 필요한 정보를 구분해 제공합니다.</li><li>현장 입구와 내부에 대피소 표식을 보강합니다.</li><li>시민이 현장에서 확인한 오류나 누락 정보를 제보할 수 있는 통로를 마련합니다.</li></ol></section>
+        <section class="section">
+            <div class="section-heading">
+                <p class="eyebrow">Data Proposal</p>
+                <h2>공공데이터에 추가되어야 할 항목</h2>
+                <p>원본 스프레드시트 대신, 공개 가능한 수준으로 정리한 데이터 스키마 초안을 웹 자산으로 만들었습니다.</p>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>현재 주로 보이는 정보</th><th>추가가 필요한 정보</th><th>이유</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>주소·좌표</td><td>입구 위치와 실제 대피층</td><td>건물에 도착한 뒤 어디로 가야 하는지 판단하기 위해</td></tr>
+                        <tr><td>수용 인원·면적</td><td>개방 조건과 담당 부서</td><td>운영 여부와 문의 경로를 확인하기 위해</td></tr>
+                        <tr><td>대피소 유형</td><td>재난 유형별 이용 가능성</td><td>민방위, 지진, 수해 대피소의 이용 맥락이 다르기 때문에</td></tr>
+                        <tr><td>시설명</td><td>엘리베이터 운행 범위와 휠체어 접근성</td><td>이동 약자가 실제로 접근 가능한지 확인하기 위해</td></tr>
+                        <tr><td>없음 또는 불명확</td><td>화장실·식수·반려동물 동반 가능 여부</td><td>도착 후 머물 수 있는 조건을 판단하기 위해</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="asset-list project-assets">
+                <a href="../assets/data/shelter-data-proposal.public.json">공개 데이터 스키마 JSON 보기</a>
+            </div>
+        </section>
+
+        <section class="section muted">
+            <div class="section-heading">
+                <p class="eyebrow">Outputs</p>
+                <h2>결과물</h2>
+            </div>
+            <div class="output-grid">
+                <article>
+                    <strong>현장 탐방 프레임</strong>
+                    <p>시민 상황별로 대피소 접근과 이용 가능성을 확인하는 탐방 관점을 정리했습니다.</p>
+                </article>
+                <article>
+                    <strong>데이터 항목 제안</strong>
+                    <p>담당주체, 접근성, 경로 안내, 생활조건, 결손정보를 포함하는 항목군을 제안했습니다.</p>
+                </article>
+                <article>
+                    <strong>공개 스키마 초안</strong>
+                    <p>웹에서 바로 확인할 수 있는 JSON 형태의 공개 자산을 만들었습니다.</p>
+                </article>
+                <article>
+                    <strong>다음 산출 방향</strong>
+                    <p>시민용 탐방 체크리스트와 지자체 제안서, 데이터 설명서로 확장할 수 있습니다.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section simulation-section" style="text-align: center; border-top: 1px solid rgba(23, 32, 38, 0.1); border-bottom: 1px solid rgba(23, 32, 38, 0.1); padding: clamp(40px, 6vw, 60px) 20px;">
+            <div style="max-width: 600px; margin: 0 auto;">
+                <p class="eyebrow" style="margin-bottom: 12px;">Simulation</p>
+                <h2 style="font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 800; line-height: 1.2; margin-bottom: 24px; letter-spacing: -0.03em;">대피 시뮬레이션</h2>
+                <button id="start-simulation-btn-2" class="button primary" style="cursor: pointer; border: none; font-family: inherit; font-size: 1.1rem; padding: 12px 28px; min-height: 48px; border-radius: 8px;">시뮬레이션 실행하기</button>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-heading">
+                <p class="eyebrow">Recommendations</p>
+                <h2>개선 제안</h2>
+            </div>
+            <ol class="recommendations">
+                <li>대피소별 담당 부서와 대표 연락처를 공개합니다.</li>
+                <li>실제 대피층, 입구, 내부 이동 경로를 표시합니다.</li>
+                <li>엘리베이터 운행 범위와 휠체어 접근 가능 여부를 별도 항목으로 제공합니다.</li>
+                <li>반려동물, 영유아, 고령자 등 동반 조건에 필요한 정보를 구분해 제공합니다.</li>
+                <li>현장 입구와 내부에 대피소 표식을 보강합니다.</li>
+                <li>시민이 현장에서 확인한 오류나 누락 정보를 제보할 수 있는 통로를 마련합니다.</li>
+            </ol>
+        </section>
     </main>
-    <footer class="site-footer"><div><strong>안심이</strong><p>재난안전 정보를 시민의 언어와 생활 조건으로 다시 묻는 프로젝트</p></div><div class="footer-links"><a href="./">프로젝트</a><a href="mailto:ansim@codefor.kr">ansim@codefor.kr</a></div></footer>
-    <script src="../script.js"></script>
+    <footer class="site-footer">
+        <div>
+            <strong>안심이</strong>
+            <p>사람이 중심인 재난 안전 정보를 함께 만들어 갑니다.</p>
+        </div>
+        <div class="footer-links">
+            <a href="mailto:ansim@codefor.kr">ansim@codefor.kr</a>
+            <a href="https://github.com/Code-for-Korea/ansimi" target="_blank" rel="noreferrer">GitHub</a>
+            <a href="https://discord.gg/6Tk4G8vz" target="_blank" rel="noreferrer">Discord</a>
+        </div>
+    </footer>
+
+    <!-- Simulation Modal Overlay -->
+    <div id="simulation-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center;">
+        <div style="position: relative; width: 100%; max-width: 600px; height: 100%; max-height: 750px; padding: 20px 0;">
+            <button id="close-simulation-btn" style="position: absolute; top: -25px; right: 10px; background: none; border: none; color: white; font-size: 36px; cursor: pointer; font-family: sans-serif; z-index: 10000; line-height: 1;" aria-label="닫기">×</button>
+            <iframe id="simulation-iframe" src="" style="width: 100%; height: 100%; border: none; border-radius: 12px; background: #2b333a;"></iframe>
+        </div>
+    </div>
+    
+    <script>
+        // Simulation Modal Handler
+        const modal = document.getElementById('simulation-modal');
+        const iframe = document.getElementById('simulation-iframe');
+        const startBtn = document.getElementById('start-simulation-btn');
+        const startBtn2 = document.getElementById('start-simulation-btn-2');
+        const closeBtn = document.getElementById('close-simulation-btn');
+
+        const closeSimulation = () => {
+            if (modal) modal.style.display = 'none';
+            if (iframe) iframe.src = '';
+            document.body.style.overflow = '';
+        };
+
+        const openSimulation = () => {
+            if (iframe && modal) {
+                iframe.src = '2026-shelter-simulation.html';
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Prevent scrolling background
+            }
+        };
+
+        if (startBtn) startBtn.addEventListener('click', openSimulation);
+        if (startBtn2) startBtn2.addEventListener('click', openSimulation);
+        if (closeBtn) closeBtn.addEventListener('click', closeSimulation);
+
+        // Listen for exit message from iframe
+        window.addEventListener('message', (event) => {
+            if (event.data && event.data.action === 'closeSimulation') {
+                closeSimulation();
+            }
+        });
+    </script>
 </body>
 </html>
