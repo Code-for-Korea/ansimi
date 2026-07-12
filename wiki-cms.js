@@ -53,12 +53,16 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("WIKI_DATABASE is missing.");
     }
 
+    const cmsWorkspace = document.getElementById("cms-workspace");
+
     // Check configuration and show Login overlay or warning
     if (typeof CMS_CONFIG !== "undefined" && CMS_CONFIG.encryptedToken) {
         loginOverlay.style.display = "flex";
+        cmsWorkspace.style.display = "none";
         adminPasswordInput.focus();
     } else {
         configWarning.style.display = "block";
+        cmsWorkspace.style.display = "block";
         updateStatus(false, "오프라인 모드");
     }
 
@@ -88,6 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (decrypted && (decrypted.startsWith("ghp_") || decrypted.startsWith("github_pat_"))) {
                 gitHubToken = decrypted;
                 loginOverlay.style.display = "none";
+                cmsWorkspace.style.display = "block"; // Show the workspace!
                 loginErrorMsg.style.display = "none";
                 updateStatus(true, "원격 커밋 가능 (관리자)");
             } else {

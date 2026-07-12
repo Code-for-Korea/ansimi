@@ -12,11 +12,11 @@
 </head>
 <body>
     <!-- 1. Password Auth Lock Screen (shows if encryptedToken config is set) -->
-    <div id="login-overlay" class="login-screen" style="display: none;">
-        <div class="login-card">
+    <div id="login-overlay" class="login-screen" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #fbfaf5; z-index: 99999; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box;">
+        <div class="login-card" style="background: #f6f4ed; border: 4px solid #172026; padding: 40px; box-shadow: 12px 12px 0 #172026; max-width: 440px; width: 100%; text-align: center; transform: rotate(-1deg); box-sizing: border-box;">
             <span class="eyebrow" style="color: var(--red); font-weight: 800; display: block; margin-bottom: 8px;">RESTRICTED AREA</span>
-            <h2 style="margin: 0 0 16px 0; font-size: 1.8rem;">안심위키 관리자 인증</h2>
-            <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 24px;">리포지토리에 직접 게시 권한을 획득하기 위해 관리자 비밀번호를 입력해주세요.</p>
+            <h2 style="margin: 0 0 16px 0; font-size: 1.8rem; font-family: 'Chiron GoRound TC', sans-serif;">안심위키 관리자 인증</h2>
+            <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 24px; font-family: 'Orbit', sans-serif;">리포지토리에 직접 게시 권한을 획득하기 위해 관리자 비밀번호를 입력해주세요.</p>
             <form id="login-form" onsubmit="return false;">
                 <div class="form-group">
                     <label for="admin-password">관리자 비밀번호</label>
@@ -46,156 +46,158 @@
     </header>
 
     <main style="padding: 40px clamp(20px, 4vw, 60px);">
-        <!-- Warning block if encrypted token is missing -->
-        <div id="config-warning" class="cms-card" style="display: none; background: rgba(167, 71, 36, 0.1); border-color: var(--red); margin-bottom: 24px;">
-            <strong style="color: var(--red); font-size: 1.1rem; display: block; margin-bottom: 8px;">⚠️ 깃허브 원격 게시 불가 상태</strong>
-            <p style="margin: 0; font-size: 0.95rem; line-height: 1.6;">
-                `assets/data/cms-config.js` 파일에 암호화된 토큰(`encryptedToken`)이 등록되어 있지 않습니다. 현재는 **오프라인 편집 및 파일 다운로드**만 가능합니다. 
-                원클릭 실시간 웹 게시를 사용하려면 사이드바 아래의 <strong>"토큰 암호화 도구"</strong>를 통해 토큰을 발급받아 설정 파일에 채워 넣어주세요.
-            </p>
-        </div>
+        <div id="cms-workspace" style="display: none;">
+            <!-- Warning block if encrypted token is missing -->
+            <div id="config-warning" class="cms-card" style="display: none; background: rgba(167, 71, 36, 0.1); border-color: var(--red); margin-bottom: 24px;">
+                <strong style="color: var(--red); font-size: 1.1rem; display: block; margin-bottom: 8px;">⚠️ 깃허브 원격 게시 불가 상태</strong>
+                <p style="margin: 0; font-size: 0.95rem; line-height: 1.6;">
+                    `assets/data/cms-config.js` 파일에 암호화된 토큰(`encryptedToken`)이 등록되어 있지 않습니다. 현재는 **오프라인 편집 및 파일 다운로드**만 가능합니다. 
+                    원클릭 실시간 웹 게시를 사용하려면 사이드바 아래의 <strong>"토큰 암호화 도구"</strong>를 통해 토큰을 발급받아 설정 파일에 채워 넣어주세요.
+                </p>
+            </div>
 
-        <div class="cms-dashboard-layout">
-            <!-- Sidebar column -->
-            <aside class="cms-sidebar">
-                <div style="margin-bottom: 24px; text-align: left;">
-                    <span class="eyebrow" style="margin-bottom: 4px; display: block;">Dashboard</span>
-                    <h2 style="margin: 0; font-size: 1.65rem;">위키 관리 콘솔</h2>
-                </div>
-
-                <!-- GitHub connection status -->
-                <div class="form-group" style="margin-bottom: 20px;">
-                    <label>깃허브 연결 상태</label>
-                    <div id="connection-status" class="status-badge disconnected">
-                        <span class="status-dot"></span>
-                        <span id="connection-text">오프라인 모드</span>
+            <div class="cms-dashboard-layout">
+                <!-- Sidebar column -->
+                <aside class="cms-sidebar">
+                    <div style="margin-bottom: 24px; text-align: left;">
+                        <span class="eyebrow" style="margin-bottom: 4px; display: block;">Dashboard</span>
+                        <h2 style="margin: 0; font-size: 1.65rem;">위키 관리 콘솔</h2>
                     </div>
-                </div>
 
-                <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 24px;">
-                    <button id="new-post-btn" class="button primary" style="width: 100%; border: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
-                        <span>➕ 새 지식노트 추가</span>
-                    </button>
-                    <button id="download-db-btn" class="button secondary" style="width: 100%; cursor: pointer;">
-                        💾 오프라인 DB 다운로드
-                    </button>
-                    <button id="open-encryptor-btn" class="button secondary" style="width: 100%; cursor: pointer; border-style: dashed;">
-                        🔑 토큰 암호화 도구 열기
-                    </button>
-                </div>
-            </aside>
+                    <!-- GitHub connection status -->
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label>깃허브 연결 상태</label>
+                        <div id="connection-status" class="status-badge disconnected">
+                            <span class="status-dot"></span>
+                            <span id="connection-text">오프라인 모드</span>
+                        </div>
+                    </div>
 
-            <!-- Main work area -->
-            <div class="cms-main-content">
-                <!-- 2. Editor Container (Hidden by default, shown when creating/editing) -->
-                <div id="editor-container" class="cms-card" style="display: none;">
-                    <h3 id="editor-heading" style="margin-top: 0; margin-bottom: 20px; font-size: 1.4rem;">새 위키 문서 작성</h3>
-                    <form id="editor-form" onsubmit="return false;">
-                        <input type="hidden" id="entry-index" value="">
+                    <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 24px;">
+                        <button id="new-post-btn" class="button primary" style="width: 100%; border: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
+                            <span>➕ 새 지식노트 추가</span>
+                        </button>
+                        <button id="download-db-btn" class="button secondary" style="width: 100%; cursor: pointer;">
+                            💾 오프라인 DB 다운로드
+                        </button>
+                        <button id="open-encryptor-btn" class="button secondary" style="width: 100%; cursor: pointer; border-style: dashed;">
+                            🔑 토큰 암호화 도구 열기
+                        </button>
+                    </div>
+                </aside>
+
+                <!-- Main work area -->
+                <div class="cms-main-content">
+                    <!-- 2. Editor Container (Hidden by default, shown when creating/editing) -->
+                    <div id="editor-container" class="cms-card" style="display: none;">
+                        <h3 id="editor-heading" style="margin-top: 0; margin-bottom: 20px; font-size: 1.4rem;">새 위키 문서 작성</h3>
+                        <form id="editor-form" onsubmit="return false;">
+                            <input type="hidden" id="entry-index" value="">
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                <div class="form-group">
+                                    <label for="entry-title">문서 제목</label>
+                                    <input type="text" id="entry-title" class="form-input" placeholder="예: 재난가방 행동 지침" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="entry-country">대상 국가</label>
+                                    <input type="text" id="entry-country" class="form-input" placeholder="예: 한국, 일본, 미국, 국제 등" required>
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                <div class="form-group">
+                                    <label for="entry-keywords">키워드 (쉼표로 구분)</label>
+                                    <input type="text" id="entry-keywords" class="form-input" placeholder="예: 재난가방, 장애인, 고령자">
+                                </div>
+                                <div class="form-group">
+                                    <label for="entry-url">참고 원문 URL (선택사항)</label>
+                                    <input type="url" id="entry-url" class="form-input" placeholder="예: https://example.com/source">
+                                </div>
+                            </div>
+
+                            <!-- Image Uploader to Base64 -->
+                            <div class="form-group" style="background: var(--soft); padding: 12px; border: 2px dashed var(--line); margin-bottom: 20px;">
+                                <label for="image-uploader" style="margin-bottom: 4px;">🖼️ 본문 이미지 삽입 도구</label>
+                                <span style="font-size: 0.8rem; color: var(--muted); margin-bottom: 8px; display: block;">이미지 파일을 선택하면 에디터에 마크다운 이미지 코드(Base64)가 즉시 복사 및 삽입됩니다.</span>
+                                <input type="file" id="image-uploader" accept="image/*" style="font-size: 0.85rem;">
+                            </div>
+
+                            <!-- Markdown Split Editor -->
+                            <div class="form-group">
+                                <label>마크다운 본문 편집 및 실시간 미리보기</label>
+                                <div class="editor-split">
+                                    <div class="editor-field">
+                                        <textarea id="entry-content" class="form-textarea" placeholder="마크다운 양식으로 내용을 작성하세요..." required></textarea>
+                                    </div>
+                                    <div class="editor-field">
+                                        <div id="entry-preview" class="preview-pane"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px;">
+                                <button type="button" id="editor-cancel-btn" class="button secondary" style="cursor: pointer;">취소</button>
+                                <button type="submit" id="editor-save-btn" class="button primary" style="border: none; cursor: pointer;">임시 보관 (로컬 램)</button>
+                                <button type="button" id="editor-publish-btn" class="button primary" style="border: none; cursor: pointer; background: var(--red); display: none;">저장소에 직접 게시 🚀</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- 3. Token Encryption Helper Panel (Hidden by default) -->
+                    <div id="encryptor-container" class="cms-card" style="display: none; background: var(--soft);">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                            <h3 style="margin: 0; font-size: 1.3rem;">🔑 토큰 암호화 도구 (관리자 최초 1회 설정용)</h3>
+                            <button id="close-encryptor-btn" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; padding: 0;">×</button>
+                        </div>
+                        <p style="font-size: 0.9rem; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
+                            깃허브 원격 게시 기능 활성화를 위해, 소유자의 <strong>GitHub Personal Access Token (PAT)</strong>을 공유할 비밀번호로 안전하게 암호화합니다. 
+                            출력되는 암호화 코드를 복사하여 <code>assets/data/cms-config.js</code>의 <code>encryptedToken</code> 항목에 넣으시면 됩니다.
+                        </p>
+                        <form id="encryptor-form" onsubmit="return false;">
+                            <div class="form-group">
+                                <label for="raw-token">GitHub Access Token (PAT)</label>
+                                <input type="password" id="raw-token" class="form-input" placeholder="ghp_ 또는 github_pat_으로 시작하는 토큰 입력..." required autocomplete="new-password">
+                            </div>
+                            <div class="form-group">
+                                <label for="encrypt-password">설정할 관리자 공동 비밀번호 (최소 12자)</label>
+                                <input type="password" id="encrypt-password" class="form-input" placeholder="비밀번호 설정..." minlength="12" required autocomplete="new-password">
+                            </div>
+                            <button type="submit" id="encrypt-submit-btn" class="button primary" style="border: none; cursor: pointer; margin-top: 8px;">암호화 코드 생성</button>
+                        </form>
                         
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                            <div class="form-group">
-                                <label for="entry-title">문서 제목</label>
-                                <input type="text" id="entry-title" class="form-input" placeholder="예: 재난가방 행동 지침" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="entry-country">대상 국가</label>
-                                <input type="text" id="entry-country" class="form-input" placeholder="예: 한국, 일본, 미국, 국제 등" required>
-                            </div>
-                        </div>
-
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                            <div class="form-group">
-                                <label for="entry-keywords">키워드 (쉼표로 구분)</label>
-                                <input type="text" id="entry-keywords" class="form-input" placeholder="예: 재난가방, 장애인, 고령자">
-                            </div>
-                            <div class="form-group">
-                                <label for="entry-url">참고 원문 URL (선택사항)</label>
-                                <input type="url" id="entry-url" class="form-input" placeholder="예: https://example.com/source">
-                            </div>
-                        </div>
-
-                        <!-- Image Uploader to Base64 -->
-                        <div class="form-group" style="background: var(--soft); padding: 12px; border: 2px dashed var(--line); margin-bottom: 20px;">
-                            <label for="image-uploader" style="margin-bottom: 4px;">🖼️ 본문 이미지 삽입 도구</label>
-                            <span style="font-size: 0.8rem; color: var(--muted); margin-bottom: 8px; display: block;">이미지 파일을 선택하면 에디터에 마크다운 이미지 코드(Base64)가 즉시 복사 및 삽입됩니다.</span>
-                            <input type="file" id="image-uploader" accept="image/*" style="font-size: 0.85rem;">
-                        </div>
-
-                        <!-- Markdown Split Editor -->
-                        <div class="form-group">
-                            <label>마크다운 본문 편집 및 실시간 미리보기</label>
-                            <div class="editor-split">
-                                <div class="editor-field">
-                                    <textarea id="entry-content" class="form-textarea" placeholder="마크다운 양식으로 내용을 작성하세요..." required></textarea>
-                                </div>
-                                <div class="editor-field">
-                                    <div id="entry-preview" class="preview-pane"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px;">
-                            <button type="button" id="editor-cancel-btn" class="button secondary" style="cursor: pointer;">취소</button>
-                            <button type="submit" id="editor-save-btn" class="button primary" style="border: none; cursor: pointer;">임시 보관 (로컬 램)</button>
-                            <button type="button" id="editor-publish-btn" class="button primary" style="border: none; cursor: pointer; background: var(--red); display: none;">저장소에 직접 게시 🚀</button>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- 3. Token Encryption Helper Panel (Hidden by default) -->
-                <div id="encryptor-container" class="cms-card" style="display: none; background: var(--soft);">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
-                        <h3 style="margin: 0; font-size: 1.3rem;">🔑 토큰 암호화 도구 (관리자 최초 1회 설정용)</h3>
-                        <button id="close-encryptor-btn" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; padding: 0;">×</button>
-                    </div>
-                    <p style="font-size: 0.9rem; line-height: 1.6; margin-top: 0; margin-bottom: 20px;">
-                        깃허브 원격 게시 기능 활성화를 위해, 소유자의 <strong>GitHub Personal Access Token (PAT)</strong>을 공유할 비밀번호로 안전하게 암호화합니다. 
-                        출력되는 암호화 코드를 복사하여 <code>assets/data/cms-config.js</code>의 <code>encryptedToken</code> 항목에 넣으시면 됩니다.
-                    </p>
-                    <form id="encryptor-form" onsubmit="return false;">
-                        <div class="form-group">
-                            <label for="raw-token">GitHub Access Token (PAT)</label>
-                            <input type="password" id="raw-token" class="form-input" placeholder="ghp_로 시작하는 깃허브 토큰 입력..." required autocomplete="new-password">
-                        </div>
-                        <div class="form-group">
-                            <label for="encrypt-password">설정할 관리자 공동 비밀번호 (최소 12자)</label>
-                            <input type="password" id="encrypt-password" class="form-input" placeholder="비밀번호 설정..." minlength="12" required autocomplete="new-password">
-                        </div>
-                        <button type="submit" id="encrypt-submit-btn" class="button primary" style="border: none; cursor: pointer; margin-top: 8px;">암호화 코드 생성</button>
-                    </form>
-                    
-                    <div id="encryption-result-box" style="margin-top: 20px; display: none;">
-                        <label style="font-weight: 900; font-size: 0.9rem; display: block; margin-bottom: 6px;">생성된 암호화 코드</label>
-                        <textarea id="encrypted-output" class="form-textarea" rows="4" readonly style="font-family: monospace; font-size: 0.85rem; background: white;"></textarea>
-                        <span style="font-size: 0.8rem; color: var(--green); font-weight: 800; display: block; margin-top: 6px;">위 해시를 복사해 cms-config.js 파일의 encryptedToken 값으로 지정하세요!</span>
-                    </div>
-                </div>
-
-                <!-- 4. Wiki Database Article Grid Listing -->
-                <div class="cms-card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
-                        <h3 style="margin: 0; font-size: 1.3rem;">전체 지식노트 목록 (<span id="total-count">0</span>개)</h3>
-                        <div style="display: flex; gap: 10px;">
-                            <input type="text" id="cms-search" class="form-input" placeholder="제목/내용 검색..." style="width: 220px; padding: 6px 12px; border-width: 2px;">
+                        <div id="encryption-result-box" style="margin-top: 20px; display: none;">
+                            <label style="font-weight: 900; font-size: 0.9rem; display: block; margin-bottom: 6px;">생성된 암호화 코드</label>
+                            <textarea id="encrypted-output" class="form-textarea" rows="4" readonly style="font-family: monospace; font-size: 0.85rem; background: white;"></textarea>
+                            <span style="font-size: 0.8rem; color: var(--green); font-weight: 800; display: block; margin-top: 6px;">위 해시를 복사해 cms-config.js 파일의 encryptedToken 값으로 지정하세요!</span>
                         </div>
                     </div>
-                    
-                    <div id="cms-table-container" style="overflow-x: auto;">
-                        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem;">
-                            <thead>
-                                <tr style="border-bottom: 3px solid var(--ink); font-weight: 900;">
-                                    <th style="padding: 12px 8px;">번호</th>
-                                    <th style="padding: 12px 8px;">제목</th>
-                                    <th style="padding: 12px 8px;">국가</th>
-                                    <th style="padding: 12px 8px;">키워드</th>
-                                    <th style="padding: 12px 8px; text-align: right;">관리 액션</th>
-                                </tr>
-                            </thead>
-                            <tbody id="cms-articles-list">
-                                <!-- Tr rendered here dynamically -->
-                            </tbody>
-                        </table>
+
+                    <!-- 4. Wiki Database Article Grid Listing -->
+                    <div class="cms-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+                            <h3 style="margin: 0; font-size: 1.3rem;">전체 지식노트 목록 (<span id="total-count">0</span>개)</h3>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" id="cms-search" class="form-input" placeholder="제목/내용 검색..." style="width: 220px; padding: 6px 12px; border-width: 2px;">
+                            </div>
+                        </div>
+                        
+                        <div id="cms-table-container" style="overflow-x: auto;">
+                            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem;">
+                                <thead>
+                                    <tr style="border-bottom: 3px solid var(--ink); font-weight: 900;">
+                                        <th style="padding: 12px 8px;">번호</th>
+                                        <th style="padding: 12px 8px;">제목</th>
+                                        <th style="padding: 12px 8px;">국가</th>
+                                        <th style="padding: 12px 8px;">키워드</th>
+                                        <th style="padding: 12px 8px; text-align: right;">관리 액션</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cms-articles-list">
+                                    <!-- Tr rendered here dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
