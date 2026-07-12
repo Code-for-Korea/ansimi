@@ -1,24 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbit&family=East+Sea+Dokdo&family=Chiron+GoRound+TC:wght@600&display=swap');
+
 :root {
     --ink: #172026;
-    --muted: #5f6b73;
-    --paper: #ffffff;
-    --soft: #f4f0e8;
-    --field: #f7fbf3;
-    --line: #d8e0d5;
-    --green: #2f6f4e;
-    --teal: #1d6f73;
+    --muted: #4e5960;
+    --paper: #fbfaf5;
+    --soft: #f6f4ed;
+    --field: #f3f0e4;
+    --line: #172026;
+    --green: #23583a;
+    --teal: #185255;
     --yellow: #f0b429;
-    --red: #b85c38;
-    --shadow: 0 18px 40px rgba(23, 32, 38, 0.12);
-    --radius: 8px;
+    --red: #a74724;
+    --shadow: 6px 6px 0 #172026;
+    --radius: 0px;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: var(--paper); line-height: 1.65; word-break: keep-all; overflow-wrap: break-word; }
+body { margin: 0; font-family: 'Orbit', Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: var(--paper); line-height: 1.65; word-break: keep-all; overflow-wrap: break-word; }
+h1, h2, h3, h4, h5, h6 { font-family: 'Chiron GoRound TC', sans-serif !important; font-weight: 600 !important; }
 a { color: inherit; }
 img { display: block; max-width: 100%; }
 .site-header { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 16px clamp(20px, 4vw, 56px); background: rgba(255,255,255,.92); border-bottom: 1px solid var(--line); backdrop-filter: blur(14px); }
-.brand { font-size: 1.2rem; font-weight: 900; text-decoration: none; }
+.brand { font-size: 1.2rem; font-weight: 900; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; color: var(--ink); }
+.brand-logo { width: 28px; height: 28px; display: inline-block; color: var(--green); flex-shrink: 0; transition: transform 0.3s ease; }
+.brand:hover .brand-logo { transform: rotate(15deg); }
 .nav-links { display: flex; flex-wrap: wrap; gap: 18px; color: var(--muted); font-size: .95rem; }
 .nav-links a { text-decoration: none; }
 .nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--green); }
@@ -73,7 +78,7 @@ h3 { margin-bottom: 10px; font-size: 1.22rem; line-height: 1.35; }
 .site-footer { display: flex; justify-content: space-between; gap: 24px; padding: 34px clamp(20px, 5vw, 80px); background: var(--ink); color: white; }
 .site-footer p, .footer-links a { color: rgba(255,255,255,.78); }
 .footer-links { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
-.footer-links a { text-decoration: none; }
+.footer-links a { text-decoration: none; font-size: 0.85rem; }
 @media (max-width: 980px) { .hero, .project-grid, .project-grid.three, .image-grid, .data-grid, .scenario-grid.detailed { grid-template-columns: 1fr; } .hero { min-height: auto; } }
 @media (max-width: 700px) { .site-header, .site-footer { align-items: flex-start; flex-direction: column; } .nav-links { gap: 12px; font-size: .9rem; } .timeline article, .finding-list article { grid-template-columns: 1fr; gap: 8px; } .timeline time, .finding-list span { grid-row: auto; } .finding-list article h3, .finding-list article p { grid-column: 1; } .hero-actions { flex-direction: column; } .button { width: 100%; } }
 
@@ -135,9 +140,9 @@ h3 { margin-bottom: 10px; font-size: 1.22rem; line-height: 1.35; }
 }
 
 .clickable-card:hover {
-    border-color: rgba(35, 89, 217, 0.36);
-    box-shadow: 0 18px 44px rgba(35, 42, 54, 0.12);
-    transform: translateY(-2px);
+    border-color: var(--ink);
+    box-shadow: 10px 10px 0 var(--ink) !important;
+    transform: scale(1.015) rotate(0deg) !important;
 }
 
 .article-body img {
@@ -154,12 +159,12 @@ h3 { margin-bottom: 10px; font-size: 1.22rem; line-height: 1.35; }
 
 /* Fluid editorial layout refresh */
 body {
-    background: #fbfaf5;
+    background: var(--paper);
 }
 
 .site-header {
-    border-bottom-color: rgba(23, 32, 38, 0.12);
-    background: rgba(251, 250, 245, 0.88);
+    border-bottom: 3px solid var(--ink);
+    background: var(--paper);
 }
 
 .fluid-hero {
@@ -293,8 +298,10 @@ body {
     gap: clamp(22px, 4vw, 64px);
     align-items: stretch;
     padding: clamp(14px, 2vw, 22px);
-    border: 1px solid rgba(23, 32, 38, 0.15);
-    background: #fffefa;
+    border: 3px solid var(--ink);
+    background: var(--paper);
+    box-shadow: var(--shadow);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.15), box-shadow 0.3s ease;
 }
 
 .feature-card.reverse .feature-media {
@@ -877,34 +884,33 @@ h3 {
 }
 
 .gradient-thumb::after {
-    background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0) 42%),
-        radial-gradient(circle at 82% 22%, rgba(255, 255, 255, 0.32), transparent 26%);
+    background: linear-gradient(to top, rgba(23, 32, 38, 0.78) 0%, rgba(23, 32, 38, 0.1) 70%);
 }
 
 .thumb-2024::before {
-    background: linear-gradient(135deg, #f0c65b, #b98200 58%, #5f4a14);
+    background-image: url('assets/images/thumb_2024.png');
+    background-size: cover;
+    background-position: center;
 }
 
 .thumb-2025::before {
-    background: linear-gradient(135deg, #ffd76d, #e0a621 48%, #8f6a00);
+    background-image: url('assets/images/thumb_2025.png');
+    background-size: cover;
+    background-position: center;
 }
 
 .thumb-2026::before {
-    background: linear-gradient(135deg, #ffe9a8, #c49215 52%, #60460c);
+    background-image: url('assets/images/thumb_2026.png');
+    background-size: cover;
+    background-position: center;
 }
 
 .gradient-thumb span {
-    color: #172026;
+    color: white !important;
     font-size: clamp(1.45rem, 3vw, 3.2rem);
-    line-height: 1;
+    line-height: 1.1;
     font-weight: 900;
-    max-width: 8ch;
-}
-
-.thumb-2024 span,
-.thumb-2026 span {
-    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
 .link-row {
@@ -1370,4 +1376,277 @@ h3 {
 
 .sub-hero.fluid-subhero {
     display: none !important;
+}
+
+/* Custom mouse cursor styles for desktop devices with a pointer */
+@media (pointer: fine) {
+    body.has-custom-cursor,
+    body.has-custom-cursor a,
+    body.has-custom-cursor button,
+    body.has-custom-cursor [role='link'],
+    body.has-custom-cursor .clickable-card,
+    body.has-custom-cursor input,
+    body.has-custom-cursor textarea,
+    body.has-custom-cursor select,
+    body.has-custom-cursor #start-simulation-btn,
+    body.has-custom-cursor #start-simulation-btn-2 {
+        cursor: none !important; /* Hide browser default cursor */
+    }
+    
+    .custom-cursor {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 32px;
+        height: 32px;
+        z-index: 100000;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        margin-left: -16px;
+        margin-top: -16px;
+    }
+    
+    .custom-cursor svg {
+        width: 100%;
+        height: 100%;
+        filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.25));
+        transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .custom-cursor.cursor-hover svg {
+        transform: scale(1.35) rotate(-15deg);
+    }
+}
+
+/* Scroll-triggered Highlighter effect */
+.scroll-highlight {
+    background-image: linear-gradient(120deg, rgba(240, 180, 41, 0.42) 0%, rgba(240, 180, 41, 0.42) 100%);
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+    background-position: 0 88%;
+    transition: background-size 1.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: inline;
+}
+
+.highlight-active .scroll-highlight {
+    background-size: 100% 100%;
+}
+
+
+
+/* Custom Cursor class override (applied only on Homepage) */
+body.has-custom-cursor,
+body.has-custom-cursor a,
+body.has-custom-cursor button,
+body.has-custom-cursor [role='link'],
+body.has-custom-cursor .clickable-card,
+body.has-custom-cursor input,
+body.has-custom-cursor textarea,
+body.has-custom-cursor select,
+body.has-custom-cursor #start-simulation-btn,
+body.has-custom-cursor #start-simulation-btn-2 {
+    cursor: none !important;
+}
+
+/* Scrapbook-style card rotations and offset placements */
+.showcase-stack > article:nth-child(3n+1), 
+.journal-grid > article:nth-child(3n+1) {
+    transform: rotate(-0.5deg);
+}
+
+.showcase-stack > article:nth-child(3n+2), 
+.journal-grid > article:nth-child(3n+2) {
+    transform: rotate(0.6deg);
+}
+
+.showcase-stack > article:nth-child(3n+3), 
+.journal-grid > article:nth-child(3n+3) {
+    transform: rotate(-0.4deg);
+}
+
+/* Hero containment layouts: displaying the square graphics uncropped on the right */
+.home-fluid {
+    background: var(--paper) url('assets/images/hero_home.png') no-repeat right 5% center !important;
+    background-size: contain !important;
+    min-height: 70vh !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    padding: clamp(40px, 8vw, 80px) clamp(20px, 5vw, 60px) !important;
+    border-bottom: 3px solid var(--ink);
+}
+
+.project-hero {
+    display: grid !important;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(24px, 4vw, 56px);
+    align-items: center;
+    background: var(--paper) !important;
+    min-height: auto !important;
+    padding: clamp(40px, 6vw, 80px) clamp(20px, 5vw, 60px) !important;
+    border-bottom: 3px solid var(--ink);
+}
+
+.hero-content-box,
+.project-hero-content {
+    background: var(--paper) !important;
+    border: 3px solid var(--ink) !important;
+    padding: clamp(24px, 4vw, 40px) !important;
+    box-shadow: var(--shadow) !important;
+    width: 100% !important;
+    z-index: 5;
+    position: relative;
+    transform: rotate(-0.5deg);
+}
+
+.project-hero-content {
+    transform: rotate(-0.5deg);
+}
+
+.project-hero-media {
+    background: var(--soft);
+    border: 3px solid var(--ink);
+    padding: clamp(16px, 3vw, 24px);
+    box-shadow: var(--shadow);
+    transform: rotate(1deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    z-index: 1;
+}
+
+.project-hero-media img {
+    width: 100%;
+    height: auto;
+    max-height: 40vh;
+    object-fit: contain;
+    display: block;
+}
+
+/* Responsive layouts for container heroes */
+@media (max-width: 980px) {
+    .project-hero {
+        grid-template-columns: 1fr !important;
+        padding-bottom: 40px !important;
+    }
+    .home-fluid {
+        background-position: center bottom 20px !important;
+        background-size: 70% auto !important;
+        min-height: auto !important;
+        padding-bottom: 360px !important;
+        display: block !important;
+    }
+    .hero-content-box, .project-hero-content, .project-hero-media {
+        max-width: 100% !important;
+        margin-bottom: 20px !important;
+        transform: none !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .home-fluid {
+        background-size: 90% auto !important;
+        padding-bottom: 280px !important;
+    }
+}
+
+/* Timeline Custom winding Scrapbook track and hand-drawn active circle markers */
+.timeline {
+    position: relative;
+    display: grid;
+    gap: 32px;
+    max-width: 1000px;
+    margin: 40px auto;
+}
+
+.timeline::before {
+    content: "";
+    position: absolute;
+    top: 20px;
+    left: 40px;
+    width: 4px;
+    height: calc(100% - 40px);
+    background: transparent;
+    border-left: 3px dashed var(--muted);
+    z-index: 1;
+}
+
+.timeline article {
+    display: grid;
+    grid-template-columns: 80px minmax(0, 1fr);
+    gap: 24px;
+    position: relative;
+    z-index: 2;
+    padding: 16px 0;
+    border-bottom: none !important;
+}
+
+.timeline time {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--yellow) !important;
+    color: var(--ink) !important;
+    border: 3px solid var(--ink) !important;
+    padding: 4px 10px;
+    font-weight: 900;
+    font-size: 1.1rem;
+    box-shadow: 3px 3px 0 var(--ink);
+    grid-row: 1 / span 2;
+    justify-self: center;
+    height: fit-content;
+    z-index: 5;
+    transform: rotate(-3deg);
+}
+
+/* Stickers & Hand-drawn elements for Scrapbook feel */
+.sticker {
+    position: absolute;
+    background: var(--yellow) !important;
+    color: var(--ink) !important;
+    border: 3px solid var(--ink) !important;
+    padding: 4px 12px !important;
+    font-family: 'East Sea Dokdo', cursive !important;
+    font-size: 1.65rem !important;
+    font-weight: normal !important;
+    letter-spacing: 1px !important;
+    box-shadow: 3px 3px 0 var(--ink) !important;
+    z-index: 15;
+    text-decoration: none !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.15), box-shadow 0.15s ease;
+}
+
+.sticker:hover {
+    transform: scale(1.1) rotate(0deg) !important;
+    box-shadow: 5px 5px 0 var(--ink) !important;
+    background: var(--red) !important;
+    color: white !important;
+}
+
+/* Custom brush header styling for hand-drawn look */
+.dokdo-header {
+    font-family: 'East Sea Dokdo', cursive !important;
+    font-size: 2.5rem !important;
+    font-weight: normal !important;
+    color: var(--red) !important;
+    margin-bottom: 8px !important;
+    line-height: 1.1 !important;
+}
+
+@media (max-width: 600px) {
+    .sticker {
+        position: relative !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        margin-bottom: 16px !important;
+        display: inline-flex !important;
+        transform: rotate(-1deg) !important;
+    }
 }

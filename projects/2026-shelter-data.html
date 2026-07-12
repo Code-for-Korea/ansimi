@@ -10,26 +10,40 @@
 </head>
 <body>
     <header class="site-header">
-        <a class="brand" href="../index.html">안심이</a>
+        <a class="brand" href="../index.html">
+            <svg class="brand-logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M 6 16 L 16 6 L 26 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <circle cx="11" cy="21" r="3.5" stroke="currentColor" stroke-width="3" />
+                <circle cx="21" cy="21" r="3.5" stroke="currentColor" stroke-width="3" />
+            </svg>
+            <span>안심이</span>
+        </a>
         <nav class="nav-links" aria-label="주요 메뉴">
             <a href="../index.html">홈</a>
             <a href="index.html" aria-current="page">프로젝트</a>
+            <a href="../wiki.html">위키</a>
             <a href="../blog.html">블로그</a>
         </nav>
     </header>
     <main>
         <section class="project-hero case-hero">
-            <p class="eyebrow">2026 당신 옆의 공익활동 · Fieldwork + Data Proposal</p>
-            <h1>재난대비, 막연한 정보에서 구체적 경험으로</h1>
-            <p class="lead">안심이는 재난 대비를 특별한 상황을 위한 준비가 아니라 일상 속에서 이해하고 실천할 수 있는 문제로 전환하는 프로젝트입니다. 지도 속 정보로만 존재하는 대피소를 실제로 찾아가 보고, 시민의 시선에서 접근성과 이용 가능성을 확인하며, 그 경험을 함께 기록하고 공유합니다.</p>
-            <div class="fact-row">
-                <span>우리 동네 대피소 탐방대</span>
-                <span>현장 탐방</span>
-                <span>전문가 인터뷰</span>
-                <span>데이터 제안</span>
+            <div class="project-hero-content" style="position: relative;">
+                <a href="../wiki.html?tag=대피소" class="sticker" style="top: -20px; right: 20px; transform: rotate(-3deg);">대피소 위키 ↗</a>
+                <p class="eyebrow">2026 당신 옆의 공익활동 · Fieldwork + Data Proposal</p>
+                <h1>재난대비, 막연한 정보에서 구체적 경험으로</h1>
+                <p class="lead">안심이는 재난 대비를 특별한 상황을 위한 준비가 아니라 일상 속에서 이해하고 실천할 수 있는 문제로 전환하는 프로젝트입니다. 지도 속 정보로만 존재하는 대피소를 실제로 찾아가 보고, 시민의 시선에서 접근성과 이용 가능성을 확인하며, 그 경험을 함께 기록하고 공유합니다.</p>
+                <div class="fact-row">
+                    <span>우리 동네 대피소 탐방대</span>
+                    <span>현장 탐방</span>
+                    <span>전문가 인터뷰</span>
+                    <span>데이터 제안</span>
+                </div>
+                <div class="hero-actions" style="margin-top: 24px; display: flex !important;">
+                    <button id="start-simulation-btn" class="button primary" style="cursor: pointer; border: none; font-family: inherit; font-size: 1.2rem; padding: 12px 30px; min-height: 52px; border-radius: 8px;">대피 시뮬레이션 체험하기</button>
+                </div>
             </div>
-            <div class="hero-actions" style="margin-top: 24px; display: flex !important;">
-                <button id="start-simulation-btn" class="button primary" style="cursor: pointer; border: none; font-family: inherit; font-size: 1.2rem; padding: 12px 30px; min-height: 52px; border-radius: 8px;">대피 시뮬레이션 체험하기</button>
+            <div class="project-hero-media">
+                <img src="../assets/images/hero_2026.png" alt="대피소 탐방과 데이터 제안 히어로 이미지">
             </div>
         </section>
 
@@ -37,7 +51,7 @@
             <div class="case-summary">
                 <div>
                     <p class="eyebrow">Community</p>
-                    <h2>재난 대비를 내 생활과 연결된 경험으로 만듭니다.</h2>
+                    <h2 class="scroll-highlight-trigger"><span class="scroll-highlight">재난 대비를 내 생활과 연결된 경험으로 만듭니다.</span></h2>
                 </div>
                 <div class="intro-copy">
                     <p>안심이는 기존 재난 정보가 사건 중심으로 제공되는 한계를 넘어, 시민의 생활 맥락에서 재난 대비를 다시 바라보고자 시작되었습니다. ‘당신 옆의 공익활동’은 시민이 직접 참여하여 경험을 만들고 공유하는 커뮤니티 기반 활동이라는 점에서 안심이가 지향하는 방향과 맞닿아 있었습니다.</p>
@@ -51,7 +65,7 @@
             <div class="case-summary">
                 <div>
                     <p class="eyebrow">Problem</p>
-                    <h2>대피소 정보는 위치에서 끝나면 충분하지 않습니다.</h2>
+                    <h2 class="scroll-highlight-trigger"><span class="scroll-highlight">대피소 정보는 위치에서 끝나면 충분하지 않습니다.</span></h2>
                 </div>
                 <p>현장에서 확인한 문제는 단순히 “대피소가 어디인가”가 아니었습니다. 시민에게 필요한 것은 실제 대피층, 이동 경로, 담당 연락처, 접근성, 동반 조건처럼 도착 전후의 판단을 가능하게 하는 정보였습니다. 가까운 대피소가 곧 갈 수 있는 대피소는 아니며, 갈 수 있는 대피소가 곧 머물 수 있는 대피소도 아닙니다.</p>
             </div>
@@ -204,13 +218,21 @@
     </main>
     <footer class="site-footer">
         <div>
-            <strong>안심이</strong>
+            <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 1.2rem; font-weight: 900; margin-bottom: 6px;">
+                <svg class="brand-logo" style="color: var(--yellow);" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M 6 16 L 16 6 L 26 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                    <circle cx="11" cy="21" r="3.5" stroke="currentColor" stroke-width="3" />
+                    <circle cx="21" cy="21" r="3.5" stroke="currentColor" stroke-width="3" />
+                </svg>
+                <span>안심이</span>
+            </div>
             <p>사람이 중심인 재난 안전 정보를 함께 만들어 갑니다.</p>
         </div>
         <div class="footer-links">
             <a href="mailto:ansim@codefor.kr">ansim@codefor.kr</a>
             <a href="https://github.com/Code-for-Korea/ansimi" target="_blank" rel="noreferrer">GitHub</a>
             <a href="https://discord.gg/6Tk4G8vz" target="_blank" rel="noreferrer">Discord</a>
+            <a href="https://app.notion.com/p/1c038e821166804d80c2dce4c20001de" target="_blank" rel="noreferrer">Notion</a>
         </div>
     </footer>
 

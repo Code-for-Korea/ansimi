@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="재난안전 활동가와 연구자들이 수집하고 분류한 국내외 재난대응 사례 및 공공서비스 지식 베이스입니다.">
+    <title>안심위키 | 안심이</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Wiki Specific Scrapbook Styling */
+        .wiki-search-section {
+            background: var(--soft);
+            border: 3px solid var(--ink);
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+            transform: rotate(-0.5deg);
+        }
+        
+        .wiki-search-box {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .wiki-search-input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 3px solid var(--ink);
+            background: var(--paper);
+            font-family: inherit;
+            font-size: 1.1rem;
+            font-weight: 800;
+            outline: none;
+            color: var(--ink);
+        }
+        
+        .wiki-search-input::placeholder {
+            color: #7c8890;
+        }
+        
+        .wiki-filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+        
+        .wiki-filter-label {
+            font-weight: 900;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-right: 8px;
+            color: var(--muted);
+        }
+        
+        .wiki-tag-btn {
+            background: var(--paper);
+            border: 2px solid var(--ink);
+            padding: 6px 14px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        
+        .wiki-tag-btn:hover, .wiki-tag-btn.active {
+            background: var(--yellow);
+            box-shadow: 2px 2px 0 var(--ink);
+            transform: translate(-1px, -1px);
+        }
+        
+        .wiki-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+        
+        .wiki-card {
+            background: var(--paper);
+            border: 3px solid var(--ink);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.15), box-shadow 0.3s ease;
+            position: relative;
+        }
+        
+        /* Sticky Note Tape Accent */
+        .wiki-card::before {
+            content: "";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%) rotate(2deg);
+            width: 70px;
+            height: 22px;
+            background: rgba(240, 180, 41, 0.5); /* Yellow semi-transparent tape */
+            border: 1px dashed rgba(23,32,38,0.2);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            pointer-events: none;
+        }
+        
+        .wiki-card-meta {
+            font-size: 0.85rem;
+            font-weight: 900;
+            color: var(--teal);
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .wiki-card-country {
+            background: var(--field);
+            padding: 2px 8px;
+            border: 1px solid var(--ink);
+            font-size: 0.75rem;
+            color: var(--ink);
+        }
+        
+        .wiki-card-title {
+            font-size: 1.35rem;
+            line-height: 1.25;
+            font-weight: 900;
+            margin: 0 0 12px 0;
+            color: var(--ink);
+        }
+        
+        .wiki-card-desc {
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            flex: 1;
+            margin: 0 0 18px 0;
+        }
+        
+        .wiki-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .wiki-card-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        
+        .wiki-card-tag {
+            font-size: 0.75rem;
+            font-weight: 800;
+            background: var(--soft);
+            padding: 2px 6px;
+            color: var(--muted);
+            border: 1px solid rgba(23, 32, 38, 0.15);
+        }
+        
+        .wiki-read-btn {
+            font-weight: 900;
+            color: var(--green);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .wiki-read-btn:hover {
+            text-decoration: underline;
+        }
+        
+        /* Wiki Modal / Fieldnote Panel overlay */
+        .wiki-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(23, 32, 38, 0.75);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .wiki-modal-content {
+            background: #fbfaf5; /* Raw paper color */
+            border: 4px solid var(--ink);
+            width: 100%;
+            max-width: 760px;
+            height: 100%;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 12px 12px 0 var(--ink);
+            position: relative;
+            animation: scrapbookOpen 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+        }
+        
+        @keyframes scrapbookOpen {
+            from { transform: scale(0.9) rotate(-2deg); opacity: 0; }
+            to { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        
+        .wiki-modal-header {
+            padding: 24px 30px;
+            border-bottom: 3px solid var(--ink);
+            background: var(--soft);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        
+        .wiki-modal-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin: 0;
+            color: var(--ink);
+        }
+        
+        .wiki-modal-meta {
+            margin-top: 6px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--muted);
+            display: flex;
+            gap: 12px;
+        }
+        
+        .wiki-close-btn {
+            background: none;
+            border: none;
+            font-size: 2.2rem;
+            line-height: 1;
+            cursor: pointer;
+            color: var(--ink);
+            padding: 0;
+            font-weight: 800;
+        }
+        
+        .wiki-modal-body {
+            padding: 30px;
+            overflow-y: auto;
+            flex: 1;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--ink);
+        }
+        
+        .wiki-modal-body h2 {
+            font-size: 1.5rem;
+            margin-top: 32px;
+            border-bottom: 2px solid var(--line);
+            padding-bottom: 8px;
+        }
+        
+        .wiki-modal-body h3 {
+            font-size: 1.2rem;
+            margin-top: 24px;
+        }
+        
+        .wiki-modal-body ul, .wiki-modal-body ol {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .wiki-modal-body li {
+            margin-bottom: 8px;
+        }
+        
+        .wiki-modal-body a {
+            color: var(--green);
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        
+        .wiki-modal-body blockquote {
+            border-left: 6px solid var(--yellow);
+            padding-left: 18px;
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--muted);
+        }
+        
+        .wiki-modal-footer {
+            padding: 16px 30px;
+            border-top: 3px solid var(--ink);
+            background: var(--soft);
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        /* Grid rotation classes dynamically applied in JS */
+        .rot-left { transform: rotate(-0.7deg); }
+        .rot-right { transform: rotate(0.8deg); }
+        .rot-slight { transform: rotate(0.3deg); }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="index.html">
+            <svg class="brand-logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M 6 16 L 16 6 L 26 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <circle cx="11" cy="21" r="3.5" stroke="currentColor" stroke-width="3" />
+                <circle cx="21" cy="21" r="3.5" stroke="currentColor" stroke-width="3" />
+            </svg>
+            <span>안심이</span>
+        </a>
+        <nav class="nav-links" aria-label="주요 메뉴">
+            <a href="index.html">홈</a>
+            <a href="projects/index.html">프로젝트</a>
+            <a href="wiki.html" aria-current="page">위키</a>
+            <a href="blog.html">블로그</a>
+        </nav>
+    </header>
+
+    <main style="padding-top: 30px;">
+        <section class="section" style="padding-top: 0;">
+            <!-- Search & Filters -->
+            <div class="wiki-search-section">
+                <div style="margin-bottom: 20px;">
+                    <span class="eyebrow" style="margin-bottom: 4px; display: block;">Disaster Safety Archive</span>
+                    <h1 style="margin: 0; font-size: 2rem; font-weight: 900;">안심위키 지식 베이스</h1>
+                </div>
+                <div class="wiki-search-box">
+                    <input type="text" id="wiki-search" class="wiki-search-input" placeholder="키워드, 제목, 내용으로 아카이브 검색...">
+                </div>
+                <div class="wiki-filter-tags">
+                    <span class="wiki-filter-label">Quick Tags:</span>
+                    <button class="wiki-tag-btn active" data-filter="all">전체</button>
+                    <button class="wiki-tag-btn" data-filter="한국">한국</button>
+                    <button class="wiki-tag-btn" data-filter="일본">일본</button>
+                    <button class="wiki-tag-btn" data-filter="미국">미국</button>
+                    <button class="wiki-tag-btn" data-filter="장애인">장애인</button>
+                    <button class="wiki-tag-btn" data-filter="고령자">고령자</button>
+                    <button class="wiki-tag-btn" data-filter="공공데이터">공공데이터</button>
+                    <button class="wiki-tag-btn" data-filter="앱">앱</button>
+                </div>
+            </div>
+
+            <!-- Cards Container -->
+            <div id="wiki-cards-container" class="wiki-grid">
+                <!-- Cards dynamically loaded here -->
+                <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--muted);">
+                    <strong>지식 아카이브 노트를 불어오는 중...</strong>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Fieldnote Detail Modal -->
+    <div id="wiki-modal" class="wiki-modal">
+        <div class="wiki-modal-content">
+            <div class="wiki-modal-header">
+                <div>
+                    <h2 id="modal-title" class="wiki-modal-title">장애인과 재난</h2>
+                    <div class="wiki-modal-meta">
+                        <span id="modal-country">국가: 한국</span>
+                        <span id="modal-keywords">키워드: 장애인</span>
+                    </div>
+                </div>
+                <button id="modal-close" class="wiki-close-btn" aria-label="닫기">×</button>
+            </div>
+            <div id="modal-body" class="wiki-modal-body">
+                <!-- Content HTML rendered dynamically -->
+            </div>
+            <div class="wiki-modal-footer">
+                <a id="modal-external-link" href="#" target="_blank" rel="noreferrer" class="button primary" style="display: none; border: none; font-size: 0.95rem; cursor: pointer; text-decoration: none;">관련 원문 링크 방문</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div>
+            <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 1.2rem; font-weight: 900; margin-bottom: 6px;">
+                <svg class="brand-logo" style="color: var(--yellow);" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M 6 16 L 16 6 L 26 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                    <circle cx="11" cy="21" r="3.5" stroke="currentColor" stroke-width="3" />
+                    <circle cx="21" cy="21" r="3.5" stroke="currentColor" stroke-width="3" />
+                </svg>
+                <span>안심이</span>
+            </div>
+            <p>사람이 중심인 재난 안전 정보를 함께 만들어 갑니다.</p>
+        </div>
+        <div class="footer-links">
+            <a href="mailto:ansim@codefor.kr">ansim@codefor.kr</a>
+            <a href="https://github.com/Code-for-Korea/ansimi" target="_blank" rel="noreferrer">GitHub</a>
+            <a href="https://discord.gg/6Tk4G8vz" target="_blank" rel="noreferrer">Discord</a>
+            <a href="https://app.notion.com/p/1c038e821166804d80c2dce4c20001de" target="_blank" rel="noreferrer">Notion</a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="assets/data/wiki-db.js"></script>
+    <script src="wiki.js"></script>
+</body>
+</html>

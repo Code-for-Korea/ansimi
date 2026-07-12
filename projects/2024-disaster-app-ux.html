@@ -10,36 +10,66 @@
 </head>
 <body>
     <header class="site-header">
-        <a class="brand" href="../index.html">안심이</a>
+        <a class="brand" href="../index.html">
+            <svg class="brand-logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M 6 16 L 16 6 L 26 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <circle cx="11" cy="21" r="3.5" stroke="currentColor" stroke-width="3" />
+                <circle cx="21" cy="21" r="3.5" stroke="currentColor" stroke-width="3" />
+            </svg>
+            <span>안심이</span>
+        </a>
         <nav class="nav-links" aria-label="주요 메뉴">
             <a href="../index.html">홈</a>
             <a href="index.html" aria-current="page">프로젝트</a>
+            <a href="../wiki.html">위키</a>
             <a href="../blog.html">블로그</a>
         </nav>
     </header>
     <main>
         <section class="project-hero">
-            <p class="eyebrow">2024 Workshop</p>
-            <h1>재난안전 앱 UX진단</h1>
-            <p class="lead">안전디딤돌을 비롯한 재난안전 앱과 해외 사례를 워크샵에서 함께 탐색하며, 경보·지도·행동요령이 시민의 다음 판단으로 이어지는지 진단했습니다.</p>
-            <div class="fact-row">
-                <span>밋앤핵 워크샵</span>
-                <span>서비스 사례 비교</span>
-                <span>UX 체크포인트</span>
+            <div class="project-hero-content" style="position: relative;">
+                <a href="../wiki.html?tag=앱" class="sticker" style="top: -20px; right: 20px; transform: rotate(-4deg);">재난앱 위키 ↗</a>
+                <p class="eyebrow">2024 Workshop</p>
+                <h1>재난안전 앱 UX진단</h1>
+                <p class="lead">안전디딤돌을 비롯한 재난안전 앱과 해외 사례를 워크샵에서 함께 탐색하며, 경보·지도·행동요령이 시민의 다음 판단으로 이어지는지 진단했습니다.</p>
+                <div class="fact-row">
+                    <span>밋앤핵 워크샵</span>
+                    <span>서비스 사례 비교</span>
+                    <span>UX 체크포인트</span>
+                </div>
+            </div>
+            <div class="project-hero-media">
+                <img src="../assets/images/hero_2024.png" alt="재난안전 앱 UX진단 히어로 이미지">
             </div>
         </section>
         <section class="section">
             <div class="statement">
                 <p class="eyebrow">Workshop Question</p>
-                <h2>위험을 알려주는 앱은 많지만, 다음 행동을 결정하게 해주는 앱은 충분할까요?</h2>
+                <h2 class="scroll-highlight-trigger"><span class="scroll-highlight">위험을 알려주는 앱은 많지만, 다음 행동을 결정하게 해주는 앱은 충분할까요?</span></h2>
                 <p>참가자들은 재난안전 앱을 직접 살펴보며 정보가 어디에 배치되는지, 경보 이후 행동 안내가 얼마나 구체적인지, 대피소와 준비물 정보가 시민의 상황에 맞게 연결되는지 확인했습니다.</p>
             </div>
         </section>
         <section class="section muted">
-            <div class="image-grid">
-                <figure><img src="../assets/images/safety-tips.jpg" alt="재난안전 팁 서비스 화면 스크린샷"><figcaption>행동요령과 안전 팁 제공 방식</figcaption></figure>
-                <figure><img src="../assets/images/osaka-disaster-app.jpg" alt="오사카 방재 앱 화면 스크린샷"><figcaption>위치 기반 대피 안내 사례</figcaption></figure>
-                <figure><img src="../assets/images/nerv-app.jpg" alt="NERV 재난 방재 앱 화면 스크린샷"><figcaption>경보와 재난 상황 정보 전달 사례</figcaption></figure>
+            <div class="section-heading compact" style="margin-bottom: 24px;">
+                <p class="eyebrow">Case Analysis</p>
+                <h2>주요 진단 대상 및 분석 내용</h2>
+            </div>
+            <div class="scenario-grid detailed">
+                <article class="scenario-card">
+                    <div class="dokdo-header">Safety Tips</div>
+                    <h3>행동요령과 안전 팁 제공 방식</h3>
+                    <p>외국인 여행자 및 거주자를 위해 다국어로 기상 경보와 대피 요령을 제공합니다. 하지만 텍스트 중심의 긴 가이드가 많아 긴급 상황에서의 시인성과 직관적인 대피 경로 파악에는 아쉬움이 있었습니다.</p>
+                </article>
+                <article class="scenario-card">
+                    <div class="dokdo-header">Osaka Disaster App</div>
+                    <h3>위치 기반 대피 안내 사례</h3>
+                    <p>현재 위치를 기준으로 반경 내의 피난소와 해일 피난 빌딩을 지도상에 실시간으로 표시해 줍니다. 고령자와 휠체어 이용자를 고려한 무장애 경로 필터링이 시도되고 있어 벤치마킹의 필요성을 확인했습니다.</p>
+                </article>
+                <article class="scenario-card">
+                    <div class="dokdo-header">NERV Disaster App</div>
+                    <h3>경보와 재난 상황 전달 사례</h3>
+                    <p>지진, 호우, 화산 등 다양한 자연재해 정보를 고대비 인터페이스와 직관적인 그리드 디자인으로 전달합니다. 색각 이상자를 배려한 배색과 경보 정보의 시각적 위계 설정이 매우 뛰어난 사례로 꼽혔습니다.</p>
+                </article>
             </div>
         </section>
         <section class="section">
@@ -59,13 +89,21 @@
     </main>
     <footer class="site-footer">
         <div>
-            <strong>안심이</strong>
+            <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 1.2rem; font-weight: 900; margin-bottom: 6px;">
+                <svg class="brand-logo" style="color: var(--yellow);" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M 6 16 L 16 6 L 26 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                    <circle cx="11" cy="21" r="3.5" stroke="currentColor" stroke-width="3" />
+                    <circle cx="21" cy="21" r="3.5" stroke="currentColor" stroke-width="3" />
+                </svg>
+                <span>안심이</span>
+            </div>
             <p>사람이 중심인 재난 안전 정보를 함께 만들어 갑니다.</p>
         </div>
         <div class="footer-links">
             <a href="mailto:ansim@codefor.kr">ansim@codefor.kr</a>
             <a href="https://github.com/Code-for-Korea/ansimi" target="_blank" rel="noreferrer">GitHub</a>
             <a href="https://discord.gg/6Tk4G8vz" target="_blank" rel="noreferrer">Discord</a>
+            <a href="https://app.notion.com/p/1c038e821166804d80c2dce4c20001de" target="_blank" rel="noreferrer">Notion</a>
         </div>
     </footer>
     <script src="../script.js"></script>
