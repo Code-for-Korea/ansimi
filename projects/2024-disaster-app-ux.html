@@ -7,6 +7,207 @@
     <title>재난안전 앱 UX진단 | 안심이</title>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css">
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        /* 2024 UX case-specific styles */
+        .gallery-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            border-bottom: 3px solid var(--ink);
+            padding-bottom: 16px;
+        }
+        
+        .gallery-tab-btn {
+            background: var(--paper);
+            border: 3px solid var(--ink);
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        
+        .gallery-tab-btn:hover {
+            background: var(--soft);
+        }
+        
+        .gallery-tab-btn.active {
+            background: var(--yellow);
+            box-shadow: 3px 3px 0 var(--ink);
+            transform: translate(-2px, -2px);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+        
+        .screenshot-card {
+            background: var(--paper);
+            border: 3px solid var(--ink);
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+        
+        .screenshot-card:hover {
+            transform: translateY(-4px);
+        }
+        
+        .screenshot-container {
+            height: 380px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #eef1f4;
+            border-bottom: 3px solid var(--ink);
+            position: relative;
+            cursor: zoom-in;
+            overflow: hidden;
+        }
+        
+        .screenshot-img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain; /* Native aspect ratio, no cropping */
+            transition: transform 0.2s ease;
+        }
+        
+        .screenshot-container:hover .screenshot-img {
+            transform: scale(1.03);
+        }
+        
+        .screenshot-caption-box {
+            padding: 16px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            font-weight: 800;
+            color: var(--ink);
+            background: var(--paper);
+            border-top: 1px solid var(--line);
+        }
+        
+        .screenshot-caption-box h4 {
+            margin: 0 0 6px 0;
+            font-size: 0.95rem;
+            font-weight: 900;
+            color: var(--teal);
+        }
+        
+        /* Comparison matrix styles */
+        .matrix-section {
+            margin-top: 50px;
+            border-top: 3px dashed var(--line);
+            padding-top: 40px;
+        }
+        
+        .matrix-table {
+            width: 100%;
+            table-layout: fixed; /* Force fixed columns to obey widths */
+            border-collapse: collapse;
+            border: 3px solid var(--ink);
+            background: var(--paper);
+            box-shadow: var(--shadow);
+            margin-top: 20px;
+        }
+        
+        .matrix-table th, .matrix-table td {
+            width: 20%; /* Equally distribute 5 columns */
+            word-break: keep-all; /* Wrap at word boundaries for clean layout */
+        }
+        
+        .matrix-table th, .matrix-table td {
+            border: 2px solid var(--ink);
+            padding: 14px 18px;
+            text-align: left;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .matrix-table th {
+            background: var(--soft);
+            font-weight: 900;
+            color: var(--ink);
+        }
+        
+        .matrix-table td strong {
+            color: var(--teal);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            border: 1px solid var(--ink);
+            border-radius: 4px;
+        }
+        
+        .badge.good { background-color: #d1fae5; color: #065f46; }
+        .badge.mod { background-color: #fef3c7; color: #92400e; }
+        .badge.poor { background-color: #fee2e2; color: #991b1b; }
+        
+        /* Lightbox modal styles */
+        .lightbox-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(23, 32, 38, 0.92);
+            z-index: 20000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 85%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 75vh;
+            object-fit: contain;
+            border: 4px solid var(--paper);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .lightbox-caption {
+            color: var(--paper);
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin: 0;
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: none;
+            border: none;
+            color: var(--paper);
+            font-size: 3rem;
+            cursor: pointer;
+            line-height: 1;
+            font-weight: 800;
+        }
+    </style>
 </head>
 <body>
     <header class="site-header">
@@ -52,25 +253,264 @@
         <section class="section muted">
             <div class="section-heading compact" style="margin-bottom: 24px;">
                 <p class="eyebrow">Case Analysis</p>
-                <h2>주요 진단 대상 및 분석 내용</h2>
+                <h2>주요 진단 대상 실무 스크린샷</h2>
+                <p>워크숍 참가자들이 정성 분석한 NERV, 오사카 방재 앱, Safety Tips의 실제 화면들입니다. 이미지 클릭 시 원본을 볼 수 있습니다.</p>
             </div>
-            <div class="scenario-grid detailed">
-                <article class="scenario-card">
-                    <div class="dokdo-header">Safety Tips</div>
-                    <h3>행동요령과 안전 팁 제공 방식</h3>
-                    <p>외국인 여행자 및 거주자를 위해 다국어로 기상 경보와 대피 요령을 제공합니다. 하지만 텍스트 중심의 긴 가이드가 많아 긴급 상황에서의 시인성과 직관적인 대피 경로 파악에는 아쉬움이 있었습니다.</p>
+
+            <!-- Gallery Tabs -->
+            <div class="gallery-tabs">
+                <button class="gallery-tab-btn active" data-app="nerv">NERV Disaster App</button>
+                <button class="gallery-tab-btn" data-app="osaka">Osaka Disaster App</button>
+                <button class="gallery-tab-btn" data-app="safetytips">Safety Tips (기상청)</button>
+            </div>
+
+            <!-- NERV Gallery Grid (Active by default) -->
+            <div id="gallery-grid-nerv" class="gallery-grid">
+                <article class="screenshot-card">
+                    <div class="screenshot-container">
+                        <img src="../assets/images/screenshots/nerv_home.jpg" class="screenshot-img zoomable-screenshot" alt="NERV 홈 화면" data-caption="NERV 홈 화면: 고대비 및 그리드 기반의 메인 레이아웃">
+                    </div>
+                    <div class="screenshot-caption-box">
+                        <h4>01. 메인 레이아웃</h4>
+                        <p>지진, 기상, 해일 등 재난을 격자형 그리드로 묶고 위계에 맞춰 선명하게 배치합니다.</p>
+                    </div>
                 </article>
-                <article class="scenario-card">
-                    <div class="dokdo-header">Osaka Disaster App</div>
-                    <h3>위치 기반 대피 안내 사례</h3>
-                    <p>현재 위치를 기준으로 반경 내의 피난소와 해일 피난 빌딩을 지도상에 실시간으로 표시해 줍니다. 고령자와 휠체어 이용자를 고려한 무장애 경로 필터링이 시도되고 있어 벤치마킹의 필요성을 확인했습니다.</p>
+                <article class="screenshot-card">
+                    <div class="screenshot-container">
+                        <img src="../assets/images/screenshots/nerv_alert.jpg" class="screenshot-img zoomable-screenshot" alt="NERV 경보 상세 화면" data-caption="NERV 경보 상세 화면: 실시간 경보 상세 내역과 위험도 지도">
+                    </div>
+                    <div class="screenshot-caption-box">
+                        <h4>02. 실시간 비구름 및 위험 정보</h4>
+                        <p>현재 기상 상황 및 특정 구역의 위험 등급을 레벨별 고대비 색상으로 뚜렷하게 시각화합니다.</p>
+                    </div>
                 </article>
-                <article class="scenario-card">
-                    <div class="dokdo-header">NERV Disaster App</div>
-                    <h3>경보와 재난 상황 전달 사례</h3>
-                    <p>지진, 호우, 화산 등 다양한 자연재해 정보를 고대비 인터페이스와 직관적인 그리드 디자인으로 전달합니다. 색각 이상자를 배려한 배색과 경보 정보의 시각적 위계 설정이 매우 뛰어난 사례로 꼽혔습니다.</p>
+                <article class="screenshot-card">
+                    <div class="screenshot-container">
+                        <img src="../assets/images/screenshots/nerv_settings.jpg" class="screenshot-img zoomable-screenshot" alt="NERV 배색 및 텍스트 설정" data-caption="NERV 배색 및 텍스트 설정: 색각 이상자 등을 배려한 색상 커스텀 옵션">
+                    </div>
+                    <div class="screenshot-caption-box">
+                        <h4>03. 배색 다양성 지원</h4>
+                        <p>적색맹, 녹색맹 등 색상 구별이 어려운 사용자를 위해 다양한 접근성 배색 테마를 탑재했습니다.</p>
+                    </div>
+                </article>
+                <article class="screenshot-card">
+                    <div class="screenshot-container">
+                        <img src="../assets/images/screenshots/nerv_map.jpg" class="screenshot-img zoomable-screenshot" alt="NERV 강수 레이더 지도" data-caption="NERV 강수 레이더 지도: GPS를 활용한 내 주변 재난 지도 레이어">
+                    </div>
+                    <div class="screenshot-caption-box">
+                        <h4>04. 중첩 지도 레이어</h4>
+                        <p>강수량, 산사태 위험도 등 지리 정보 데이터 레이어를 지도 위에 선명하게 겹쳐서 전달합니다.</p>
+                    </div>
                 </article>
             </div>
+
+            <!-- Osaka Gallery Grid (Hidden by default) -->
+            <div id="gallery-grid-osaka" class="gallery-grid" style="display: none;">
+                <article class="screenshot-card">
+                    <div class="screenshot-container">
+                        <img src="../assets/images/screenshots/osaka_home.jpg" class="screenshot-img zoomable-screenshot" alt="오사카 방재 홈 화면" data-caption="오사카 방재 홈 화면: 심플한 홈 UI와 SOS 긴급 연락망 및 쉼터 검색">
+                    </div>
+                    <div class="screenshot-caption-box">
+                        <h4>01. 원터치 비상 지원</h4>
+                        <p>긴급 피난을 위해 홈 화면에서 내 위치 주변 쉼터 찾기 및 연락처를 직관적인 버튼으로 노출합니다.</p>
+                    </div>
+                </article>
+                <article class="screenshot-card">
+                    <div class="screenshot-container">
+                        <img src="../assets/images/screenshots/osaka_map.jpg" class="screenshot-img zoomable-screenshot" alt="오사카 방재 지도 화면" data-caption="오사카 방재 지도 화면: 피난 약자 경사로 및 턱 유무 필터링">
+                    </div>
+                    <div class="screenshot-caption-box">
+                        <h4>02. 배리어프리 지도 안내</h4>
+                        <p>엘리베이터 유무, 장애인 경사로, 휠체어 이용 가능 경로 등 약자 맞춤형 길 찾기 필터링을 지원합니다.</p>
+                    </div>
+                </article>
+                <article class="screenshot-card">
+                    <div class="screenshot-container">
+                        <img src="../assets/images/screenshots/osaka_settings.jpg" class="screenshot-img zoomable-screenshot" alt="오사카 방재 대피 옵션" data-caption="오사카 방재 대피 옵션: 휠체어 이용자, 고령자 동반 시 대피 조건 매뉴얼">
+                    </div>
+                    <div class="screenshot-caption-box">
+                        <h4>03. 대피 시나리오 매뉴얼</h4>
+                        <p>거동이 불편한 동반인 유무에 따라 대피 판단을 내릴 수 있는 조건별 디지털 매뉴얼을 매칭합니다.</p>
+                    </div>
+                </article>
+                <article class="screenshot-card">
+                    <div class="screenshot-container">
+                        <img src="../assets/images/screenshots/osaka_map_base.jpg" class="screenshot-img zoomable-screenshot" alt="오사카 방재 대피소 요약" data-caption="오사카 방재 대피소 요약: 실시간 개방 상태 및 세부 주소 확인">
+                    </div>
+                    <div class="screenshot-caption-box">
+                        <h4>04. 대피 시설 상세 요약</h4>
+                        <p>대피소 지도의 아이콘을 탭하면, 침수/지진/민방위 등 재난별 대피 가능성 및 거리를 빠르게 띄웁니다.</p>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Safety Tips Gallery Grid (Hidden by default) -->
+            <div id="gallery-grid-safetytips" class="gallery-grid" style="display: none;">
+                <article class="screenshot-card">
+                    <div class="screenshot-container">
+                        <img src="../assets/images/screenshots/safetytips_home.jpg" class="screenshot-img zoomable-screenshot" alt="Safety Tips 메인 화면" data-caption="Safety Tips 메인 화면: 다국어(14개 국어) 기반의 외국인 전용 메인 인터페이스">
+                    </div>
+                    <div class="screenshot-caption-box">
+                        <h4>01. 외국인 접근성 첫 화면</h4>
+                        <p>해외 관광객 및 거주자를 타깃으로 삼아 14개 언어 중 원하는 현지어 기반 비상 알람 목록을 보여줍니다.</p>
+                    </div>
+                </article>
+                <article class="screenshot-card">
+                    <div class="screenshot-container">
+                        <img src="../assets/images/screenshots/safetytips_alert.jpg" class="screenshot-img zoomable-screenshot" alt="Safety Tips 경보 푸시" data-caption="Safety Tips 경보 푸시: 영문 및 기상 상황 빠른 안내">
+                    </div>
+                    <div class="screenshot-caption-box">
+                        <h4>02. 직관적인 다국어 기상 정보</h4>
+                        <p>지진 경보 및 기상 악화 시, 사용자가 설정한 현지 언어로 팝업창을 띄워 빠른 상황 인식을 돕습니다.</p>
+                    </div>
+                </article>
+                <article class="screenshot-card">
+                    <div class="screenshot-container">
+                        <img src="../assets/images/screenshots/safetytips_menu.jpg" class="screenshot-img zoomable-screenshot" alt="Safety Tips 정보 범주 목록" data-caption="Safety Tips 정보 범주 목록: 재난 유형별 대처 매뉴얼 링크">
+                    </div>
+                    <div class="screenshot-caption-box">
+                        <h4>03. 행동요령 콘텐츠 라이브러리</h4>
+                        <p>지진, 수해, 폭염 등 재난 상황별로 대피해야 하는 행동 지침을 번역해 탑재한 목록형 라이브러리입니다.</p>
+                    </div>
+                </article>
+                <article class="screenshot-card">
+                    <div class="screenshot-container">
+                        <img src="../assets/images/screenshots/safetytips_evac.jpg" class="screenshot-img zoomable-screenshot" alt="Safety Tips 대피 매뉴얼 일러스트" data-caption="Safety Tips 대피 매뉴얼 일러스트: 그래픽을 활용한 다국어 대피 카드">
+                    </div>
+                    <div class="screenshot-caption-box">
+                        <h4>04. 일러스트 기반 대피 가이드</h4>
+                        <p>언어 장벽을 줄이기 위해 직관적인 일러스트레이션과 카툰 형식을 접목해 응급 요령을 전달합니다.</p>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Lightbox Modal -->
+            <div id="lightbox-modal" class="lightbox-modal">
+                <button id="lightbox-close" class="lightbox-close" aria-label="닫기">×</button>
+                <div class="lightbox-content">
+                    <img id="lightbox-img" class="lightbox-img" src="" alt="원본 스크린샷 확대">
+                    <p id="lightbox-caption" class="lightbox-caption"></p>
+                </div>
+            </div>
+
+            <!-- UX Evaluation Comparison Matrix Section -->
+            <div class="matrix-section">
+                <div class="section-heading compact" style="margin-bottom: 12px;">
+                    <p class="eyebrow">UX Comparison Matrix</p>
+                    <h2>글로벌 재난 정보 서비스 비교 분석 매트릭스</h2>
+                    <p>워크숍 분석 대상이었던 주요 재난 정보 서비스들의 접근성 및 기능별 정량·정성 분석 비교표입니다.</p>
+                </div>
+                <div class="table-wrap">
+                    <table class="matrix-table">
+                        <thead>
+                            <tr>
+                                <th>평가 차원 (Dimension)</th>
+                                <th>일본 NERV App</th>
+                                <th>일본 오사카 방재 앱</th>
+                                <th>일본 Safety Tips (관광청)</th>
+                                <th>국내 안전디딤돌 앱 (행안부)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>색각 이상 대응 (CUD)</strong></td>
+                                <td><span class="badge good">우수 (Good)</span><br>색각 배색 테마 커스텀 가능, 선명한 고대비 인터페이스 제공</td>
+                                <td><span class="badge mod">보통 (Moderate)</span><br>일부 테마에서 대비가 지원되나 범용 옵션은 부재</td>
+                                <td><span class="badge mod">보통 (Moderate)</span><br>기본적인 대비 디자인은 적용되었으나 고대비 테마 없음</td>
+                                <td><span class="badge poor">미흡 (Poor)</span><br>색상만으로 위험도 표현, 색각이상자 구분 곤란</td>
+                            </tr>
+                            <tr>
+                                <td><strong>무장애 경로 안내 (Barrier-Free)</strong></td>
+                                <td><span class="badge poor">미흡 (Poor)</span><br>공간 및 기상 실시간 시각화 강점이나 경로 약자 필터 없음</td>
+                                <td><span class="badge good">우수 (Good)</span><br>휠체어 경사로, 유무단차, 장애인 엘리베이터 여부 지도 필터링 연동</td>
+                                <td><span class="badge poor">미흡 (Poor)</span><br>대피소 지도가 없거나 다국어 텍스트 매뉴얼에 치중</td>
+                                <td><span class="badge poor">미흡 (Poor)</span><br>대피소 주소와 수용인원만 나열, 접근 조건 누락</td>
+                            </tr>
+                            <tr>
+                                <td><strong>상황별 구체적 행동 지침</strong></td>
+                                <td><span class="badge good">우수 (Good)</span><br>실시간 GPS 위치 및 위험도 매칭형 긴급 팁 동적 연계</td>
+                                <td><span class="badge mod">보통 (Moderate)</span><br>기본 방재 카드 가이드 제공, 대피 우선순위 텍스트 매뉴얼</td>
+                                <td><span class="badge good">우수 (Good)</span><br>일러스트 카드를 사용하여 직관적으로 대피 지침 교육 제공</td>
+                                <td><span class="badge mod">보통 (Moderate)</span><br>방대한 행동요령이 있으나 텍스트가 매우 길어 긴급 상황 가독성 저하</td>
+                            </tr>
+                            <tr>
+                                <td><strong>다국어 지원 수준 (외국인)</strong></td>
+                                <td><span class="badge mod">보통 (Moderate)</span><br>영어 및 일본어 지원 중심. 일본 내 외국인 거주자용</td>
+                                <td><span class="badge mod">보통 (Moderate)</span><br>한·영·중·일 등 주요 4개 국어 지원 위주</td>
+                                <td><span class="badge good">우수 (Good)</span><br>한국어, 영어, 베트남어 등 14개 국어로 기상 비보 번역 전달</td>
+                                <td><span class="badge poor">미흡 (Poor)</span><br>재난문자는 한국어 위주 송출, 외국인용 앱 분리(Emergency Ready)로 인지도 저조</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- JavaScript for Interactive Gallery, Lightbox and Tabs -->
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    // Gallery tabs logic
+                    const tabBtns = document.querySelectorAll(".gallery-tab-btn");
+                    const appGrids = document.querySelectorAll(".gallery-grid");
+
+                    tabBtns.forEach(btn => {
+                        btn.addEventListener("click", () => {
+                            tabBtns.forEach(b => b.classList.remove("active"));
+                            btn.classList.add("active");
+
+                            const targetApp = btn.getAttribute("data-app");
+                            appGrids.forEach(grid => {
+                                if (grid.getAttribute("id") === `gallery-grid-${targetApp}`) {
+                                    grid.style.display = "grid";
+                                } else {
+                                    grid.style.display = "none";
+                                }
+                            });
+                        });
+                    });
+
+                    // Lightbox modal logic
+                    const lightboxModal = document.getElementById("lightbox-modal");
+                    const lightboxImg = document.getElementById("lightbox-img");
+                    const lightboxCaption = document.getElementById("lightbox-caption");
+                    const lightboxClose = document.getElementById("lightbox-close");
+                    const zoomableScreenshots = document.querySelectorAll(".zoomable-screenshot");
+
+                    zoomableScreenshots.forEach(img => {
+                        img.addEventListener("click", () => {
+                            const imgSrc = img.getAttribute("src");
+                            const caption = img.getAttribute("data-caption") || img.getAttribute("alt");
+                            
+                            lightboxImg.src = imgSrc;
+                            lightboxCaption.textContent = caption;
+                            lightboxModal.style.display = "flex";
+                            document.body.style.overflow = "hidden"; // Disable background scroll
+                        });
+                    });
+
+                    const closeLightbox = () => {
+                        if (lightboxModal) {
+                            lightboxModal.style.display = "none";
+                            lightboxImg.src = "";
+                            document.body.style.overflow = ""; // Enable background scroll
+                        }
+                    };
+
+                    if (lightboxClose) lightboxClose.addEventListener("click", closeLightbox);
+                    if (lightboxModal) {
+                        lightboxModal.addEventListener("click", (e) => {
+                            if (e.target === lightboxModal) {
+                                closeLightbox();
+                            }
+                        });
+                    }
+
+                    document.addEventListener("keydown", (e) => {
+                        if (e.key === "Escape" && lightboxModal && lightboxModal.style.display === "flex") {
+                            closeLightbox();
+                        }
+                    });
+                });
+            </script>
         </section>
         <section class="section">
             <div class="finding-list">

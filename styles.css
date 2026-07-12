@@ -1506,11 +1506,11 @@ body.has-custom-cursor #start-simulation-btn-2 {
 }
 
 .project-hero-media {
-    background: var(--soft);
-    border: 3px solid var(--ink);
-    padding: clamp(16px, 3vw, 24px);
-    box-shadow: var(--shadow);
-    transform: rotate(1deg);
+    background: transparent;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    transform: none;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1524,6 +1524,12 @@ body.has-custom-cursor #start-simulation-btn-2 {
     max-height: 40vh;
     object-fit: contain;
     display: block;
+    background: var(--paper);
+    border: 3px solid var(--ink);
+    padding: clamp(10px, 2vw, 16px);
+    box-shadow: var(--shadow);
+    transform: rotate(1.2deg); /* Postcard cutout feel */
+    border-radius: 4px;
 }
 
 /* Responsive layouts for container heroes */

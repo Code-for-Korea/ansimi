@@ -7,6 +7,194 @@
     <title>대피소 탐방과 데이터 제안 | 안심이</title>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css">
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        /* 2026 Shelter proposal specific styles */
+        .filter-container {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        .search-input {
+            flex-grow: 1;
+            min-width: 200px;
+            padding: 10px 14px;
+            border: 3px solid var(--ink);
+            font-size: 0.95rem;
+            font-weight: 800;
+            background: var(--paper);
+            font-family: inherit;
+        }
+        .filter-select {
+            padding: 10px 14px;
+            border: 3px solid var(--ink);
+            font-size: 0.95rem;
+            font-weight: 800;
+            background: var(--paper);
+            font-family: inherit;
+            cursor: pointer;
+        }
+        .priority-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .priority-tab-btn {
+            background: var(--paper);
+            border: 3px solid var(--ink);
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .priority-tab-btn:hover {
+            background: var(--soft);
+        }
+        .priority-tab-btn.active {
+            background: var(--yellow);
+            box-shadow: 3px 3px 0 var(--ink);
+            transform: translate(-2px, -2px);
+        }
+        .proposal-table {
+            width: 100%;
+            table-layout: fixed; /* Force fixed columns to obey width */
+            border-collapse: collapse;
+            border: 3px solid var(--ink);
+            background: var(--paper);
+            box-shadow: var(--shadow);
+        }
+        .proposal-table th, .proposal-table td {
+            border: 2px solid var(--ink);
+            padding: 12px 14px;
+            text-align: left;
+            font-size: 0.9rem;
+            line-height: 1.45;
+            word-break: keep-all; /* Wrap clean Korean text at word boundaries */
+        }
+        .proposal-table th {
+            background: var(--soft);
+            font-weight: 900;
+            color: var(--ink);
+        }
+        .proposal-table tr:hover td {
+            background: #fafbfe;
+        }
+        
+        /* Badges */
+        .pbadge {
+            display: inline-block;
+            padding: 2px 6px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            border: 1px solid var(--ink);
+            border-radius: 4px;
+            text-align: center;
+        }
+        .pbadge.priority-p1 { background: #ffedd5; color: #ea580c; }
+        .pbadge.priority-p2 { background: #dbeafe; color: #2563eb; }
+        .pbadge.priority-p3 { background: #f3f4f6; color: #4b5563; }
+        .pbadge.priority-existing { background: #e2e8f0; color: #1e293b; }
+        
+        .pbadge.status-exists { background: #d1fae5; color: #065f46; }
+        .pbadge.status-partial { background: #fef3c7; color: #92400e; }
+        .pbadge.status-missing { background: #fee2e2; color: #991b1b; }
+        
+        /* Collapsible Accordion Styles */
+        .proposal-accordion {
+            margin-top: 40px;
+            border: 3px solid var(--ink);
+            background: var(--paper);
+            box-shadow: var(--shadow);
+        }
+        .accordion-trigger {
+            width: 100%;
+            background: var(--yellow);
+            border: none;
+            padding: 18px 24px;
+            font-size: 1.1rem;
+            font-weight: 900;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: inherit;
+            border-bottom: none;
+            transition: background-color 0.15s ease;
+        }
+        .proposal-accordion.open .accordion-trigger {
+            border-bottom: 3px solid var(--ink);
+        }
+        .accordion-trigger:hover {
+            filter: brightness(0.98);
+        }
+        .accordion-icon {
+            font-size: 1.5rem;
+            font-weight: 800;
+            transition: transform 0.2s ease;
+        }
+        .proposal-accordion.open .accordion-icon {
+            transform: rotate(45deg);
+        }
+        .accordion-panel {
+            display: none;
+            max-height: 700px;
+            overflow-y: auto;
+            background: var(--paper);
+        }
+        .proposal-document {
+            padding: 24px 30px;
+            font-size: 0.95rem;
+            line-height: 1.65;
+            color: var(--ink);
+        }
+        .proposal-document h2 {
+            font-size: 1.3rem;
+            font-weight: 900;
+            border-left: 5px solid var(--teal);
+            padding-left: 12px;
+            margin: 32px 0 16px 0;
+            color: var(--ink);
+        }
+        .proposal-document h3 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin: 24px 0 12px 0;
+            color: var(--teal);
+        }
+        .proposal-document p {
+            margin: 0 0 16px 0;
+        }
+        .proposal-document ul {
+            margin: 0 0 16px 0;
+            padding-left: 20px;
+        }
+        .proposal-document li {
+            margin-bottom: 6px;
+        }
+        .proposal-document table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+        .proposal-document th, .proposal-document td {
+            border: 1px solid var(--line);
+            padding: 10px 14px;
+            text-align: left;
+        }
+        .proposal-document th {
+            background: var(--soft);
+            font-weight: 800;
+        }
+        .proposal-document hr {
+            border: none;
+            border-top: 1px dashed var(--line);
+            margin: 24px 0;
+        }
+    </style>
 </head>
 <body>
     <header class="site-header">
@@ -146,26 +334,715 @@
         <section class="section">
             <div class="section-heading">
                 <p class="eyebrow">Data Proposal</p>
-                <h2>공공데이터에 추가되어야 할 항목</h2>
-                <p>원본 스프레드시트 대신, 공개 가능한 수준으로 정리한 데이터 스키마 초안을 웹 자산으로 만들었습니다.</p>
+                <h2>시민이 제안하는 47개 대피소 데이터 항목</h2>
+                <p>재난 상황에서 실제 보행 경로와 머무는 공간으로서 대피소를 이용하기 위해 필요한 데이터 항목 구조입니다. 지자체 및 정부 안전디딤돌의 개선 제안을 위한 초안입니다.</p>
             </div>
+
+            <!-- Interactive Filters -->
+            <div class="filter-container">
+                <input type="text" id="search-data-items" class="search-input" placeholder="검색어를 입력하세요 (예: 휠체어, 화장실, 연락처)...">
+                <select id="select-category" class="filter-select">
+                    <option value="all">모든 대분류 카테고리</option>
+                    <option value="기본 정보">기본 정보</option>
+                    <option value="담당주체">담당주체</option>
+                    <option value="접근성">접근성(배리어프리)</option>
+                    <option value="위생·생활">위생·생활 시설</option>
+                    <option value="접근 경로·안내">접근 경로 및 안내 표지</option>
+                    <option value="동적·특수·기타">현황 및 기타 특수자원</option>
+                </select>
+                <select id="select-disaster" class="filter-select">
+                    <option value="all">모든 재난 유형</option>
+                    <option value="공통">공통 적용</option>
+                    <option value="민방위">민방위 전용</option>
+                    <option value="자연재난">수해/지진 전용</option>
+                </select>
+            </div>
+
+            <!-- Priority Tabs -->
+            <div class="priority-tabs">
+                <button class="priority-tab-btn active" data-priority="all">전체 중요도</button>
+                <button class="priority-tab-btn" data-priority="P1">최우선 제안 (P1)</button>
+                <button class="priority-tab-btn" data-priority="P2">필수 수집 (P2)</button>
+                <button class="priority-tab-btn" data-priority="P3">장기 권장 (P3)</button>
+                <button class="priority-tab-btn" data-priority="기존">기존 제공중</button>
+            </div>
+
+            <!-- Dynamic Table Grid -->
             <div class="table-wrap">
-                <table>
+                <table class="proposal-table">
                     <thead>
-                        <tr><th>현재 주로 보이는 정보</th><th>추가가 필요한 정보</th><th>이유</th></tr>
+                        <tr>
+                            <th style="width: 6%; text-align: center;">No</th>
+                            <th style="width: 12%;">중요도</th>
+                            <th style="width: 15%;">대분류</th>
+                            <th style="width: 20%;">항목 후보명</th>
+                            <th style="width: 35%;">수집 타당성 및 설명</th>
+                            <th style="width: 12%; text-align: center;">행정공개상태</th>
+                        </tr>
                     </thead>
-                    <tbody>
-                        <tr><td>주소·좌표</td><td>입구 위치와 실제 대피층</td><td>건물에 도착한 뒤 어디로 가야 하는지 판단하기 위해</td></tr>
-                        <tr><td>수용 인원·면적</td><td>개방 조건과 담당 부서</td><td>운영 여부와 문의 경로를 확인하기 위해</td></tr>
-                        <tr><td>대피소 유형</td><td>재난 유형별 이용 가능성</td><td>민방위, 지진, 수해 대피소의 이용 맥락이 다르기 때문에</td></tr>
-                        <tr><td>시설명</td><td>엘리베이터 운행 범위와 휠체어 접근성</td><td>이동 약자가 실제로 접근 가능한지 확인하기 위해</td></tr>
-                        <tr><td>없음 또는 불명확</td><td>화장실·식수·반려동물 동반 가능 여부</td><td>도착 후 머물 수 있는 조건을 판단하기 위해</td></tr>
+                    <tbody id="proposal-tbody">
+                        <!-- JS Dynamic injection -->
                     </tbody>
                 </table>
             </div>
-            <div class="asset-list project-assets">
-                <a href="../assets/data/shelter-data-proposal.public.json">공개 데이터 스키마 JSON 보기</a>
+
+            <!-- Show More Button -->
+            <div id="show-more-container" style="text-align: center; margin-top: 20px; display: none;">
+                <button id="btn-show-more" class="button primary" style="font-size: 1rem; padding: 10px 24px; min-height: 44px; border-radius: 8px; cursor: pointer; border: 3px solid var(--ink); box-shadow: var(--shadow); background: var(--yellow); font-family: inherit; font-weight: 800;">
+                    항목 더 보기 (+0개)
+                </button>
             </div>
+
+            <div class="asset-list project-assets" style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                <span style="font-weight: 800; font-size: 0.9rem; color: var(--muted);" id="table-stats-count">불러오는 중...</span>
+                <a href="../assets/data/shelter-data-proposal.public.json" download class="text-link" style="font-weight: 900;">공개 데이터 스키마 JSON 다운로드 💾</a>
+            </div>
+
+            <!-- Collapsible Accordion containing the Full-text Proposal -->
+            <div class="proposal-accordion" id="proposal-text-accordion">
+                <button class="accordion-trigger" id="btn-toggle-accordion">
+                    <span>📄 시민 관점 대피소 데이터 항목 제안서 전문 보기 (초안 v0.1)</span>
+                    <span class="accordion-icon" id="accordion-arrow">+</span>
+                </button>
+                <div class="accordion-panel" id="accordion-panel-content">
+                    <div class="proposal-document">
+                        <p><strong>안심이 팀 · 2026 당신 옆의 공익활동</strong> · 2026-07-03</p>
+                        <p><em>*검토용 초안 — 서울연구원 및 당옆공 행사 제출 최종 정리판*</em></p>
+                        <hr>
+                        
+                        <h2>요약</h2>
+                        <p>현행 대피소 공공데이터는 위치·수용인원 등 시설 지정 정보에 머물러 있어, 시민이 "내 상황에서 이 대피소를 이용할 수 있는가"를 판단할 수 없습니다. 안심이 팀은 시민 현장 탐방(페르소나 프로브 2회)과 재난구호 전문가 심층인터뷰(108분, 주제별 코딩)를 교차 검증하여 <strong>47개 데이터 항목 후보</strong>를 도출했습니다. 이 중 신규 제안은 43개이며, 최우선(P1) 항목은 13개입니다. 핵심 제안은 세 가지입니다.</p>
+                        <ul>
+                            <li><strong>담당주체의 데이터화</strong> — 공간 정보보다 "누가 책임지는가"(관리 부서·대표 유선 연락처)가 정보의 최우선입니다.</li>
+                            <li><strong>결손정보의 명시</strong> — '장애인 대피 불가', '샤워시설 없음' 등 <em>부재 자체를 기록</em>하는 것이 시민 관점 데이터의 차별점입니다.</li>
+                            <li><strong>재난유형별 분리</strong> — 사회재난(민방위)과 자연재난(지진, 수해)은 물리적 대피 구조가 달라, 단일 스키마로 담을 수 없습니다.</li>
+                        </ul>
+                        
+                        <hr>
+                        
+                        <h2>1. 문제 진단: "대피소는 주소밖에 없다"</h2>
+                        <p>행정안전부 안전디딤돌 앱과 공공데이터포털은 대피소의 위치·명칭·수용인원을 제공합니다. 그러나 재난구호 전문가는 이를 한 문장으로 진단했습니다: <strong>"대피소는 지금 주소밖에 없다"</strong>. 대피소는 기능이 준비된 시설이 아니라 그저 배정된 공간이며, "실제 가 보면 아무것도 없다"는 것입니다.</p>
+                        <p>시민 탐방에서도 동일한 문제가 확인되었습니다. 탐방대원이 방문한 민방위 대피소(지하주차장)에서는 대피소 표지판이 보이지 않았고, 관리자·식수·화장실 위치를 도무지 알 수 없었으며, 도달해도 개방 여부를 확인할 수 없었습니다. 휠체어 페르소나는 인도 없는 차도와 연석 턱 때문에 대피소로 향하는 경로 자체가 원천적으로 가로막혔습니다.</p>
+                        <p>이 간극의 구조적 원인은 두 가지입니다. 첫째, 현행 데이터는 <strong>공급자(행정) 관점의 시설 지정 정보</strong>로, 이용자의 생활·접근 맥락을 전혀 담지 않습니다. 둘째, 재난약자(고령·장애·영유아 동반·반려동물 동반)에게 정보 결손의 비용이 가장 크게 전가됩니다. 같은 대피소가 누군가에게는 안전한 공간이지만 다른 누군가에게는 도달조차 불가능한 차별의 공간이 됩니다.</p>
+                        
+                        <h2>2. 방법: 시민 탐방 × 전문가 인터뷰 교차 검증</h2>
+                        <ul>
+                            <li><strong>시민 현장 탐방 (2회)</strong>: 페르소나(노인·휠체어 이용자·보행자) 기반 경로 시나리오 A/B 비교 및 관찰 이슈를 기록했습니다.</li>
+                            <li><strong>전문가 심층인터뷰 (108분)</strong>: 피스윈즈코리아 국내 재난긴급구호 총괄 인터뷰를 바탕으로 발화 주제 코딩 분석을 실시했습니다.</li>
+                            <li><strong>교차 검증</strong>: 인터뷰 발화 내용과 현장 발견점(10개)을 대조하여 데이터 스키마 요구 정의를 정립했습니다.</li>
+                        </ul>
+                        
+                        <h2>3. 제안: 대피소 데이터 항목 47개</h2>
+                        <h3>3-1. 담당주체·연락처 (5개 항목) — 최우선 제안 (P1)</h3>
+                        <p>대피소 관리가 지자체 내에서도 사회복지과·주민복지과·시설물관리과 등으로 제각각이라 긴급 구호 시 큰 보틀넥이 발생합니다. 전문가는 "행정센터 전화번호·대표부서만 한 곳에 정리해도 굉장히 큰 정보"라고 강조했습니다. 보직이 바뀌어도 주민센터 유선번호는 유지되므로 데이터 지속성 측면에서도 유용합니다.</p>
+                        
+                        <h3>3-2. 접근성(배리어프리) (8개 항목)</h3>
+                        <p>"내가 실제로 입소할 수 있는 시설인가"를 결정하는 기본 수용 조건 정보입니다. 현장 탐방에서 엘리베이터가 지하 1층까지만 운행하는데 대피 공간은 지하 3~5층에 위치한 사례 등이 발견되어, 단순 엘리베이터 유무가 아닌 <strong>실제 휠체어 운행 가능 층 범위</strong> 정보가 필수적으로 매칭되어야 합니다.</p>
+                        
+                        <h3>3-3. 위생·생활시설 (9개 항목)</h3>
+                        <p>대피소가 단순 '잠깐 피하는 곳'이 아니라 며칠~몇 주 생활하는 최소한의 생활 공간이라는 대피 현실을 데이터에 반영합니다. 식수 위치, 온열/난방 여부, 수면 조명 제어 가능 여부, 전기 콘센트 위치 등이 해당됩니다.</p>
+                        
+                        <h3>3-4. 접근 경로·안내·표지 (8개 항목)</h3>
+                        <p>인터뷰가 아닌 <strong>현장 탐방을 통해 신규 발굴된 축</strong>으로, 대피소 건물 안으로 들어오기 전까지의 보행 인도 조건, 침수 위험 구간 우회로, 야간 외부 조명 표지판 상태, 그리고 정문이 아닌 실제 휠체어 진입 가능한 입구 좌표를 제공해야 합니다.</p>
+                        
+                        <h3>3-5. 결손정보의 명시 (1개 항목) — P1</h3>
+                        <p>현장 구호 전문가들의 공통된 강력 권고는 <strong>"없으면 없다고 솔직하게 적어 달라"</strong>는 점이었습니다. '장애인 대피 불가', '샤워실 없음' 같은 정보의 기록은 행정 데이터에서 감추고 싶어 하지만, 시민 관점에서는 헛걸음을 줄이기 위한 가장 중요한 정보값입니다.</p>
+                        
+                        <h2>4. 설계 및 제안 스키마 원칙</h2>
+                        <ol>
+                            <li><strong>재난유형별 스키마 분리</strong>: 지진(운동장), 민방위(지방 주차장), 수해(실내 강당)는 스키마 구조를 애초에 분리해서 제공해야 합니다.</li>
+                            <li><strong>이용자 관점의 기술</strong>: '엘리베이터 있음'이 아닌 '지하 1층만 운행(대피공간은 지하3층)'처럼 실제 동작 조건 위주로 기술합니다.</li>
+                            <li><strong>정적/동적 트랙 분리</strong>: 물리 시설 형태(정적)와 개방 상태/비축 자원/체류 인원(동적)을 분리 수집하여 갱신 비대칭을 조율합니다.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JavaScript for filtering and accordion -->
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    const SHELTER_DATA = [
+                        {
+                            "no": "1.0",
+                            "category": "위치·주소",
+                            "subcategory": "위치·기본",
+                            "item_ko": "대피소 좌표·주소",
+                            "priority": "공통",
+                            "reason_ko": "기존",
+                            "status_ko": "있음"
+                        },
+                        {
+                            "no": "2.0",
+                            "category": "수용 인원",
+                            "subcategory": "위치·기본",
+                            "item_ko": "최대 수용 가능 인원",
+                            "priority": "공통",
+                            "reason_ko": "기존",
+                            "status_ko": "있음"
+                        },
+                        {
+                            "no": "3.0",
+                            "category": "수용 면적",
+                            "subcategory": "위치·기본",
+                            "item_ko": "대피 가능 면적",
+                            "priority": "공통",
+                            "reason_ko": "기존",
+                            "status_ko": "있음"
+                        },
+                        {
+                            "no": "4.0",
+                            "category": "대비 재난유형",
+                            "subcategory": "위치·기본",
+                            "item_ko": "지진/민방위/수해 등 지정 유형",
+                            "priority": "공통",
+                            "reason_ko": "기존",
+                            "status_ko": "있음"
+                        },
+                        {
+                            "no": "5.0",
+                            "category": "관리 담당 부서",
+                            "subcategory": "담당주체·연락처",
+                            "item_ko": "대피소를 실제 관할하는 부서(사회복지과/주민복지과/시설물관리과 등)",
+                            "priority": "공통",
+                            "reason_ko": "P1",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "6.0",
+                            "category": "대표 연락처(유선)",
+                            "subcategory": "담당주체·연락처",
+                            "item_ko": "담당 부서·대피소 대표 전화번호",
+                            "priority": "공통",
+                            "reason_ko": "P1",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "7.0",
+                            "category": "운영 주체",
+                            "subcategory": "담당주체·연락처",
+                            "item_ko": "공공/민간/혼합 등 운영 방식",
+                            "priority": "공통",
+                            "reason_ko": "P2",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "8.0",
+                            "category": "관할 기초의원",
+                            "subcategory": "담당주체·연락처",
+                            "item_ko": "해당 지역 군·시의원 및 연락 정보",
+                            "priority": "공통",
+                            "reason_ko": "P2",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "9.0",
+                            "category": "지역 지원자원 명단",
+                            "subcategory": "담당주체·연락처",
+                            "item_ko": "유사시 역할 가능한 지역 사회적기업·협동조합·자활기업",
+                            "priority": "공통",
+                            "reason_ko": "P2",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "10.0",
+                            "category": "휠체어 접근 가능",
+                            "subcategory": "접근성(배리어프리)",
+                            "item_ko": "입구~대피공간 휠체어 이동 가능 여부",
+                            "priority": "공통",
+                            "reason_ko": "P1",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "11.0",
+                            "category": "경사로 유무",
+                            "subcategory": "접근성(배리어프리)",
+                            "item_ko": "경사로 설치 여부",
+                            "priority": "공통",
+                            "reason_ko": "P1",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "12.0",
+                            "category": "엘리베이터 유무·대피층수",
+                            "subcategory": "접근성(배리어프리)",
+                            "item_ko": "엘리베이터 수와 실제 대피 공간이 위치한 층",
+                            "priority": "공통",
+                            "reason_ko": "P1",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "13.0",
+                            "category": "장애인 화장실 유무",
+                            "subcategory": "접근성(배리어프리)",
+                            "item_ko": "장애인용 화장실 설치 여부",
+                            "priority": "공통",
+                            "reason_ko": "P1",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "14.0",
+                            "category": "반려동물 동반 가능",
+                            "subcategory": "접근성(배리어프리)",
+                            "item_ko": "반려동물 동반 입소 가능 여부",
+                            "priority": "공통",
+                            "reason_ko": "P1",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "15.0",
+                            "category": "가족 단위 수용 가능",
+                            "subcategory": "접근성(배리어프리)",
+                            "item_ko": "가족 단위(대형 텐트 등) 수용 가능 여부",
+                            "priority": "공통",
+                            "reason_ko": "P1",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "16.0",
+                            "category": "영유아·수유 시설",
+                            "subcategory": "접근성(배리어프리)",
+                            "item_ko": "수유실·영유아 대비 여부",
+                            "priority": "공통",
+                            "reason_ko": "P2",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "17.0",
+                            "category": "이동지원(버스·셔틀)",
+                            "subcategory": "접근성(배리어프리)",
+                            "item_ko": "대피소~생활권 이동수단 운행 여부·횟수",
+                            "priority": "공통",
+                            "reason_ko": "P2",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "18.0",
+                            "category": "샤워시설 유무·개수",
+                            "subcategory": "위생·생활시설",
+                            "item_ko": "샤워 가능 여부 및 개수",
+                            "priority": "공통",
+                            "reason_ko": "P1",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "19.0",
+                            "category": "화장실 개수·면적",
+                            "subcategory": "위생·생활시설",
+                            "item_ko": "화장실 수·면적(인원당 기준 대비)",
+                            "priority": "공통",
+                            "reason_ko": "P1",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "20.0",
+                            "category": "취사시설 유무",
+                            "subcategory": "위생·생활시설",
+                            "item_ko": "자체 취사 가능 여부",
+                            "priority": "공통",
+                            "reason_ko": "P2",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "21.0",
+                            "category": "세탁시설·세탁차 접근",
+                            "subcategory": "위생·생활시설",
+                            "item_ko": "세탁 가능 여부/세탁차 지원 가능성",
+                            "priority": "공통",
+                            "reason_ko": "P3",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "22.0",
+                            "category": "냉·난방 설비",
+                            "subcategory": "위생·생활시설",
+                            "item_ko": "냉방·난방 가능 여부",
+                            "priority": "공통",
+                            "reason_ko": "P2",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "23.0",
+                            "category": "야간 조명·수면환경",
+                            "subcategory": "위생·생활시설",
+                            "item_ko": "취침 시 조명 분리·암막 가능 여부",
+                            "priority": "공통",
+                            "reason_ko": "P2",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "24.0",
+                            "category": "전기·콘센트·와이파이",
+                            "subcategory": "위생·생활시설",
+                            "item_ko": "충전 인프라·통신 가용성",
+                            "priority": "공통",
+                            "reason_ko": "P2",
+                            "status_ko": "부분"
+                        },
+                        {
+                            "no": "25.0",
+                            "category": "침대(바닥생활 대체)",
+                            "subcategory": "위생·생활시설",
+                            "item_ko": "라꾸라꾸 등 침대 제공 가능 여부",
+                            "priority": "공통",
+                            "reason_ko": "P3",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "26.0",
+                            "category": "실제 거주 가능 여부",
+                            "subcategory": "유형별 특수",
+                            "item_ko": "잠깐 대피용 vs 숙박·거주 가능 공간 구분",
+                            "priority": "공통",
+                            "reason_ko": "P1",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "27.0",
+                            "category": "야외 대피소 시설물",
+                            "subcategory": "유형별 특수",
+                            "item_ko": "운동장 등 야외 시설물(테니스장·농구대·벤치·정글짐)",
+                            "priority": "지진·공통",
+                            "reason_ko": "P2",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "28.0",
+                            "category": "지하주차장 시설",
+                            "subcategory": "유형별 특수",
+                            "item_ko": "민방위 대피소 관리실·화장실·전기차 충전 등",
+                            "priority": "민방위",
+                            "reason_ko": "P2",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "29.0",
+                            "category": "게시판형 정보판 유무",
+                            "subcategory": "유형별 특수",
+                            "item_ko": "현장 정보 공유 보드 설치 여부",
+                            "priority": "공통",
+                            "reason_ko": "P2",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "30.0",
+                            "category": "결손정보 명시",
+                            "subcategory": "결손정보",
+                            "item_ko": "‘장애인 대피 불가’·‘샤워시설 없음’ 등 부재 자체를 기록",
+                            "priority": "공통",
+                            "reason_ko": "P1",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "31.0",
+                            "category": "비축 천막·텐트 수량",
+                            "subcategory": "비축자원",
+                            "item_ko": "보유 천막·텐트 동수",
+                            "priority": "공통",
+                            "reason_ko": "P3",
+                            "status_ko": "부분"
+                        },
+                        {
+                            "no": "32.0",
+                            "category": "재난물품 비축 현황",
+                            "subcategory": "비축자원",
+                            "item_ko": "은박담요·매트·침대 등 비축 수량",
+                            "priority": "공통",
+                            "reason_ko": "P3",
+                            "status_ko": "부분"
+                        },
+                        {
+                            "no": "33.0",
+                            "category": "재난구호기금 잔액",
+                            "subcategory": "비축자원",
+                            "item_ko": "지자체별 재난구호기금 규모",
+                            "priority": "공통",
+                            "reason_ko": "P3",
+                            "status_ko": "부분"
+                        },
+                        {
+                            "no": "34.0",
+                            "category": "실시간 수용 인원",
+                            "subcategory": "현황(동적·민감)",
+                            "item_ko": "현재 체류 인원",
+                            "priority": "공통",
+                            "reason_ko": "P3",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "35.0",
+                            "category": "취약계층 현황 수",
+                            "subcategory": "현황(동적·민감)",
+                            "item_ko": "고령·장애·와병·영유아·임산부·외국인·반려동물 수",
+                            "priority": "공통",
+                            "reason_ko": "P3",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "36.0",
+                            "category": "지원·방문 내역",
+                            "subcategory": "현황(동적·민감)",
+                            "item_ko": "누가 와서 무엇을 지원했는지 이력",
+                            "priority": "공통",
+                            "reason_ko": "P3",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "37.0",
+                            "category": "물품 수요·재고",
+                            "subcategory": "현황(동적·민감)",
+                            "item_ko": "현장 필요 물품과 재고 현황",
+                            "priority": "공통",
+                            "reason_ko": "P3",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "38.0",
+                            "category": "출입구(정문/후문) 위치·접근 가능 출입구",
+                            "subcategory": "접근 경로·안내",
+                            "item_ko": "어느 출입구로 진입해야 하는지(정문/후문 위치·접근성)",
+                            "priority": "공통",
+                            "reason_ko": "P1",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "39.0",
+                            "category": "대피소 표지판(사인) 유무·위치",
+                            "subcategory": "안내·표지",
+                            "item_ko": "건물·입구에 대피소임을 알리는 표지 존재 여부",
+                            "priority": "공통",
+                            "reason_ko": "P1",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "40.0",
+                            "category": "입구·야간 외부 시인성",
+                            "subcategory": "안내·표지",
+                            "item_ko": "야간 도달 시 입구를 식별할 수 있는 조명·표지",
+                            "priority": "공통",
+                            "reason_ko": "P2",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "41.0",
+                            "category": "식수·급수 시설 위치",
+                            "subcategory": "위생·생활시설",
+                            "item_ko": "식수 제공·급수 가능 지점 위치",
+                            "priority": "공통",
+                            "reason_ko": "P2",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "42.0",
+                            "category": "시설 내부 안내(화장실·식수·구역 배치도)",
+                            "subcategory": "안내·표지",
+                            "item_ko": "대피소 내부 시설 위치 안내도·사이니지",
+                            "priority": "공통",
+                            "reason_ko": "P2",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "43.0",
+                            "category": "접근 경로 보행환경(인도 유무·턱/연석)",
+                            "subcategory": "접근 경로",
+                            "item_ko": "대피소까지 경로의 보도 유무·턱·차도 혼재 등 보행 안전",
+                            "priority": "공통",
+                            "reason_ko": "P2",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "44.0",
+                            "category": "경로 침수위험 구간(저지대·침수이력)",
+                            "subcategory": "접근 경로",
+                            "item_ko": "경로상 침수 가능·저지대 구간(시나리오 A/B 판단 근거)",
+                            "priority": "자연재난(수해)",
+                            "reason_ko": "P1",
+                            "status_ko": "부분"
+                        },
+                        {
+                            "no": "45.0",
+                            "category": "대피소 입구 기준 좌표·현위치/방위 표시",
+                            "subcategory": "정보·데이터(지도품질)",
+                            "item_ko": "건물 중심이 아닌 실제 입구 좌표, 현재위치·방위 표시 지원",
+                            "priority": "공통",
+                            "reason_ko": "P2",
+                            "status_ko": "부분"
+                        },
+                        {
+                            "no": "46.0",
+                            "category": "대피소 개방·운영 상태(동적)",
+                            "subcategory": "현황(동적·민감)",
+                            "item_ko": "현재 개방/운영 여부(평시 잠금 여부 포함)",
+                            "priority": "공통",
+                            "reason_ko": "P3",
+                            "status_ko": "없음"
+                        },
+                        {
+                            "no": "47.0",
+                            "category": "대피소 유형의 시민 친화적 설명",
+                            "subcategory": "안내·표지",
+                            "item_ko": "민방위/수해/지진 등 유형별로 ‘어떤 재난에 가는 곳’인지 쉬운 설명",
+                            "priority": "공통",
+                            "reason_ko": "P2",
+                            "status_ko": "부분"
+                        }
+                    ];
+
+                    const tbody = document.getElementById("proposal-tbody");
+                    const searchInput = document.getElementById("search-data-items");
+                    const selectCat = document.getElementById("select-category");
+                    const selectDisaster = document.getElementById("select-disaster");
+                    const priorityTabBtns = document.querySelectorAll(".priority-tab-btn");
+                    const countSpan = document.getElementById("table-stats-count");
+
+                    let currentPriorityFilter = "all";
+                    let itemsLimit = 5;
+
+                    const mapCategoryGroup = (subcat) => {
+                        if (subcat === '위치·기본') return '기본 정보';
+                        if (subcat === '담당주체·연락처') return '담당주체';
+                        if (subcat === '접근성(배리어프리)') return '접근성';
+                        if (subcat === '위생·생활시설') return '위생·생활';
+                        if (subcat.includes('경로') || subcat.includes('안내') || subcat.includes('표지') || subcat.includes('지도품질')) return '접근 경로·안내';
+                        return '동적·특수·기타';
+                    };
+
+                    function renderTable() {
+                        tbody.innerHTML = "";
+                        
+                        const query = searchInput.value.toLowerCase();
+                        const catFilter = selectCat.value;
+                        const disasterFilter = selectDisaster.value;
+
+                        let filtered = SHELTER_DATA.filter(item => {
+                            // Search query
+                            const matchesSearch = item.category.toLowerCase().includes(query) || 
+                                                  item.item_ko.toLowerCase().includes(query) ||
+                                                  item.subcategory.toLowerCase().includes(query);
+
+                            // Category filter
+                            const catGroup = mapCategoryGroup(item.subcategory);
+                            const matchesCat = (catFilter === "all" || catGroup === catFilter);
+
+                            // Disaster applicability filter
+                            let matchesDisaster = true;
+                            if (disasterFilter === "공통") {
+                                matchesDisaster = (item.priority === "공통");
+                            } else if (disasterFilter === "민방위") {
+                                matchesDisaster = (item.priority === "민방위");
+                            } else if (disasterFilter === "자연재난") {
+                                matchesDisaster = (item.priority.includes("자연재난") || item.priority.includes("지진"));
+                            }
+
+                            // Priority filter (tab)
+                            const matchesPriority = (currentPriorityFilter === "all" || item.reason_ko === currentPriorityFilter);
+
+                            return matchesSearch && matchesCat && matchesDisaster && matchesPriority;
+                        });
+
+                        const sliced = filtered.slice(0, itemsLimit);
+
+                        sliced.forEach(item => {
+                            const tr = document.createElement("tr");
+                            
+                            // Map Priority Badge
+                            let pBadgeClass = "";
+                            if (item.reason_ko === "P1") pBadgeClass = "priority-p1";
+                            else if (item.reason_ko === "P2") pBadgeClass = "priority-p2";
+                            else if (item.reason_ko === "P3") pBadgeClass = "priority-p3";
+                            else pBadgeClass = "priority-existing";
+
+                            // Map Status Badge
+                            let sBadgeClass = "";
+                            if (item.status_ko === "있음") sBadgeClass = "status-exists";
+                            else if (item.status_ko === "부분") sBadgeClass = "status-partial";
+                            else sBadgeClass = "status-missing";
+
+                            const displayNo = parseFloat(item.no).toFixed(0);
+
+                            tr.innerHTML = `
+                                <td style="text-align: center; font-weight: 800;">${displayNo}</td>
+                                <td><span class="pbadge ${pBadgeClass}">${item.reason_ko === "기존" ? "기존 제공" : item.reason_ko + " 제안"}</span></td>
+                                <td style="font-weight: 800; color: var(--muted);">${item.subcategory}</td>
+                                <td style="font-weight: 900; color: var(--teal);">${item.category}</td>
+                                <td>
+                                    ${item.item_ko}
+                                    <div style="font-size: 0.75rem; color: var(--muted); margin-top: 4px;">적용 재난: ${item.priority}</div>
+                                </td>
+                                <td style="text-align: center;"><span class="pbadge ${sBadgeClass}">${item.status_ko}</span></td>
+                            `;
+                            tbody.appendChild(tr);
+                        });
+
+                        // Show/Hide More Button based on matching items limit
+                        const showMoreContainer = document.getElementById("show-more-container");
+                        const btnShowMore = document.getElementById("btn-show-more");
+                        if (filtered.length > itemsLimit) {
+                            showMoreContainer.style.display = "block";
+                            btnShowMore.textContent = `항목 더 보기 (+${filtered.length - itemsLimit}개)`;
+                        } else {
+                            showMoreContainer.style.display = "none";
+                        }
+
+                        countSpan.textContent = `검색 결과: 총 ${filtered.length}개 항목 중 ${sliced.length}개 표시 중입니다.`;
+                        if (filtered.length === 0) {
+                            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 30px; font-weight: 800; color: var(--muted);">검색 조건과 일치하는 제안 항목이 없습니다.</td></tr>`;
+                        }
+                    }
+
+                    // Attach Event Listeners (Resets limit to 5)
+                    searchInput.addEventListener("input", () => {
+                        itemsLimit = 5;
+                        renderTable();
+                    });
+                    selectCat.addEventListener("change", () => {
+                        itemsLimit = 5;
+                        renderTable();
+                    });
+                    selectDisaster.addEventListener("change", () => {
+                        itemsLimit = 5;
+                        renderTable();
+                    });
+
+                    priorityTabBtns.forEach(btn => {
+                        btn.addEventListener("click", () => {
+                            priorityTabBtns.forEach(b => b.classList.remove("active"));
+                            btn.classList.add("active");
+                            currentPriorityFilter = btn.getAttribute("data-priority");
+                            itemsLimit = 5; // Reset limit
+                            renderTable();
+                        });
+                    });
+
+                    // Show More Button Event Handler
+                    const btnShowMore = document.getElementById("btn-show-more");
+                    btnShowMore.addEventListener("click", () => {
+                        itemsLimit += 15; // Load 15 more items
+                        renderTable();
+                    });
+
+                    // Collapsible Accordion logic
+                    const btnToggle = document.getElementById("btn-toggle-accordion");
+                    const panel = document.getElementById("accordion-panel-content");
+                    const accordionDiv = document.getElementById("proposal-text-accordion");
+                    const arrow = document.getElementById("accordion-arrow");
+
+                    btnToggle.addEventListener("click", () => {
+                        const isOpen = accordionDiv.classList.contains("open");
+                        if (isOpen) {
+                            accordionDiv.classList.remove("open");
+                            panel.style.display = "none";
+                            arrow.textContent = "+";
+                        } else {
+                            accordionDiv.classList.add("open");
+                            panel.style.display = "block";
+                            arrow.textContent = "−";
+                        }
+                    });
+
+                    // Initial Render
+                    renderTable();
+                });
+            </script>
         </section>
 
         <section class="section muted">

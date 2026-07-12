@@ -7,6 +7,220 @@
     <title>재난가방 워크샵과 프로토타입 | 안심이</title>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css">
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        /* 2025 Checklist Specific Styling */
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            padding: 10px 16px;
+            border: 2px solid var(--ink);
+            background: var(--paper);
+            transition: all 0.15s ease;
+        }
+        
+        .option-label:hover {
+            background: var(--soft);
+        }
+        
+        .option-label input[type="checkbox"]:checked + span {
+            color: var(--teal);
+        }
+        
+        .checklist-table {
+            width: 100%;
+            table-layout: fixed; /* Force fixed columns to obey width */
+            border-collapse: collapse;
+            border: 3px solid var(--ink);
+            margin-top: 16px;
+            background: var(--paper);
+        }
+        
+        .checklist-table th, .checklist-table td {
+            border: 2px solid var(--ink);
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            word-break: keep-all; /* Wrap clean Korean text */
+        }
+        
+        .checklist-table th {
+            background: var(--soft);
+            font-weight: 900;
+            color: var(--ink);
+        }
+        
+        .checklist-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            border: 1px solid var(--ink);
+            border-radius: 4px;
+        }
+        
+        .checklist-badge.basic { background: #e0f2fe; color: #0369a1; }
+        .checklist-badge.infant { background: #fce7f3; color: #be185d; }
+        .checklist-badge.illness { background: #fee2e2; color: #b91c1c; }
+        .checklist-badge.pet { background: #fef3c7; color: #b45309; }
+        .checklist-badge.disability { background: #dcfce7; color: #15803d; }
+        
+        .item-row.packed {
+            background: #f8fafc;
+            opacity: 0.65;
+        }
+        
+        .item-row.packed td {
+            text-decoration: line-through;
+        }
+        
+        .item-row.packed td:first-child, .item-row.packed td:nth-child(3) {
+            text-decoration: none !important;
+        }
+        
+        /* Dynamic Grid Layout */
+        .simulator-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 28px;
+            align-items: start;
+        }
+
+        .bag-container {
+            border: 4px solid var(--ink);
+            background: #fbf9f3;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            border-radius: 16px;
+            position: sticky;
+            top: 20px;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .bag-header {
+            background: var(--soft);
+            border-bottom: 3px solid var(--ink);
+            margin: -24px -24px 20px -24px;
+            padding: 16px 24px;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bag-items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+            gap: 14px;
+            align-content: start;
+            flex-grow: 1;
+            overflow-y: auto;
+            max-height: 380px;
+            border: 3px dashed var(--ink);
+            padding: 16px;
+            background: #fdfdfd;
+            margin-bottom: 20px;
+            min-height: 200px;
+        }
+
+        .bag-item-card {
+            border: 3px solid var(--ink);
+            background: white;
+            box-shadow: 3px 3px 0 var(--ink);
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            font-size: 0.78rem;
+            font-weight: 800;
+            transition: transform 0.15s ease;
+        }
+
+        .bag-item-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 var(--ink);
+        }
+
+        .bag-item-card .remove-btn {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 20px;
+            height: 20px;
+            background: var(--red);
+            color: white;
+            border: 2px solid var(--ink);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 11px;
+            cursor: pointer;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        @media (max-width: 980px) {
+            .simulator-grid {
+                grid-template-columns: 1fr;
+            }
+            .bag-container {
+                position: static;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #checklist-simulator-section, #checklist-simulator-section * {
+                visibility: visible;
+            }
+            #checklist-simulator-section {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .checklist-options-box, #btn-copy-checklist, #bag-empty-message, #btn-print-checklist, .remove-btn, #bag-weight-warning {
+                display: none !important;
+            }
+            .simulator-grid {
+                grid-template-columns: 1fr !important;
+            }
+            .bag-container {
+                border: none !important;
+                box-shadow: none !important;
+                background: transparent !important;
+                padding: 0 !important;
+                margin-top: 20px !important;
+                page-break-before: always;
+            }
+            .bag-items-grid {
+                border: none !important;
+                background: transparent !important;
+                overflow: visible !important;
+                max-height: none !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+            }
+            .bag-item-card {
+                box-shadow: none !important;
+                border: 2px solid #000 !important;
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="site-header">
@@ -79,17 +293,26 @@
             </div>
             <div class="scenario-grid detailed">
                 <article class="scenario-card">
-                    <div class="dokdo-header">영유아 동반 가정</div>
+                    <div style="font-size: 0.95rem; font-weight: 900; color: var(--teal); margin-bottom: 8px; display: inline-flex; align-items: center; gap: 6px;">
+                        <span style="display: inline-block; width: 8px; height: 8px; background: var(--teal); border-radius: 50%;"></span>
+                        영유아 동반 가정
+                    </div>
                     <h3>분유, 기저귀, 그리고 아기띠</h3>
                     <p>재난 발생 시 전기가 끊길 것을 대비하여 액상 분유와 일회용 젖병이 필수적입니다. 또한, 양손을 자유롭게 해 피난 속도를 올릴 수 있는 신체 밀착형 아기띠가 가방 무게보다 중요하게 다루어졌습니다.</p>
                 </article>
                 <article class="scenario-card">
-                    <div class="dokdo-header">만성 질환자</div>
+                    <div style="font-size: 0.95rem; font-weight: 900; color: var(--teal); margin-bottom: 8px; display: inline-flex; align-items: center; gap: 6px;">
+                        <span style="display: inline-block; width: 8px; height: 8px; background: var(--teal); border-radius: 50%;"></span>
+                        만성 질환자
+                    </div>
                     <h3>처방전 사본과 여분 의약품</h3>
                     <p>혈압약, 당뇨약 등 매일 복용해야 하는 필수 약품의 1~2주일치 여분과 의사 처방전 사본(혹은 스마트폰 사진 보관)이 생수보다 우선순위에 배치되었습니다. 대피소 내 의약품 지원 한계를 고려한 결과입니다.</p>
                 </article>
                 <article class="scenario-card">
-                    <div class="dokdo-header">반려동물 동반 가구</div>
+                    <div style="font-size: 0.95rem; font-weight: 900; color: var(--teal); margin-bottom: 8px; display: inline-flex; align-items: center; gap: 6px;">
+                        <span style="display: inline-block; width: 8px; height: 8px; background: var(--teal); border-radius: 50%;"></span>
+                        반려동물 동반 가구
+                    </div>
                     <h3>인식표, 사료, 그리고 접이식 식기</h3>
                     <p>반려동물 동반 입소가 제한되는 대피소가 많기 때문에, 동반 가능 대피소 사전 파악과 함께 사료, 이동식 식기, 동물등록 번호가 기재된 인식표가 핵심 대피 정보 카드로 분류되었습니다.</p>
                 </article>
@@ -102,6 +325,689 @@
                 <article><span>03</span><h3>프로토타입은 준비와 대피를 연결해야 합니다.</h3><p>준비물 체크가 대피소 정보, 공식 행동요령, 연락 경로와 이어질 때 실제 서비스가 됩니다.</p></article>
             </div>
         </section>
+
+        <!-- Interactive Checklist Simulator Section -->
+        <section class="section muted" id="checklist-simulator-section">
+            <div class="section-heading compact" style="margin-bottom: 24px;">
+                <p class="eyebrow">Interactive Tool</p>
+                <h2>맞춤형 재난가방 체크리스트 시뮬레이터</h2>
+                <p>가족 구성과 생활 상황에 맞춰 나만의 재난가방 품목을 구성해 보세요. 체크된 조건에 따라 맞춤형 물품과 행동 지침이 실시간으로 추가됩니다.</p>
+            </div>
+
+            <!-- Options form -->
+            <div class="checklist-options-box" style="background: var(--paper); border: 3px solid var(--ink); padding: 24px; margin-bottom: 30px; box-shadow: var(--shadow);">
+                <h3 style="margin-top: 0; margin-bottom: 16px; font-size: 1.1rem; font-weight: 900; color: var(--teal); border-bottom: 2px solid var(--line); padding-bottom: 8px;">1단계: 가구의 구성 특성을 선택하세요.</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;">
+                    <label class="option-label">
+                        <input type="checkbox" checked disabled style="width: 18px; height: 18px; cursor: not-allowed;">
+                        <span>기본 생존용품 (필수)</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="checkbox" id="opt-infant" style="width: 18px; height: 18px; cursor: pointer;">
+                        <span>영유아 동반</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="checkbox" id="opt-illness" style="width: 18px; height: 18px; cursor: pointer;">
+                        <span>만성 질환자 포함</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="checkbox" id="opt-pet" style="width: 18px; height: 18px; cursor: pointer;">
+                        <span>반려동물 동반</span>
+                    </label>
+                    <label class="option-label">
+                        <input type="checkbox" id="opt-disability" style="width: 18px; height: 18px; cursor: pointer;">
+                        <span>이동/시각 약자 포함</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Interactive Simulator Grid Layout -->
+            <div class="simulator-grid">
+                <!-- Left Column: Table of items -->
+                <div class="checklist-view-box" style="background: var(--paper); border: 3px solid var(--ink); padding: 24px; box-shadow: var(--shadow); height: 100%;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; border-bottom: 2px solid var(--line); padding-bottom: 12px;">
+                        <h3 style="margin: 0; font-size: 1.15rem; font-weight: 900; color: var(--ink);">2단계: 내 상황에 맞춘 생존 배낭 준비 목록</h3>
+                        <button id="btn-copy-checklist" class="button secondary" style="font-size: 0.85rem; padding: 6px 14px; min-height: 36px; border: 2px solid var(--ink); cursor: pointer;">목록 텍스트 복사</button>
+                    </div>
+
+                    <!-- Live Item Table -->
+                    <div class="table-wrap" style="margin: 0;">
+                        <table class="checklist-table">
+                            <thead>
+                                <tr style="background: var(--soft);">
+                                    <th style="width: 12%; text-align: center;">준비</th>
+                                    <th style="width: 44%;">물품명 / 픽셀 아이콘</th>
+                                    <th style="width: 44%;">행동 지침 (Action Statement)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="checklist-tbody">
+                                <!-- JS will inject rows here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Right Column: Interactive Neubrutalist Backpack -->
+                <div class="bag-container" id="interactive-bag-box">
+                    <div>
+                        <div class="bag-header">
+                            <h3 style="margin: 0; font-size: 1.15rem; font-weight: 900; color: var(--ink); display: flex; align-items: center; gap: 8px;">
+                                🎒 내 생존 가방 (Go-Bag)
+                            </h3>
+                            <span id="bag-total-weight-badge" class="checklist-badge basic" style="font-size: 0.85rem; font-weight: 900; background: var(--yellow); padding: 4px 10px;">
+                                총 무게: 0.0 kg
+                            </span>
+                        </div>
+                        
+                        <div style="font-size: 0.85rem; color: var(--muted); margin-bottom: 12px; font-weight: 800; border-bottom: 1px solid var(--line); padding-bottom: 8px;">
+                            * 왼쪽 표에서 필요한 생존 용품을 체크하면 가방 카드 슬롯에 담깁니다.
+                        </div>
+                        
+                        <!-- Bag Slot Grid -->
+                        <div class="bag-items-grid" id="bag-slots-container">
+                            <!-- Pack cards injected dynamically here -->
+                            <div id="bag-empty-message" style="grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: var(--muted); font-weight: 800; font-size: 0.95rem; line-height: 1.5;">
+                                🎒 가방이 비어 있습니다.<br><span style="font-size:0.85rem; font-weight:normal;">왼쪽 표에서 필요한 아이템을 체크해 담아보세요!</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Bag stats & actions -->
+                    <div style="border-top: 3px solid var(--ink); padding-top: 16px;">
+                        <div id="bag-weight-warning" style="font-size: 0.85rem; font-weight: 800; color: var(--red); margin-bottom: 12px; display: none; background: rgba(167,71,36,0.1); border: 2px solid var(--red); padding: 8px 12px; border-radius: 6px; line-height: 1.4;">
+                            ⚠️ 경고: 가방의 총 무게가 권장 한도(여성 10kg, 아동 5kg)를 초과하고 있습니다. 실제 메고 달릴 수 있는 무게인지 검토가 필요합니다!
+                        </div>
+                        <div style="font-size: 0.8rem; color: var(--muted); margin-bottom: 14px; line-height: 1.4; font-weight: 800;">
+                            💡 <strong>가방 무게 권장 기준</strong>: 성인 남성 15kg 이하, 성인 여성 10kg 이하, 아동 체중의 10% 이하.
+                        </div>
+                        <button id="btn-print-checklist" class="button primary" style="width: 100%; font-size: 1rem; padding: 12px; min-height: 48px; border: none; cursor: pointer; color: var(--paper); font-weight: 900; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: var(--shadow);">
+                            📄 패킹 완료 및 가방 인쇄 / PDF 저장
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- JavaScript for Interactive Checklist Simulator -->
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const PIXEL_ICONS = {
+                    water: {
+                        pixels: [
+                            "...kk...",
+                            "..kbwk..",
+                            "..kbbk..",
+                            ".kbbbbk.",
+                            ".kbbbbk.",
+                            ".kbbbbk.",
+                            ".kbbbbk.",
+                            "..kkkk.."
+                        ],
+                        colors: { 'k': '#172026', 'w': '#ffffff', 'b': '#38bdf8' }
+                    },
+                    radio: {
+                        pixels: [
+                            "..kddkk.",
+                            ".kdddk..",
+                            "kkkkkkkk",
+                            "kyyyyyyk",
+                            "kykkkkyk",
+                            "kykkkkyk",
+                            "kyyyyyyk",
+                            "kkkkkkkk"
+                        ],
+                        colors: { 'k': '#172026', 'd': '#9ca3af', 'y': '#fbbf24' }
+                    },
+                    flashlight: {
+                        pixels: [
+                            "....kk..",
+                            "...kyyk.",
+                            "..kddk..",
+                            ".kddk...",
+                            "kddk....",
+                            "kk......"
+                        ],
+                        colors: { 'k': '#172026', 'y': '#fbbf24', 'd': '#6b7280' }
+                    },
+                    first_aid: {
+                        pixels: [
+                            "..kkkk..",
+                            ".kwwrrwk.",
+                            "kwwrrrwwk",
+                            "krrrrrrwk",
+                            "kwwrrrwwk",
+                            ".kwwrrwk.",
+                            "..kkkk.."
+                        ],
+                        colors: { 'k': '#172026', 'w': '#ffffff', 'r': '#ef4444' }
+                    },
+                    multitool: {
+                        pixels: [
+                            "....k...",
+                            "...kdk..",
+                            "..kdk...",
+                            ".krrk...",
+                            "krrk....",
+                            "kk......"
+                        ],
+                        colors: { 'k': '#172026', 'd': '#9ca3af', 'r': '#ef4444' }
+                    },
+                    formula: {
+                        pixels: [
+                            "...kk...",
+                            "..kwwk..",
+                            "..kppk..",
+                            ".kwwwk..",
+                            ".kwwwk..",
+                            ".kwwwk..",
+                            "..kkkk.."
+                        ],
+                        colors: { 'k': '#172026', 'w': '#ffffff', 'p': '#f472b6' }
+                    },
+                    baby_carrier: {
+                        pixels: [
+                            ".kk..kk.",
+                            "kppkkppk",
+                            "kppppppk",
+                            ".kppppk.",
+                            "..kppk..",
+                            ".kppppk.",
+                            "kk....kk"
+                        ],
+                        colors: { 'k': '#172026', 'p': '#f472b6' }
+                    },
+                    doll: {
+                        pixels: [
+                            ".k..k...",
+                            "kkkkkk..",
+                            "kyyyyk..",
+                            "kykkky..",
+                            "kyyyyk..",
+                            ".kyyk...",
+                            "kk..kk.."
+                        ],
+                        colors: { 'k': '#172026', 'y': '#fbbf24' }
+                    },
+                    diaper: {
+                        pixels: [
+                            ".kkkkkk.",
+                            "kwwwwwwk",
+                            "kwbbbbwk",
+                            "kwwwwwwk",
+                            "kwwwwwwk",
+                            ".kkkkkk."
+                        ],
+                        colors: { 'k': '#172026', 'w': '#ffffff', 'b': '#60a5fa' }
+                    },
+                    prescription: {
+                        pixels: [
+                            ".kkkkkk.",
+                            "kwwwwwwk",
+                            "kwkkkwwk",
+                            "kwwwwwk.",
+                            "kwkkkwwk",
+                            ".kkkkkk."
+                        ],
+                        colors: { 'k': '#172026', 'w': '#ffffff' }
+                    },
+                    meds: {
+                        pixels: [
+                            "...kk...",
+                            "..krrk..",
+                            "..kwwk..",
+                            "..krrk..",
+                            "..kwwk..",
+                            "..kkkk.."
+                        ],
+                        colors: { 'k': '#172026', 'r': '#ef4444', 'w': '#ffffff' }
+                    },
+                    inhaler: {
+                        pixels: [
+                            "..kkkk..",
+                            ".kddddk.",
+                            "kddbbddk",
+                            "kddbbddk",
+                            ".kkkkkk.",
+                            "..kbbk.."
+                        ],
+                        colors: { 'k': '#172026', 'd': '#9ca3af', 'b': '#3b82f6' }
+                    },
+                    collar: {
+                        pixels: [
+                            "kkkkkkkk",
+                            "krrrrrrk",
+                            "krrkyyrk",
+                            "krrkyyrk",
+                            "krrrrrrk",
+                            "kkkkkkkk"
+                        ],
+                        colors: { 'k': '#172026', 'r': '#ef4444', 'y': '#fbbf24' }
+                    },
+                    pet_food: {
+                        pixels: [
+                            "..kkkk..",
+                            ".kooook.",
+                            "kooooodk",
+                            "kooodddk",
+                            "kodddddk",
+                            ".kkkkkk."
+                        ],
+                        colors: { 'k': '#172026', 'o': '#f97316', 'd': '#78350f' }
+                    },
+                    cage: {
+                        pixels: [
+                            ".kkkkkk.",
+                            "kykkkkyk",
+                            "kykyykyk",
+                            "kykyykyk",
+                            "kykkkkyk",
+                            ".kkkkkk."
+                        ],
+                        colors: { 'k': '#172026', 'y': '#facc15' }
+                    },
+                    wheelchair: {
+                        pixels: [
+                            "..kkkk..",
+                            "..kddk..",
+                            "kkkkkkkk",
+                            "kddkdddk",
+                            "kddkdddk",
+                            "..kkkk.."
+                        ],
+                        colors: { 'k': '#172026', 'd': '#6b7280' }
+                    },
+                    glasses: {
+                        pixels: [
+                            "kkkkkkkk",
+                            "kyykyykk",
+                            "kyykyykk",
+                            "kkkkkkkk"
+                        ],
+                        colors: { 'k': '#172026', 'y': '#3b82f6' }
+                    },
+                    cane: {
+                        pixels: [
+                            "..kkkk..",
+                            ".kddddk.",
+                            "..kddk..",
+                            "...kd...",
+                            "...kd...",
+                            "...kd..."
+                        ],
+                        colors: { 'k': '#172026', 'd': '#6b7280' }
+                    }
+                };
+
+                function drawPixelIcon(id) {
+                    const iconData = PIXEL_ICONS[id];
+                    if (!iconData) return '🎒';
+                    const height = iconData.pixels.length;
+                    const width = iconData.pixels[0].length;
+                    let rects = '';
+                    for (let y = 0; y < height; y++) {
+                        for (let x = 0; x < width; x++) {
+                            const char = iconData.pixels[y][x];
+                            if (char !== '.' && iconData.colors[char]) {
+                                rects += `<rect x="${x}" y="${y}" width="1" height="1" fill="${iconData.colors[char]}"/>`;
+                            }
+                        }
+                    }
+                    return `<svg viewBox="0 0 ${width} ${height}" style="width: 32px; height: 32px; image-rendering: pixelated; display: inline-block; vertical-align: middle; border: 2px solid var(--ink); background: white; padding: 2px; box-shadow: 1px 1px 0 var(--ink); border-radius: 4px;" aria-hidden="true">${rects}</svg>`;
+                }
+
+                const CHECKLIST_ITEMS = [
+                    {
+                        id: "water",
+                        name: "생수 (1인당 3L)",
+                        category: "basic",
+                        categoryName: "기본 생존",
+                        weight: 3000,
+                        action: "재난 첫 3일을 버티기 위한 최소 음용수. 대피 가방의 하단 부분에 흔들리지 않게 분배하여 패킹합니다."
+                    },
+                    {
+                        id: "radio",
+                        name: "휴대용 라디오 & 여분 건전지",
+                        category: "basic",
+                        categoryName: "기본 생존",
+                        weight: 300,
+                        action: "통신망 두절 시 기상 경보 및 공식 대피 방송 청취용. 건전지는 방전을 막기 위해 비닐팩에 분리 보관."
+                    },
+                    {
+                        id: "flashlight",
+                        name: "고휘도 헤드랜턴/손전등",
+                        category: "basic",
+                        categoryName: "기본 생존",
+                        weight: 200,
+                        action: "정전 상태의 지하 대피소 이동 시 필수. 헤드랜턴은 양손을 자유롭게 해 주어 보행 안전을 크게 높입니다."
+                    },
+                    {
+                        id: "first_aid",
+                        name: "비상 약품 키트",
+                        category: "basic",
+                        categoryName: "기본 생존",
+                        weight: 500,
+                        action: "개인 소독약, 붕대, 연고, 해열제, 소화제 포함. 지퍼백에 밀봉하여 빗물이 스며들지 않게 합니다."
+                    },
+                    {
+                        id: "multitool",
+                        name: "다용도 칼 및 은박담요",
+                        category: "basic",
+                        categoryName: "기본 생존",
+                        weight: 350,
+                        action: "체온 보호용 은박담요는 가볍고 방풍 효과가 뛰어남. 다용도 칼은 통조림 개봉 및 텐트 로프 절단 시 사용."
+                    },
+                    {
+                        id: "formula",
+                        name: "액상 분유 & 일회용 젖병",
+                        category: "infant",
+                        categoryName: "영유아 동반",
+                        weight: 600,
+                        action: "단수 및 정전 시 물을 끓일 수 없으므로 가열이 불필요한 액상 타입 분유와 비닐 리필식 일회용 젖병을 패킹."
+                    },
+                    {
+                        id: "baby_carrier",
+                        name: "밀착형 아기띠 (포대기)",
+                        category: "infant",
+                        categoryName: "영유아 동반",
+                        weight: 400,
+                        action: "유모차는 연석 턱 및 도로 파편으로 이동이 불가능하므로, 양손을 자유롭게 해 주는 밀착형 아기띠를 최우선 지참."
+                    },
+                    {
+                        id: "doll",
+                        name: "유아용 간식 & 애착 인형",
+                        category: "infant",
+                        categoryName: "영유아 동반",
+                        weight: 300,
+                        action: "대피소의 낯선 소음과 어둠은 영유아에게 극심한 패닉을 줍니다. 영유아 안정을 도울 애착 인형/장난감 필수."
+                    },
+                    {
+                        id: "diaper",
+                        name: "물티슈 & 일회용 기저귀",
+                        category: "infant",
+                        categoryName: "영유아 동반",
+                        weight: 500,
+                        action: "대피소 내 화장실 및 수도 시설 미비에 대비하여 충분한 용량의 물티슈와 방수 밀봉 가능한 일회용 기저귀 백 확보."
+                    },
+                    {
+                        id: "prescription",
+                        name: "의사 처방전 사본",
+                        category: "illness",
+                        categoryName: "만성 질환",
+                        weight: 10,
+                        action: "복용 약품명 및 용량을 확실히 증명하기 위해 처방전 종이 사본을 지참하거나 스마트폰에 사진으로 상시 보관."
+                    },
+                    {
+                        id: "meds",
+                        name: "만성질환 약품 (1~2주 분량)",
+                        category: "illness",
+                        categoryName: "만성 질환",
+                        weight: 150,
+                        action: "혈압, 당뇨, 천식 등 매일 먹어야 하는 약은 대피소 보급소에 비축되지 않으므로 개별적으로 2주 여분을 항시 준비."
+                    },
+                    {
+                        id: "inhaler",
+                        name: "휴대용 흡입기/자가의료기기",
+                        category: "illness",
+                        categoryName: "만성 질환",
+                        weight: 200,
+                        action: "천식 환자용 흡입기 또는 정밀 복약 보조 기구는 전용 파우치에 넣어 대피 가방에서 가장 꺼내기 쉬운 외측 탭에 수납."
+                    },
+                    {
+                        id: "collar",
+                        name: "동물등록 인식표 및 목줄",
+                        category: "pet",
+                        categoryName: "반려동물",
+                        weight: 150,
+                        action: "혼란스러운 대피 상황에서 반려 동물의 가출/실종에 대비해 등록 번호와 보호자 번호가 기재된 인식표를 목에 상시 착용."
+                    },
+                    {
+                        id: "pet_food",
+                        name: "접이식 식기 & 사료 (3일치)",
+                        category: "pet",
+                        categoryName: "반려동물",
+                        weight: 900,
+                        action: "대피소에서는 반려동물용 급수가 제공되지 않습니다. 휴대가 용이한 폴딩형 실리콘 식기와 1회씩 소분된 사료 준비."
+                    },
+                    {
+                        id: "cage",
+                        name: "소형 이동 케이지 / 배변백",
+                        category: "pet",
+                        categoryName: "반려동물",
+                        weight: 1200,
+                        action: "대피소 입소 거부 시 야외 대기나 차량 내 대피를 고려하여 케이지 필수. 위생 관리를 위한 탈취 배변 패드 다량 지참."
+                    },
+                    {
+                        id: "wheelchair",
+                        name: "휠체어 예비 부품 & 충전기",
+                        category: "disability",
+                        categoryName: "이동 약자",
+                        weight: 1500,
+                        action: "수동 휠체어의 경우 예비 타이어/공구, 전동 휠체어의 경우 대피층 충전기 및 수동 전환 모드 위치 사전 확인."
+                    },
+                    {
+                        id: "glasses",
+                        name: "예비 안경 / 렌즈",
+                        category: "disability",
+                        categoryName: "이동 약자",
+                        weight: 100,
+                        action: "시각 보행 약자의 경우 대피 중 안경 파손 시 대피 안내판 식별 및 독립 보행이 아예 불가능하므로 예비 안경 패킹."
+                    },
+                    {
+                        id: "cane",
+                        name: "보행 보조용 지팡이/지지대",
+                        category: "disability",
+                        categoryName: "이동 약자",
+                        weight: 400,
+                        action: "엘리베이터 사용 불가능 시 완만한 계단/경사로 보행을 지지해 줄 접이식 지팡이 또는 보도 턱을 넘기 쉬운 지지대 챙김."
+                    }
+                ];
+
+                const tbody = document.getElementById("checklist-tbody");
+                const checkboxes = {
+                    infant: document.getElementById("opt-infant"),
+                    illness: document.getElementById("opt-illness"),
+                    pet: document.getElementById("opt-pet"),
+                    disability: document.getElementById("opt-disability")
+                };
+
+                // Track packed state by item id
+                const packedStatus = {};
+
+                // Default check essential items
+                CHECKLIST_ITEMS.forEach(item => {
+                    if (item.category === "basic") {
+                        packedStatus[item.id] = true;
+                    }
+                });
+
+                function formatWeight(g) {
+                    if (g >= 1000) {
+                        return `${(g / 1000).toFixed(1)} kg`;
+                    }
+                    return `${g} g`;
+                }
+
+                function renderChecklist() {
+                    tbody.innerHTML = "";
+                    
+                    const activeCategories = ["basic"];
+                    if (checkboxes.infant.checked) activeCategories.push("infant");
+                    if (checkboxes.illness.checked) activeCategories.push("illness");
+                    if (checkboxes.pet.checked) activeCategories.push("pet");
+                    if (checkboxes.disability.checked) activeCategories.push("disability");
+
+                    const filtered = CHECKLIST_ITEMS.filter(item => activeCategories.includes(item.category));
+
+                    filtered.forEach((item, index) => {
+                        const row = document.createElement("tr");
+                        row.className = "item-row";
+                        const isPacked = !!packedStatus[item.id];
+                        if (isPacked) {
+                            row.classList.add("packed");
+                        }
+
+                        row.innerHTML = `
+                            <td style="text-align: center; padding: 12px; vertical-align: middle;">
+                                <input type="checkbox" class="pack-item-checkbox" data-id="${item.id}" ${isPacked ? 'checked' : ''} style="width: 20px; height: 20px; cursor: pointer;">
+                            </td>
+                            <td style="padding: 12px; vertical-align: middle;">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    ${drawPixelIcon(item.id)}
+                                    <div>
+                                        <div style="font-weight: 800; color: var(--ink); font-size: 0.95rem;">${item.name}</div>
+                                        <div style="margin-top: 4px; display: flex; align-items: center; gap: 6px;">
+                                            <span class="checklist-badge ${item.category}">${item.categoryName}</span>
+                                            <span style="font-size: 0.75rem; color: var(--muted); font-weight: 800;">⚖️ ${formatWeight(item.weight)}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="padding: 12px; color: var(--muted); font-size: 0.88rem; vertical-align: middle;">${item.action}</td>
+                        `;
+
+                        // Add toggle event listener to row checkbox
+                        const cb = row.querySelector(".pack-item-checkbox");
+                        cb.addEventListener("change", (e) => {
+                            packedStatus[item.id] = e.target.checked;
+                            renderChecklist(); // Complete refresh
+                        });
+
+                        tbody.appendChild(row);
+                    });
+
+                    // Render Packed Backpack Cards
+                    renderBagSlots(filtered);
+                }
+
+                function renderBagSlots(filtered) {
+                    const slotsContainer = document.getElementById("bag-slots-container");
+                    const emptyMsg = document.getElementById("bag-empty-message");
+                    
+                    // Clear previous dynamic cards (keep empty message placeholder)
+                    const cards = slotsContainer.querySelectorAll(".bag-item-card");
+                    cards.forEach(c => c.remove());
+
+                    const packedItems = filtered.filter(item => !!packedStatus[item.id]);
+
+                    if (packedItems.length === 0) {
+                        emptyMsg.style.display = "block";
+                    } else {
+                        emptyMsg.style.display = "none";
+                        
+                        // Inject packed item cards
+                        packedItems.forEach(item => {
+                            const card = document.createElement("div");
+                            card.className = "bag-item-card";
+                            card.innerHTML = `
+                                <span class="remove-btn" data-id="${item.id}">×</span>
+                                ${drawPixelIcon(item.id)}
+                                <div style="margin-top: 6px; font-size: 0.75rem; line-height: 1.2; word-break: break-all; max-width: 100%; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;" title="${item.name}">
+                                    ${item.name.split(" ")[0]}
+                                </div>
+                                <div style="font-size: 0.68rem; color: var(--muted); margin-top: 2px;">
+                                    ${formatWeight(item.weight)}
+                                </div>
+                            `;
+
+                            // Bind remove event on x button click
+                            card.querySelector(".remove-btn").addEventListener("click", () => {
+                                packedStatus[item.id] = false;
+                                renderChecklist();
+                            });
+
+                            slotsContainer.appendChild(card);
+                        });
+                    }
+
+                    // Calculate Bag Stats
+                    let totalWeight = 0;
+                    packedItems.forEach(item => {
+                        totalWeight += item.weight;
+                    });
+
+                    const weightBadge = document.getElementById("bag-total-weight-badge");
+                    weightBadge.textContent = `총 무게: ${formatWeight(totalWeight)}`;
+
+                    // Alert if total weight exceeds 10kg
+                    const weightWarning = document.getElementById("bag-weight-warning");
+                    if (totalWeight > 10000) {
+                        weightWarning.style.display = "block";
+                        weightBadge.style.background = "var(--red)";
+                        weightBadge.style.color = "white";
+                    } else {
+                        weightWarning.style.display = "none";
+                        weightBadge.style.background = "var(--yellow)";
+                        weightBadge.style.color = "var(--ink)";
+                    }
+                }
+
+                // Attach change events to option checkboxes
+                Object.values(checkboxes).forEach(cb => {
+                    cb.addEventListener("change", () => {
+                        // Reset packed state for categories that get deselected
+                        const activeCategories = ["basic"];
+                        if (checkboxes.infant.checked) activeCategories.push("infant");
+                        if (checkboxes.illness.checked) activeCategories.push("illness");
+                        if (checkboxes.pet.checked) activeCategories.push("pet");
+                        if (checkboxes.disability.checked) activeCategories.push("disability");
+
+                        CHECKLIST_ITEMS.forEach(item => {
+                            if (!activeCategories.includes(item.category)) {
+                                packedStatus[item.id] = false;
+                            }
+                        });
+                        renderChecklist();
+                    });
+                });
+
+                // Copy to clipboard logic
+                const btnCopy = document.getElementById("btn-copy-checklist");
+                btnCopy.addEventListener("click", () => {
+                    const activeCategories = ["basic"];
+                    if (checkboxes.infant.checked) activeCategories.push("infant");
+                    if (checkboxes.illness.checked) activeCategories.push("illness");
+                    if (checkboxes.pet.checked) activeCategories.push("pet");
+                    if (checkboxes.disability.checked) activeCategories.push("disability");
+
+                    const filtered = CHECKLIST_ITEMS.filter(item => activeCategories.includes(item.category));
+                    const packedItems = filtered.filter(item => !!packedStatus[item.id]);
+
+                    let text = "=== 안심이 내 재난가방 패킹 리스트 ===\n";
+                    let totalWeight = 0;
+
+                    if (packedItems.length === 0) {
+                        text += "\n[가방이 비어 있습니다. 필요 물품을 체크해 보세요!]\n";
+                    } else {
+                        packedItems.forEach((item, idx) => {
+                            text += `\n${idx + 1}. [V] ${item.name} (${item.categoryName})\n`;
+                            text += `   - 무게: ${formatWeight(item.weight)}\n`;
+                            text += `   - 지침: ${item.action}\n`;
+                            totalWeight += item.weight;
+                        });
+                    }
+
+                    text += `\n---------------------------------\n`;
+                    text += `총 패킹 품목: ${packedItems.length}개 / 총 무게: ${formatWeight(totalWeight)}\n`;
+                    text += `나를 지키는 준비, 안심이와 함께합니다. (ansim.codefor.kr)`;
+
+                    navigator.clipboard.writeText(text).then(() => {
+                        alert("패킹 완료된 생존배낭 목록이 클립보드에 복사되었습니다! 메모장 등에 붙여넣어 보관하세요.");
+                    }).catch(err => {
+                        console.error("복사 실패:", err);
+                        alert("클립보드 복사에 실패했습니다. 수동으로 복사해주세요.");
+                    });
+                });
+
+                // Print logic
+                const btnPrint = document.getElementById("btn-print-checklist");
+                btnPrint.addEventListener("click", () => {
+                    window.print();
+                });
+
+                // Initial render
+                renderChecklist();
+            });
+        </script>
     </main>
     <footer class="site-footer">
         <div>

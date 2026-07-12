@@ -1,44 +1,472 @@
-﻿{
-  "title": "Shelter data proposal for civic use",
-  "project": "2026 대피소 탐방과 데이터 제안",
-  "version": "public-draft-2026-07",
-  "principles": [
-    "주소와 좌표를 넘어 실제 이용 가능성을 설명한다.",
-    "담당주체와 연락처를 대피소 기본 정보로 본다.",
-    "없음, 불가, 확인 안 됨을 유효한 데이터 값으로 기록한다.",
-    "재난 유형별로 필요한 대피소 정보가 다르다는 점을 반영한다."
-  ],
-  "categories": [
+[
     {
-      "id": "governance",
-      "name": "담당주체와 운영",
-      "fields": ["관리 담당 부서", "대표 유선 연락처", "운영 주체", "개방 조건", "야간/휴일 확인 경로"]
+        "no": "1.0",
+        "category": "위치·주소",
+        "subcategory": "위치·기본",
+        "item_ko": "대피소 좌표·주소",
+        "item_en": "텍스트/좌표",
+        "priority": "공통",
+        "reason_ko": "기존",
+        "status_ko": "있음"
     },
     {
-      "id": "accessibility",
-      "name": "접근성",
-      "fields": ["접근 가능한 출입구", "무단차 경로", "경사로", "엘리베이터 운행 층", "휠체어 접근 가능 여부", "장애인 화장실"]
+        "no": "2.0",
+        "category": "수용 인원",
+        "subcategory": "위치·기본",
+        "item_ko": "최대 수용 가능 인원",
+        "item_en": "수치",
+        "priority": "공통",
+        "reason_ko": "기존",
+        "status_ko": "있음"
     },
     {
-      "id": "wayfinding",
-      "name": "경로와 안내",
-      "fields": ["입구 위치 설명", "외부 대피소 표식", "내부 안내도", "대피층", "야간 시인성", "침수 위험 구간"]
+        "no": "3.0",
+        "category": "수용 면적",
+        "subcategory": "위치·기본",
+        "item_ko": "대피 가능 면적",
+        "item_en": "수치(㎡)",
+        "priority": "공통",
+        "reason_ko": "기존",
+        "status_ko": "있음"
     },
     {
-      "id": "living_conditions",
-      "name": "생활조건",
-      "fields": ["화장실", "식수", "전기", "통신", "냉난방", "대기 가능 공간", "반려동물 동반 가능 여부"]
+        "no": "4.0",
+        "category": "대비 재난유형",
+        "subcategory": "위치·기본",
+        "item_ko": "지진/민방위/수해 등 지정 유형",
+        "item_en": "범주",
+        "priority": "공통",
+        "reason_ko": "기존",
+        "status_ko": "있음"
     },
     {
-      "id": "data_gaps",
-      "name": "결손정보",
-      "fields": ["없음", "불가", "확인 안 됨", "현장 확인 필요", "제보 필요 항목"]
+        "no": "5.0",
+        "category": "관리 담당 부서",
+        "subcategory": "담당주체·연락처",
+        "item_ko": "대피소를 실제 관할하는 부서(사회복지과/주민복지과/시설물관리과 등)",
+        "item_en": "텍스트",
+        "priority": "공통",
+        "reason_ko": "P1",
+        "status_ko": "없음"
+    },
+    {
+        "no": "6.0",
+        "category": "대표 연락처(유선)",
+        "subcategory": "담당주체·연락처",
+        "item_ko": "담당 부서·대피소 대표 전화번호",
+        "item_en": "연락처",
+        "priority": "공통",
+        "reason_ko": "P1",
+        "status_ko": "없음"
+    },
+    {
+        "no": "7.0",
+        "category": "운영 주체",
+        "subcategory": "담당주체·연락처",
+        "item_ko": "공공/민간/혼합 등 운영 방식",
+        "item_en": "범주",
+        "priority": "공통",
+        "reason_ko": "P2",
+        "status_ko": "없음"
+    },
+    {
+        "no": "8.0",
+        "category": "관할 기초의원",
+        "subcategory": "담당주체·연락처",
+        "item_ko": "해당 지역 군·시의원 및 연락 정보",
+        "item_en": "텍스트",
+        "priority": "공통",
+        "reason_ko": "P2",
+        "status_ko": "없음"
+    },
+    {
+        "no": "9.0",
+        "category": "지역 지원자원 명단",
+        "subcategory": "담당주체·연락처",
+        "item_ko": "유사시 역할 가능한 지역 사회적기업·협동조합·자활기업",
+        "item_en": "텍스트",
+        "priority": "공통",
+        "reason_ko": "P2",
+        "status_ko": "없음"
+    },
+    {
+        "no": "10.0",
+        "category": "휠체어 접근 가능",
+        "subcategory": "접근성(배리어프리)",
+        "item_ko": "입구~대피공간 휠체어 이동 가능 여부",
+        "item_en": "Boolean",
+        "priority": "공통",
+        "reason_ko": "P1",
+        "status_ko": "없음"
+    },
+    {
+        "no": "11.0",
+        "category": "경사로 유무",
+        "subcategory": "접근성(배리어프리)",
+        "item_ko": "경사로 설치 여부",
+        "item_en": "Boolean",
+        "priority": "공통",
+        "reason_ko": "P1",
+        "status_ko": "없음"
+    },
+    {
+        "no": "12.0",
+        "category": "엘리베이터 유무·대피층수",
+        "subcategory": "접근성(배리어프리)",
+        "item_ko": "엘리베이터 수와 실제 대피 공간이 위치한 층",
+        "item_en": "Boolean+수치",
+        "priority": "공통",
+        "reason_ko": "P1",
+        "status_ko": "없음"
+    },
+    {
+        "no": "13.0",
+        "category": "장애인 화장실 유무",
+        "subcategory": "접근성(배리어프리)",
+        "item_ko": "장애인용 화장실 설치 여부",
+        "item_en": "Boolean",
+        "priority": "공통",
+        "reason_ko": "P1",
+        "status_ko": "없음"
+    },
+    {
+        "no": "14.0",
+        "category": "반려동물 동반 가능",
+        "subcategory": "접근성(배리어프리)",
+        "item_ko": "반려동물 동반 입소 가능 여부",
+        "item_en": "Boolean",
+        "priority": "공통",
+        "reason_ko": "P1",
+        "status_ko": "없음"
+    },
+    {
+        "no": "15.0",
+        "category": "가족 단위 수용 가능",
+        "subcategory": "접근성(배리어프리)",
+        "item_ko": "가족 단위(대형 텐트 등) 수용 가능 여부",
+        "item_en": "Boolean",
+        "priority": "공통",
+        "reason_ko": "P1",
+        "status_ko": "없음"
+    },
+    {
+        "no": "16.0",
+        "category": "영유아·수유 시설",
+        "subcategory": "접근성(배리어프리)",
+        "item_ko": "수유실·영유아 대비 여부",
+        "item_en": "Boolean",
+        "priority": "공통",
+        "reason_ko": "P2",
+        "status_ko": "없음"
+    },
+    {
+        "no": "17.0",
+        "category": "이동지원(버스·셔틀)",
+        "subcategory": "접근성(배리어프리)",
+        "item_ko": "대피소~생활권 이동수단 운행 여부·횟수",
+        "item_en": "텍스트",
+        "priority": "공통",
+        "reason_ko": "P2",
+        "status_ko": "없음"
+    },
+    {
+        "no": "18.0",
+        "category": "샤워시설 유무·개수",
+        "subcategory": "위생·생활시설",
+        "item_ko": "샤워 가능 여부 및 개수",
+        "item_en": "Boolean+수치",
+        "priority": "공통",
+        "reason_ko": "P1",
+        "status_ko": "없음"
+    },
+    {
+        "no": "19.0",
+        "category": "화장실 개수·면적",
+        "subcategory": "위생·생활시설",
+        "item_ko": "화장실 수·면적(인원당 기준 대비)",
+        "item_en": "수치",
+        "priority": "공통",
+        "reason_ko": "P1",
+        "status_ko": "없음"
+    },
+    {
+        "no": "20.0",
+        "category": "취사시설 유무",
+        "subcategory": "위생·생활시설",
+        "item_ko": "자체 취사 가능 여부",
+        "item_en": "Boolean",
+        "priority": "공통",
+        "reason_ko": "P2",
+        "status_ko": "없음"
+    },
+    {
+        "no": "21.0",
+        "category": "세탁시설·세탁차 접근",
+        "subcategory": "위생·생활시설",
+        "item_ko": "세탁 가능 여부/세탁차 지원 가능성",
+        "item_en": "Boolean",
+        "priority": "공통",
+        "reason_ko": "P3",
+        "status_ko": "없음"
+    },
+    {
+        "no": "22.0",
+        "category": "냉·난방 설비",
+        "subcategory": "위생·생활시설",
+        "item_ko": "냉방·난방 가능 여부",
+        "item_en": "Boolean",
+        "priority": "공통",
+        "reason_ko": "P2",
+        "status_ko": "없음"
+    },
+    {
+        "no": "23.0",
+        "category": "야간 조명·수면환경",
+        "subcategory": "위생·생활시설",
+        "item_ko": "취침 시 조명 분리·암막 가능 여부",
+        "item_en": "Boolean",
+        "priority": "공통",
+        "reason_ko": "P2",
+        "status_ko": "없음"
+    },
+    {
+        "no": "24.0",
+        "category": "전기·콘센트·와이파이",
+        "subcategory": "위생·생활시설",
+        "item_ko": "충전 인프라·통신 가용성",
+        "item_en": "Boolean",
+        "priority": "공통",
+        "reason_ko": "P2",
+        "status_ko": "부분"
+    },
+    {
+        "no": "25.0",
+        "category": "침대(바닥생활 대체)",
+        "subcategory": "위생·생활시설",
+        "item_ko": "라꾸라꾸 등 침대 제공 가능 여부",
+        "item_en": "Boolean",
+        "priority": "공통",
+        "reason_ko": "P3",
+        "status_ko": "없음"
+    },
+    {
+        "no": "26.0",
+        "category": "실제 거주 가능 여부",
+        "subcategory": "유형별 특수",
+        "item_ko": "잠깐 대피용 vs 숙박·거주 가능 공간 구분",
+        "item_en": "범주",
+        "priority": "공통",
+        "reason_ko": "P1",
+        "status_ko": "없음"
+    },
+    {
+        "no": "27.0",
+        "category": "야외 대피소 시설물",
+        "subcategory": "유형별 특수",
+        "item_ko": "운동장 등 야외 시설물(테니스장·농구대·벤치·정글짐)",
+        "item_en": "텍스트",
+        "priority": "지진·공통",
+        "reason_ko": "P2",
+        "status_ko": "없음"
+    },
+    {
+        "no": "28.0",
+        "category": "지하주차장 시설",
+        "subcategory": "유형별 특수",
+        "item_ko": "민방위 대피소 관리실·화장실·전기차 충전 등",
+        "item_en": "텍스트",
+        "priority": "민방위",
+        "reason_ko": "P2",
+        "status_ko": "없음"
+    },
+    {
+        "no": "29.0",
+        "category": "게시판형 정보판 유무",
+        "subcategory": "유형별 특수",
+        "item_ko": "현장 정보 공유 보드 설치 여부",
+        "item_en": "Boolean",
+        "priority": "공통",
+        "reason_ko": "P2",
+        "status_ko": "없음"
+    },
+    {
+        "no": "30.0",
+        "category": "결손정보 명시",
+        "subcategory": "결손정보",
+        "item_ko": "‘장애인 대피 불가’·‘샤워시설 없음’ 등 부재 자체를 기록",
+        "item_en": "텍스트",
+        "priority": "공통",
+        "reason_ko": "P1",
+        "status_ko": "없음"
+    },
+    {
+        "no": "31.0",
+        "category": "비축 천막·텐트 수량",
+        "subcategory": "비축자원",
+        "item_ko": "보유 천막·텐트 동수",
+        "item_en": "수치",
+        "priority": "공통",
+        "reason_ko": "P3",
+        "status_ko": "부분"
+    },
+    {
+        "no": "32.0",
+        "category": "재난물품 비축 현황",
+        "subcategory": "비축자원",
+        "item_ko": "은박담요·매트·침대 등 비축 수량",
+        "item_en": "수치",
+        "priority": "공통",
+        "reason_ko": "P3",
+        "status_ko": "부분"
+    },
+    {
+        "no": "33.0",
+        "category": "재난구호기금 잔액",
+        "subcategory": "비축자원",
+        "item_ko": "지자체별 재난구호기금 규모",
+        "item_en": "수치",
+        "priority": "공통",
+        "reason_ko": "P3",
+        "status_ko": "부분"
+    },
+    {
+        "no": "34.0",
+        "category": "실시간 수용 인원",
+        "subcategory": "현황(동적·민감)",
+        "item_ko": "현재 체류 인원",
+        "item_en": "수치",
+        "priority": "공통",
+        "reason_ko": "P3",
+        "status_ko": "없음"
+    },
+    {
+        "no": "35.0",
+        "category": "취약계층 현황 수",
+        "subcategory": "현황(동적·민감)",
+        "item_ko": "고령·장애·와병·영유아·임산부·외국인·반려동물 수",
+        "item_en": "수치",
+        "priority": "공통",
+        "reason_ko": "P3",
+        "status_ko": "없음"
+    },
+    {
+        "no": "36.0",
+        "category": "지원·방문 내역",
+        "subcategory": "현황(동적·민감)",
+        "item_ko": "누가 와서 무엇을 지원했는지 이력",
+        "item_en": "텍스트",
+        "priority": "공통",
+        "reason_ko": "P3",
+        "status_ko": "없음"
+    },
+    {
+        "no": "37.0",
+        "category": "물품 수요·재고",
+        "subcategory": "현황(동적·민감)",
+        "item_ko": "현장 필요 물품과 재고 현황",
+        "item_en": "텍스트",
+        "priority": "공통",
+        "reason_ko": "P3",
+        "status_ko": "없음"
+    },
+    {
+        "no": "38.0",
+        "category": "출입구(정문/후문) 위치·접근 가능 출입구",
+        "subcategory": "접근 경로·안내",
+        "item_ko": "어느 출입구로 진입해야 하는지(정문/후문 위치·접근성)",
+        "item_en": "텍스트/좌표",
+        "priority": "공통",
+        "reason_ko": "P1",
+        "status_ko": "없음"
+    },
+    {
+        "no": "39.0",
+        "category": "대피소 표지판(사인) 유무·위치",
+        "subcategory": "안내·표지",
+        "item_ko": "건물·입구에 대피소임을 알리는 표지 존재 여부",
+        "item_en": "Boolean+텍스트",
+        "priority": "공통",
+        "reason_ko": "P1",
+        "status_ko": "없음"
+    },
+    {
+        "no": "40.0",
+        "category": "입구·야간 외부 시인성",
+        "subcategory": "안내·표지",
+        "item_ko": "야간 도달 시 입구를 식별할 수 있는 조명·표지",
+        "item_en": "범주",
+        "priority": "공통",
+        "reason_ko": "P2",
+        "status_ko": "없음"
+    },
+    {
+        "no": "41.0",
+        "category": "식수·급수 시설 위치",
+        "subcategory": "위생·생활시설",
+        "item_ko": "식수 제공·급수 가능 지점 위치",
+        "item_en": "Boolean+텍스트",
+        "priority": "공통",
+        "reason_ko": "P2",
+        "status_ko": "없음"
+    },
+    {
+        "no": "42.0",
+        "category": "시설 내부 안내(화장실·식수·구역 배치도)",
+        "subcategory": "안내·표지",
+        "item_ko": "대피소 내부 시설 위치 안내도·사이니지",
+        "item_en": "텍스트/이미지",
+        "priority": "공통",
+        "reason_ko": "P2",
+        "status_ko": "없음"
+    },
+    {
+        "no": "43.0",
+        "category": "접근 경로 보행환경(인도 유무·턱/연석)",
+        "subcategory": "접근 경로",
+        "item_ko": "대피소까지 경로의 보도 유무·턱·차도 혼재 등 보행 안전",
+        "item_en": "범주",
+        "priority": "공통",
+        "reason_ko": "P2",
+        "status_ko": "없음"
+    },
+    {
+        "no": "44.0",
+        "category": "경로 침수위험 구간(저지대·침수이력)",
+        "subcategory": "접근 경로",
+        "item_ko": "경로상 침수 가능·저지대 구간(시나리오 A/B 판단 근거)",
+        "item_en": "범주/좌표",
+        "priority": "자연재난(수해)",
+        "reason_ko": "P1",
+        "status_ko": "부분"
+    },
+    {
+        "no": "45.0",
+        "category": "대피소 입구 기준 좌표·현위치/방위 표시",
+        "subcategory": "정보·데이터(지도품질)",
+        "item_ko": "건물 중심이 아닌 실제 입구 좌표, 현재위치·방위 표시 지원",
+        "item_en": "좌표",
+        "priority": "공통",
+        "reason_ko": "P2",
+        "status_ko": "부분"
+    },
+    {
+        "no": "46.0",
+        "category": "대피소 개방·운영 상태(동적)",
+        "subcategory": "현황(동적·민감)",
+        "item_ko": "현재 개방/운영 여부(평시 잠금 여부 포함)",
+        "item_en": "범주",
+        "priority": "공통",
+        "reason_ko": "P3",
+        "status_ko": "없음"
+    },
+    {
+        "no": "47.0",
+        "category": "대피소 유형의 시민 친화적 설명",
+        "subcategory": "안내·표지",
+        "item_ko": "민방위/수해/지진 등 유형별로 ‘어떤 재난에 가는 곳’인지 쉬운 설명",
+        "item_en": "텍스트",
+        "priority": "공통",
+        "reason_ko": "P2",
+        "status_ko": "부분"
     }
-  ],
-  "scenario_checks": [
-    { "persona": "영유아 동반 가족", "checks": ["유모차 이동 가능 경로", "화장실", "대기 공간", "야간 운영 여부"] },
-    { "persona": "휠체어 이용자", "checks": ["무단차 입구", "엘리베이터 운행 층", "경사로", "장애인 화장실"] },
-    { "persona": "반려동물 동반 가구", "checks": ["동반 가능 여부", "분리 대기 공간", "배변 처리", "문의 연락처"] },
-    { "persona": "지하주차장형 대피소", "checks": ["입구 표식", "내부 안내", "대피층", "식수와 화장실 위치"] }
-  ]
-}
+]

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="대피소 데이터 항목 제안: 사람 중심의 재난 정보를 향해 - 안심이 팀이 진행한 대피소 현장 탐방과 전문가 인터뷰의 비하인드와 데이터 제안">
+    <title>대피소 데이터 항목 제안: 사람 중심의 재난 정보를 향해 | 안심이</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="../index.html">
+            <svg class="brand-logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width: 20px; height: 20px; vertical-align: middle;">
+                <path d="M 6 16 L 16 6 L 26 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <circle cx="11" cy="21" r="3.5" stroke="currentColor" stroke-width="3" />
+                <circle cx="21" cy="21" r="3.5" stroke="currentColor" stroke-width="3" />
+            </svg>
+            <span>안심이</span>
+        </a>
+        <nav class="nav-links" aria-label="주요 메뉴">
+            <a href="../index.html">홈</a>
+            <a href="../projects/index.html">프로젝트</a>
+            <a href="../wiki.html">위키</a>
+            <a href="../blog.html" aria-current="page">블로그</a>
+        </nav>
+    </header>
+    <main>
+        <section class="sub-hero">
+            <p class="eyebrow">2026.07 · Fieldwork & Proposal</p>
+            <h1>대피소 데이터 항목 제안: 사람 중심의 재난 정보를 향해</h1>
+            <p class="lead">시민 현장 탐방과 재난구호 전문가 인터뷰를 통해 도출한 47개 대피소 데이터 항목 제안서의 핵심 내용과 비하인드 스토리를 공유합니다.</p>
+            <div class="blog-nav">
+                <a href="../projects/2026-shelter-data.html" style="font-weight: 800;">제안서 및 47개 항목 보러가기 ↗</a>
+                <a href="../blog.html">블로그 목록</a>
+            </div>
+        </section>
+        <section class="section article-layout">
+            <article class="article-body">
+                <p>안녕하세요? 사람이 중심인 재난 안전 정보를 연구하고 실험하는 <strong>안심이 팀</strong>입니다.</p>
+                <p>지난 5월과 6월, 저희 팀은 대피소를 지도 속 하나의 '점'이 아닌 시민들이 재난 시 실제로 도달하고 며칠간 머물러야 하는 '생활 공간'으로 재정의하는 연구 프로젝트를 수행했습니다. 시민들이 휠체어를 타거나, 아이를 안고, 반려동물과 함께 대피소를 직접 찾아가는 <strong>페르소나 현장 탐방</strong>을 실시했고, 국제 재난 긴급구호 총괄 전문가와 108분간의 <strong>심층 인터뷰</strong>를 나누었습니다.</p>
+                <p>그 결과, 행안부 안전디딤돌 등 기존 공공데이터에 반드시 추가되어야 할 <strong>47개의 대피소 데이터 항목 후보</strong>를 최종 정립했습니다. 본 글에서는 그 핵심 문제의식과 제안 사항을 간략히 정리해 소개합니다.</p>
+
+                <hr>
+
+                <h3>1. "대피소는 지금 주소밖에 없다"</h3>
+                <p>인터뷰 중 구호 전문가가 던진 이 한마디는 기존 공공데이터의 현주소를 날카롭게 관통했습니다. 현재 대피소 공공데이터는 위치(주소·좌표)와 수용 면적, 명칭 같은 <strong>행정 관리(공급자) 편의적 정보</strong> 위주로만 개방되어 있습니다.</p>
+                <p>하지만 정작 시민들이 밤에 홍수 경보를 듣고 대피소로 가려고 할 때, <em>'지금 대피소가 개방되어 운영 중인가?', '휠체어가 진입 가능한 경사로나 입구가 있는가?', '화장실과 샤워실 개수는 수용 인원 대비 충분한가?', '반려동물을 동반하고 입소할 수 있는가?'</em> 같은 생존에 직결된 핵심 정보들은 완전히 결손되어 있습니다. 주소만 믿고 갔다가 대피소 문이 잠겨 있거나 휠체어로 들어갈 수 없어 헛걸음하게 된다면, 그것은 또 다른 재난으로 번지게 됩니다.</p>
+
+                <h3>2. 데이터화의 최우선 순위: 담당주체와 결손정보 명시</h3>
+                <p>안심이 팀은 47개 스키마 제안 중 특히 <strong>두 가지 설계 원칙</strong>을 최우선(P1)으로 제시했습니다.</p>
+                <ul>
+                    <li><strong>담당 주체와 유선 대표 연락처의 데이터화</strong>: 공간 좌표보다 유사시 즉각 소통할 수 있는 주민센터나 관할 지자체 담당 부서의 대표 전화번호가 대피 정보의 가장 기본이어야 합니다.</li>
+                    <li><strong>부재(결손정보) 자체의 기록</strong>: 전문가는 <em>"샤워 시설이 없거나 장애인 대피가 불가능하다면, 데이터에 솔직하게 '없음' 혹은 '불가'라고 적어주는 것이 시민이 다른 대피소를 선택할 수 있게 돕는 가장 소중한 가치"</em>라고 강조했습니다.</li>
+                </ul>
+
+                <h3>3. 대피소까지 가는 '보행 경로'와 '입구'의 중요성</h3>
+                <p>시민 현장 탐방에서 대피소 건물의 중심 좌표만 지도 앱에 표시되어, 실제 휠체어를 탄 대원이 진입하기 위해 정문이 아닌 어느 골목 후문 슬로프로 가야 하는지 안내해 주는 정보가 없어 큰 혼란을 겪었습니다. 또한 경로 상 인도가 없거나 턱이 높아서 휠체어가 아예 전복될 뻔한 물리적 위험도 빈번했습니다. 점 데이터 중심의 정보에서 벗어나, 대피소 <strong>실제 입구 좌표</strong>와 <strong>이동 경로의 배리어프리 조건</strong>이 공공데이터로 수집되어야 하는 이유입니다.</p>
+
+                <hr>
+
+                <p>안심이 팀은 이번에 정립한 47개 스키마 데이터를 템플릿화하여 향후 시민들이 직접 스마트폰으로 동네 대피소를 탐방하고 검증할 수 있는 크라우드소싱 도구로 발전시킬 계획입니다. 상세한 47개 제안 스키마 항목과 상세한 타당성 설명서 전문은 <a href="../projects/2026-shelter-data.html">[2026 대피소 탐방과 데이터 제안]</a> 프로젝트 페이지에서 실시간 검색 및 필터를 통해 살펴보실 수 있으며, 원본 JSON 파일도 직접 내려받을 수 있습니다.</p>
+                <p>더 안전한 도시, 사람이 소외되지 않는 재난 정보망을 위해 시민과 공공의 많은 참여와 피드백을 기대합니다.</p>
+                
+                <p>by 안심이 팀 (Code for Korea & 당신 옆의 공익활동)</p>
+            </article>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <div>
+            <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 1.2rem; font-weight: 900; margin-bottom: 6px;">
+                <svg class="brand-logo" style="color: var(--yellow);" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M 6 16 L 16 6 L 26 16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                    <circle cx="11" cy="21" r="3.5" stroke="currentColor" stroke-width="3" />
+                    <circle cx="21" cy="21" r="3.5" stroke="currentColor" stroke-width="3" />
+                </svg>
+                <span>안심이</span>
+            </div>
+            <p>사람이 중심인 재난 안전 정보를 함께 만들어 갑니다.</p>
+        </div>
+        <div class="footer-links">
+            <a href="mailto:ansim@codefor.kr">ansim@codefor.kr</a>
+            <a href="https://github.com/Code-for-Korea/ansimi" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+    </footer>
+    <script src="../script.js"></script>
+</body>
+</html>
