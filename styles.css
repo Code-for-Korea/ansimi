@@ -1748,7 +1748,8 @@ body.has-custom-cursor #start-simulation-btn-2 {
 .editor-field textarea {
     flex: 1;
     resize: none;
-    min-height: 250px;
+    height: 100%;
+    min-height: 0;
 }
 
 .preview-pane {
@@ -1756,6 +1757,8 @@ body.has-custom-cursor #start-simulation-btn-2 {
     padding: 16px;
     background: #fbfaf5;
     overflow-y: auto;
+    flex: 1;
+    height: 100%;
     max-height: 100%;
     text-align: left;
 }
